@@ -1,2 +1,5 @@
-package app.domain;public class PharmacyAdmin {
+package app.domain;
+
+public class PharmacyAdmin extends User {
+
 }
