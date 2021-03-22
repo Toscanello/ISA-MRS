@@ -3,8 +3,14 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import HomePagePharmacist from '../views/HomePagePharmacist.vue'
 import Pharmacy from '../views/HomePahePharmacist.vue'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueRouter)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: ''
+  }
+})
 
 const routes = [
   {
