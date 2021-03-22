@@ -3,9 +3,11 @@ package app.service;
 import app.domain.Address;
 import app.domain.Location;
 import app.domain.Patient;
+import app.domain.Pharmacy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -25,8 +27,26 @@ public class PatientServiceImpl implements PatientService {
         }
     };
 
+    private final Collection<Pharmacy> pharmacies = new ArrayList<>();
+
+    public PatientServiceImpl() {
+        Location loc = new Location(19.8425, 43.8556);
+        Address addr = new Address("Omladinska", "2a", "Uzice", "Serbia", loc);
+        Pharmacy p = new Pharmacy("abc", "Krsenkovic", addr);
+        pharmacies.add(p);
+    }
+
     @Override
     public List<Patient> getAll() {
         return this.patients;
+    }
+
+    @Override
+    public Pharmacy getPharmacy(String regNo) {
+        for (Pharmacy p : pharmacies) {
+            if (p.getRegNo().equals(regNo))
+                return p;
+        }
+        return null;
     }
 }

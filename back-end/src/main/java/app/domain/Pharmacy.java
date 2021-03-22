@@ -7,6 +7,7 @@ public class Pharmacy {
     private String regNo;  /* Registry numberm - unique ID */
     private String name;
     private Address address;
+    private List<Integer> ratings;
     private List<String> employeeIDs;
     private List<Appointment> appointments;
     private List<MedicineQuantity> medicineQuantities;
@@ -20,6 +21,7 @@ public class Pharmacy {
         employeeIDs = new ArrayList<>();
         appointments = new ArrayList<>();
         medicineQuantities = new ArrayList<>();
+        ratings = new ArrayList<>();
     }
 
     public String getRegNo() {
@@ -68,5 +70,13 @@ public class Pharmacy {
 
     public void setMedicineQuantities(List<MedicineQuantity> medicineQuantities) {
         this.medicineQuantities = medicineQuantities;
+    }
+
+    public List<Integer> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Integer> ratings) {
+        this.ratings = ratings;
     }
 }

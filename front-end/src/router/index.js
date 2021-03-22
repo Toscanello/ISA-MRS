@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import HomePagePharmacist from '../views/HomePagePharmacist.vue'
+import Pharmacy from '../views/HomePahePharmacist.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/home-pharmacist',
     name: 'HomePagePharmacist',
     component: HomePagePharmacist
+  },
+  {
+    path: '/pharmacy/:regNo',
+    name: 'Pharmacy',
+    component: Pharmacy
   }
 ]
 
