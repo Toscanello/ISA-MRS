@@ -41,6 +41,10 @@ const routes = [
     path: '/home-patient',
     name: 'HomePagePatient',
     component: HomePagePatient
+  }, {
+    path: '/systemadmin',
+    name: 'SystemAdminHome',
+    component: SystemAdminHome
   }
 ]
 
