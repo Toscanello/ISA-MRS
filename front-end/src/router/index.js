@@ -5,7 +5,7 @@ import HomePagePharmacist from '../views/HomePagePharmacist.vue'
 import Pharmacy from '../views/HomePagePharmacist.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import SystemAdminHome from '../components/SystemAdminHome.vue'
+import SystemAdminHome from '../views/SystemAdminHome.vue'
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
