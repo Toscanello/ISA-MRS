@@ -81,7 +81,7 @@ export default {
       }
     },
     mounted() {
-      let path = "http://localhost:9090/pharmacies/" + this.$route.params.regNo
+      let path = "http://localhost:9090/patients/pharmacies/" + this.$route.params.regNo
       axios
       .get(path)
       .then(response => {
