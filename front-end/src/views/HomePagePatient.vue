@@ -38,6 +38,34 @@
             <v-list-item-title style="color:Tomato;">Appointments</v-list-item-title>
           </v-list-item>
 
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon style="color:Tomato;">mdi-hospital-box</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="color:Tomato;">Drugs</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon style="color:Tomato;">mdi-prescription</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="color:Tomato;">Prescriptions</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon style="color:Tomato;">mdi-plus</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="color:Tomato;">Allegries</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon style="color:Tomato;">mdi-emoticon-angry-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title style="color:Tomato;">Complaints</v-list-item-title>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
