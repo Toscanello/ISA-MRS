@@ -1,16 +1,40 @@
 package app.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
 public class Pharmacy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "regNo", unique = true, nullable = false)
     private String regNo;  /* Registry numberm - unique ID */
+
+    @Column(name = "name", unique = false, nullable = false)
     private String name;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "pharmacy_address",
+            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "regNo"),
+            inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    @NotNull
     private Address address;
-    private List<Integer> ratings;
-    private List<String> employeeIDs;
-    private List<Appointment> appointments;
-    private List<MedicineQuantity> medicineQuantities;
+
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Rating> ratings = new HashSet<>();
+
+
+//    private Set<MedicalWorker> medicalWorkers = new HashSet<>();
+//    private Set<Appointment> appointments;
+    @ManyToMany
+    @JoinTable(name = "pharmacy_medicine",
+            joinColumns =  @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "regNo"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"))
+    private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
 
     public Pharmacy() { }
 
@@ -18,11 +42,13 @@ public class Pharmacy {
         this.regNo = regNo;
         this.name = name;
         this.address = address;
-        employeeIDs = new ArrayList<>();
-        appointments = new ArrayList<>();
-        medicineQuantities = new ArrayList<>();
-        ratings = new ArrayList<>();
+//        appointments = new HashSet<>();
+//        medicineQuantities = new HashSet<>();
+        ratings = new HashSet<>();
     }
+    public Long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getRegNo() {
         return regNo;
@@ -48,35 +74,35 @@ public class Pharmacy {
         this.address = address;
     }
 
-    public List<String> getEmployeeIDs() {
-        return employeeIDs;
-    }
-
-    public void setEmployeeIDs(List<String> employeeIDs) {
-        this.employeeIDs = employeeIDs;
-    }
-
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-
-    public List<MedicineQuantity> getMedicineQuantities() {
+//    public Set<MedicalWorker> getMedicalWorkers() {
+//        return medicalWorkers;
+//    }
+//
+//    public void setMedicalWorkers(Set<MedicalWorker> medicalWorkers) {
+//        this.medicalWorkers = medicalWorkers;
+//    }
+//
+//    public Set<Appointment> getAppointments() {
+//        return appointments;
+//    }
+//
+//    public void setAppointments(Set<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
+//
+    public Set<MedicineQuantity> getMedicineQuantities() {
         return medicineQuantities;
     }
 
-    public void setMedicineQuantities(List<MedicineQuantity> medicineQuantities) {
+    public void setMedicineQuantities(Set<MedicineQuantity> medicineQuantities) {
         this.medicineQuantities = medicineQuantities;
     }
 
-    public List<Integer> getRatings() {
+    public Set<Rating> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<Integer> ratings) {
+    public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
     }
 }

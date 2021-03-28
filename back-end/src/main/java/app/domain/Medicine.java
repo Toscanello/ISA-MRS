@@ -1,43 +1,61 @@
 package app.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Medicine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name", unique = false, nullable = false)
     private String name;
 
+    @Column(name = "code", unique = true, nullable = false)
     private String code;
 
+    @Column(name = "type", unique = false, nullable = false)
     private String type;
 
+    @Column(name = "type")
     private String manufacturer;
 
     /* Pastile, Tablete, Prasak */
+    @Column(name = "drug_form", unique = false, nullable = false)
     private String drugaForm;
 
-    private List<String> alternativeMedicineCodes;
+    @ManyToMany
+    @JoinTable(name = "alternative_medicine",
+    joinColumns = @JoinColumn(name = "medicineCode", referencedColumnName = "code"),
+    inverseJoinColumns = @JoinColumn(name = "alternativeCode", referencedColumnName = "code"))
+    private List<Medicine> alternativeMedicine = new ArrayList<>();
 
+    @Column(name = "composition", unique = false, nullable = false)
     private String composition;
 
+    @Column(name = "description", unique = false, nullable = false)
     private String description;
 
     /* POM - perscription only, P - pharmacy (no perscription) */
     public enum Category { POM, P }
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     public Medicine() {
     }
 
     public Medicine(String name, String code, String type, String manufacturer,
-                    String drugaForm, List<String> alternativeMedicineCodes, String composition,
+                    String drugaForm, List<Medicine> alternativeMedicine, String composition,
                     String description, Category category) {
         this.name = name;
         this.code = code;
         this.type = type;
         this.manufacturer = manufacturer;
         this.drugaForm = drugaForm;
-        this.alternativeMedicineCodes = alternativeMedicineCodes;
+        this.alternativeMedicine = alternativeMedicine;
         this.composition = composition;
         this.description = description;
         this.category = category;
@@ -53,7 +71,6 @@ public class Medicine {
         this.composition = composition;
         this.description = description;
         this.category = category;
-        this.alternativeMedicineCodes = new ArrayList<>();
     }
 
     public String getName() {
@@ -96,12 +113,12 @@ public class Medicine {
         this.drugaForm = drugaForm;
     }
 
-    public List<String> getAlternativeMedicineCodes() {
-        return alternativeMedicineCodes;
+    public List<Medicine> getAlternativeMedicine() {
+        return alternativeMedicine;
     }
 
-    public void setAlternativeMedicineCodes(List<String> alternativeMedicineCodes) {
-        this.alternativeMedicineCodes = alternativeMedicineCodes;
+    public void setAlternativeMedicine(List<Medicine> alternativeMedicine) {
+        this.alternativeMedicine = alternativeMedicine;
     }
 
     public String getComposition() {

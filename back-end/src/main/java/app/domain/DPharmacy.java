@@ -3,18 +3,19 @@ package app.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-public class DPharmacy {
+//@Entity
+public class DPharmacy {/*
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long regNo;  /* Registry numberm - unique ID */
+    private Long regNo;  /* Registry numberm - unique ID
 
     @Column(name = "name", nullable = false)
     private String name;
 
 
     @OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "pharmacy_address", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "regNo"), inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    @JoinTable(name = "dpharmacy_address", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "regNo"),
+                                    inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
     @NotNull
     private Address address;
 
@@ -39,6 +40,6 @@ public class DPharmacy {
 
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
 }
