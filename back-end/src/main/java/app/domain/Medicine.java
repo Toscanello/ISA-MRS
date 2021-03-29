@@ -19,7 +19,7 @@ public class Medicine {
     @Column(name = "type", unique = false, nullable = false)
     private String type;
 
-    @Column(name = "type")
+    @Column(name = "manufacturer", unique = false, nullable = false)
     private String manufacturer;
 
     /* Pastile, Tablete, Prasak */

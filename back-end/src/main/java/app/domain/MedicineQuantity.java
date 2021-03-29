@@ -3,12 +3,14 @@ package app.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "medicine_quantity")
 public class MedicineQuantity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "medicine_code")
     private Medicine medicine;
 
     @Column(name = "quantity", nullable = false)
