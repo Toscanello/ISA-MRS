@@ -8,10 +8,7 @@ import java.util.Set;
 @Entity
 public class Pharmacy {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "regNo", unique = true, nullable = false)
+    @Column(name = "reg_no", unique = true, nullable = false)
     private String regNo;  /* Registry numberm - unique ID */
 
     @Column(name = "name", unique = false, nullable = false)
@@ -19,7 +16,7 @@ public class Pharmacy {
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "pharmacy_address",
-            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "regNo"),
+            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
             inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
     @NotNull
     private Address address;
@@ -32,8 +29,8 @@ public class Pharmacy {
 //    private Set<Appointment> appointments;
     @ManyToMany
     @JoinTable(name = "pharmacy_medicine",
-            joinColumns =  @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "regNo"),
-            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"))
+            joinColumns =  @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "medicine_code"))
     private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
 
     public Pharmacy() { }
@@ -46,9 +43,6 @@ public class Pharmacy {
 //        medicineQuantities = new HashSet<>();
         ratings = new HashSet<>();
     }
-    public Long getId() { return id; }
-
-    public void setId(long id) { this.id = id; }
 
     public String getRegNo() {
         return regNo;

@@ -10,7 +10,7 @@ public class MedicineQuantity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "medicine_code")
+    @JoinColumn(name = "medicine_code", referencedColumnName = "code")
     private Medicine medicine;
 
     @Column(name = "quantity", nullable = false)

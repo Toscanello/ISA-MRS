@@ -7,14 +7,11 @@ import java.util.List;
 @Entity
 public class Medicine {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "code", unique = true, nullable = false)
+    private String code;
 
     @Column(name = "name", unique = false, nullable = false)
     private String name;
-
-    @Column(name = "code", unique = true, nullable = false)
-    private String code;
 
     @Column(name = "type", unique = false, nullable = false)
     private String type;
@@ -28,8 +25,8 @@ public class Medicine {
 
     @ManyToMany
     @JoinTable(name = "alternative_medicine",
-    joinColumns = @JoinColumn(name = "medicineCode", referencedColumnName = "code"),
-    inverseJoinColumns = @JoinColumn(name = "alternativeCode", referencedColumnName = "code"))
+    joinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"),
+    inverseJoinColumns = @JoinColumn(name = "alternative_code", referencedColumnName = "code"))
     private List<Medicine> alternativeMedicine = new ArrayList<>();
 
     @Column(name = "composition", unique = false, nullable = false)
