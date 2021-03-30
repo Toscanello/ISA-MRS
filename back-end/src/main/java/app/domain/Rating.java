@@ -1,5 +1,7 @@
 package app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +14,8 @@ public class Rating {
     private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pharmacy_reg_no")
+    @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no")
+    @JsonIgnore
     private Pharmacy pharmacy;
 
     public Rating() {};

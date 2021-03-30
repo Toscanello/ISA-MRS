@@ -81,7 +81,7 @@ export default {
       }
     },
     mounted() {
-      let path = "http://localhost:9090/patients/pharmacies/" + this.$route.params.regNo
+      let path = "http://localhost:9090/api/pharmacy/" + this.$route.params.regNo
       axios
       .get(path)
       .then(response => {
@@ -96,7 +96,8 @@ export default {
     },
     computed: {
       fullAddress () {
-        return this.pharmacy.address.street + ', ' +
+        return this.pharmacy.address.street + ' ' +
+        this.pharmacy.address.streetNumber + ', ' +
         this.pharmacy.address.place + ', ' +
         this.pharmacy.address.country
       },
@@ -104,7 +105,7 @@ export default {
         let avgRating = 0;
         console.log(this.pharmacy.ratings.length)
         for (const rating of this.pharmacy.ratings) {
-          avgRating += Number(rating);
+          avgRating += rating;
         }
         if (this.pharmacy.ratings.length == 0)
           return avgRating;

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 
+import javax.transaction.Transactional;
+
 public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
 
     public Page<Pharmacy> findAll(Pageable pageable);

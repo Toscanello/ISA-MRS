@@ -1,10 +1,11 @@
 package app.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "medicine_quantity")
-public class MedicineQuantity {
+public class MedicineQuantity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
