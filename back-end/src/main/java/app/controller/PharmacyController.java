@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.DPharmacy;
 import app.domain.Pharmacy;
+import app.dto.SimplePharmacyDTO;
 import app.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,10 @@ public class PharmacyController {
     }
 
     @GetMapping(value = "/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Pharmacy> getPharmacy(@PathVariable String regNo) {
+    public ResponseEntity<SimplePharmacyDTO> getPharmacy(@PathVariable String regNo) {
         Pharmacy p = pharmacyService.getPharmacy(regNo);
         HttpStatus status = p == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return new ResponseEntity<Pharmacy>(p, status);
+        SimplePharmacyDTO dto = p == null ? null : new SimplePharmacyDTO(p);
+        return new ResponseEntity<>(dto, status);
     }
 }
