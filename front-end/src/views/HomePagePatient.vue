@@ -69,13 +69,16 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+    <PharmaciesList></PharmaciesList>
   </div>
 </template>
 
 <script>
+  import PharmaciesList from '../views/patient/PharmaciesList.vue'
   export default {
     name: "HomePagePatient",
     components: {
+      PharmaciesList
   },
     data: () => ({
       drawer: false,

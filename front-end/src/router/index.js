@@ -6,6 +6,7 @@ import Pharmacy from '../views/Pharmacy.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import SystemAdminHome from '../views/SystemAdminHome.vue'
+import PharmaciesList from '../views/patient/PharmaciesList.vue'
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -41,7 +42,13 @@ const routes = [
     path: '/home-patient',
     name: 'HomePagePatient',
     component: HomePagePatient
-  }, {
+  },
+  {
+    path: '/pharmacies-list',
+    name: 'PharmaciesList',
+    component: PharmaciesList
+  },
+  {
     path: '/systemadmin',
     name: 'SystemAdminHome',
     component: SystemAdminHome
