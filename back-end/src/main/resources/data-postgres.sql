@@ -1,6 +1,6 @@
 --insert into dpharmacy (name) values ('Apoteka Betty');
 
-insert into location (width, height) values (45.0, 20.0);
+insert into location (width, height) values (19.85, 45.26);
 insert into address (street, street_number, place, country,location_id) values ('Dimitrija Tucovica', '7', 'Uzice', 'Srbija',1);
 insert into pharmacy (reg_no, name, address_id) values ('abc', 'Apoteka Jankovic',1);
 --insert into pharmacy_address(address_id, pharmacy_reg_no) values (1, 'abc');

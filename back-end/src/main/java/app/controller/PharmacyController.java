@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
 @RequestMapping(value = "api/pharmacy")
 public class PharmacyController {
     @Autowired
