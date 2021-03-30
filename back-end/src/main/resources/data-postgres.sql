@@ -21,33 +21,30 @@ values ('Herbiko', 'lek3', 'tip', 'zdravko', 'tableta', 'sastav', 'opis', 'P');
 insert into medicine(name, code, type, manufacturer, drug_form, composition, description, category)
 values ('Probio Forte', 'lek4', 'tip', 'galenika', 'kapsula', 'sastav', 'opis', 'P');
 
-insert into rating(pharmacy_reg_no, rating) values ('abc', 5);
 
-insert into rating(pharmacy_reg_no, rating) values ('abc', 4);
+--insert into medicine_quantity(medicine_code, quantity)
+--values ('lek1', 2);
 
-insert into medicine_quantity(medicine_code, quantity)
-values ('lek1', 2);
+--insert into medicine_quantity(medicine_code, quantity)
+--values ('lek2', 3);
 
-insert into medicine_quantity(medicine_code, quantity)
-values ('lek2', 3);
+--insert into medicine_quantity(medicine_code, quantity)
+--values ('lek3', 3);
 
-insert into medicine_quantity(medicine_code, quantity)
-values ('lek3', 3);
+--insert into medicine_quantity(medicine_code, quantity)
+--values ('lek4', 4);
 
-insert into medicine_quantity(medicine_code, quantity)
-values ('lek4', 4);
+--insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
+--values ('abc', 'lek1');
 
-insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
-values ('abc', 'lek1');
+--insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
+--values ('abc', 'lek2');
 
-insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
-values ('abc', 'lek2');
+--insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
+--values ('abc', 'lek3');
 
-insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
-values ('abc', 'lek3');
-
-insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
-values ('abc', 'lek4');
+--insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
+--values ('abc', 'lek4');
 
 insert into alternative_medicine(medicine_code, alternative_code)
 values('lek3', 'lek4');

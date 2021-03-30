@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,9 +21,15 @@ public class PharmacyController {
     private PharmacyService pharmacyService;
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Pharmacy>> getAllStudents() {
+    public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
         List<Pharmacy> pharmacies = pharmacyService.findAll();
-        return new ResponseEntity<>(pharmacies, HttpStatus.OK);
+        List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
+
+        for (Pharmacy p : pharmacies)
+        {
+            pharmaciesDTO.add(new SimplePharmacyDTO(p));
+        }
+        return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
