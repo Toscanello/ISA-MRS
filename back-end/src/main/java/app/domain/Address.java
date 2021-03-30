@@ -1,11 +1,29 @@
 package app.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "street", nullable = false)
     private String street;
+
+    @Column(name = "streetNumber", nullable = false)
     private String streetNumber;
+
+    @Column(name = "place", nullable = false)
     private String place;
+
+    @Column(name = "country", nullable = false)
     private String country;
+
+    @OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "address_location", joinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
     private Location location;
+
 
     public Address() {
     }
