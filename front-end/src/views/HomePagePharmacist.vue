@@ -105,7 +105,7 @@ export default {
     patients: [],
   }),
   created() {
-    axios.get("http://localhost:9090/patients").then((resp) => {
+    axios.get("http://localhost:9090/patients/derm@gmail.com").then((resp) => {
       this.patients = resp.data;
     });
   },

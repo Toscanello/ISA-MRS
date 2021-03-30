@@ -8,4 +8,5 @@ import java.util.List;
 public interface PatientService {
     List<Patient> getAll();
     Pharmacy getPharmacy(String regNo);
+    List<Patient> findAllStudentsByPharmacistEmail(String email);
 }

@@ -4,6 +4,8 @@ import app.domain.Address;
 import app.domain.Location;
 import app.domain.Patient;
 import app.domain.Pharmacy;
+import app.repository.PatientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class PatientServiceImpl implements PatientService {
 
     private final Collection<Pharmacy> pharmacies = new ArrayList<>();
 
+    @Autowired
+    private PatientRepository patientRepository;
+
     public PatientServiceImpl() {
         Location loc = new Location(19.8425, 43.8556);
         Address addr = new Address("Omladinska", "2a", "Uzice", "Serbia", loc);
@@ -48,5 +53,10 @@ public class PatientServiceImpl implements PatientService {
                 return p;
         }
         return null;
+    }
+
+    @Override
+    public List<Patient> findAllStudentsByPharmacistEmail(String email) {
+        return patientRepository.findAllStudentsByPharmacistEmail(email);
     }
 }

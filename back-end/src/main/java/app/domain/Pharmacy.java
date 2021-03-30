@@ -15,9 +15,7 @@ public class Pharmacy {
     private String name;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "pharmacy_address",
-            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
-            inverseJoinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"))
+    @JoinColumn(name = "address_id")
     @NotNull
     private Address address;
 

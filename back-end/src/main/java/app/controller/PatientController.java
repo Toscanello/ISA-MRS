@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.Patient;
 import app.domain.Pharmacy;
+import app.dto.PatientDTO;
 import app.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,5 +32,16 @@ public class PatientController {
             return new ResponseEntity<Pharmacy>(p, HttpStatus.OK);
         else
             return new ResponseEntity<Pharmacy>(p, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(path = "/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PatientDTO>> findAllStudentsByPharmacistEmail(@PathVariable String email){
+        List<Patient>patients = service.findAllStudentsByPharmacistEmail(email);
+
+        List<PatientDTO> patientDTOS = new ArrayList<>();
+        for (Patient p : patients) {
+            patientDTOS.add(new PatientDTO(p));
+        }
+        return new ResponseEntity<>(patientDTOS,HttpStatus.OK);
     }
 }

@@ -20,7 +20,7 @@ public class MedicineQuantity implements Serializable {
     public MedicineQuantity() {}
 
     public MedicineQuantity(Medicine medicine, int quantity) {
-        this.medicine = medicine;
+        //this.medicine = medicine;
         this.quantity = quantity;
     }
 

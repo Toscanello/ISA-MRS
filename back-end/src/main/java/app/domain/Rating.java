@@ -14,7 +14,7 @@ public class Rating {
     private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no")
+    @JoinColumn(name = "pharmacy_reg_no")
     @JsonIgnore
     private Pharmacy pharmacy;
 

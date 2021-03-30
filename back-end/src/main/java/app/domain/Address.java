@@ -21,7 +21,7 @@ public class Address {
     private String country;
 
     @OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "address_location", joinColumns = @JoinColumn(name = "address_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"))
+    @JoinColumn(name = "location_id")
     private Location location;
 
 

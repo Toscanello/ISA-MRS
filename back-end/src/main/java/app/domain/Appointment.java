@@ -1,21 +1,34 @@
 package app.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Appointment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "startTime", nullable = true)
     private LocalDateTime startTime;
-    private LocalDateTime duration;
+    @Column(name = "endTime", nullable = true)
+    private LocalDateTime endTime;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="patient_id",referencedColumnName = "email",nullable = false)
     private Patient patient;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="medical_worker_id",referencedColumnName = "email",nullable = false)
     private MedicalWorker medicalWorker;
+    @Column(name = "price", nullable = false)
     private Double price;
 
     public Appointment() {
     }
 
-    public Appointment(LocalDateTime startTime, LocalDateTime duration,
+    public Appointment(LocalDateTime startTime, LocalDateTime endTime,
                        Patient patient, MedicalWorker medicalWorker, Double price) {
         this.startTime = startTime;
-        this.duration = duration;
+        this.endTime = endTime;
         this.patient = patient;
         this.medicalWorker = medicalWorker;
         this.price = price;
@@ -30,11 +43,11 @@ public class Appointment {
     }
 
     public LocalDateTime getDuration() {
-        return duration;
+        return endTime;
     }
 
-    public void setDuration(LocalDateTime duration) {
-        this.duration = duration;
+    public void setDuration(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public Patient getPatient() {

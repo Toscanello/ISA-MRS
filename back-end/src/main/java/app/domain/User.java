@@ -1,12 +1,33 @@
 package app.domain;
 
-public abstract class User {
-    protected String email; //unique id
-    protected String password;
-    protected String name;
-    protected String surname;
-    protected String phoneNumber;
-    protected Address address;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import static javax.persistence.InheritanceType.JOINED;
+
+@Entity
+@Table(name="users")
+@Inheritance(strategy=JOINED)
+public class User {
+    @Id
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @Column(name = "password", unique = false, nullable = false)
+    private String password;
+
+    @Column(name = "name", unique = false, nullable = false)
+    private String name;
+
+    @Column(name = "surname", unique = false, nullable = false)
+    private String surname;
+
+    @Column(name = "phone_number", unique = false, nullable = false)
+    private String phoneNumber;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @NotNull
+    private Address address;
 
     public User() {
     }
