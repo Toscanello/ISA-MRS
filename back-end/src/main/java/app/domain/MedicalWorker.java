@@ -4,8 +4,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.InheritanceType.JOINED;
+
 @Entity
 @Table(name = "medical_workers")
+@Inheritance(strategy=JOINED)
 public class MedicalWorker extends User {
 
     @OneToMany(mappedBy = "medicalWorker", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

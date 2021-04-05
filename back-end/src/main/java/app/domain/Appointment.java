@@ -5,20 +5,24 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Appointment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "startTime", nullable = true)
+
+    @Column(name = "start_time", nullable = true)
     private LocalDateTime startTime;
-    @Column(name = "endTime", nullable = true)
+
+    @Column(name = "end_time", nullable = true)
     private LocalDateTime endTime;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="patient_id",referencedColumnName = "email",nullable = false)
     private Patient patient;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="medical_worker_id",referencedColumnName = "email",nullable = false)
     private MedicalWorker medicalWorker;
+
     @Column(name = "price", nullable = false)
     private Double price;
 

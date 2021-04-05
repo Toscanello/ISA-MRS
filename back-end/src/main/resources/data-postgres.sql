@@ -2,7 +2,9 @@
 
 insert into location (width, height) values (19.85, 45.26);
 insert into address (street, street_number, place, country,location_id) values ('Dimitrija Tucovica', '7', 'Uzice', 'Srbija',1);
+insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi sad', 'Srbija',1);
 insert into pharmacy (reg_no, name, address_id) values ('abc', 'Apoteka Jankovic',1);
+insert into pharmacy (reg_no, name, address_id) values ('aaa', 'Apoteka Betty',1);
 --insert into pharmacy_address(address_id, pharmacy_reg_no) values (1, 'abc');
 
 insert into medicine(name, code, type, manufacturer, drug_form, composition, description, category)
@@ -16,7 +18,7 @@ values ('Probio Forte', 'lek4', 'tip', 'galenika', 'kapsula', 'sastav', 'opis', 
 
 insert into rating(pharmacy_reg_no, rating) values ('abc', 5);
 insert into rating(pharmacy_reg_no, rating) values ('abc', 4);
-
+insert into rating(pharmacy_reg_no, rating) values ('aaa', 4);
 --insert into medicine_quantity(medicine_code, quantity)
 --values ('lek1', 2);
 --insert into medicine_quantity(medicine_code, quantity)
@@ -71,10 +73,12 @@ insert into patients(email)values('d@gmail.com');
 insert into medical_workers(email)values('derm@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 
-insert into appointment(patient_id,medical_worker_id,price)values('ika@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('pera@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('a@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('b@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('c@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('d@gmail.com','derm@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('mika@gmail.com','farm@gmail.com',1000);
+insert into work_hour(start_time, end_time, pharmacy) values ('07:00:00','11:00:00', 'abc');
+insert into pharmacist(email, work_hour, pharmacists_pharmacy) values ('farm@gmail.com', 1, 'abc');
+
+insert into work_hour(start_time, end_time, pharmacy) values ('07:00:00','07:15:00', 'aaa');
+insert into pharmacist(email, work_hour, pharmacists_pharmacy) values ('derm@gmail.com', 2, 'aaa');
+
+insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('ika@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
+--insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
+--insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-

@@ -10,6 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +41,24 @@ public class PharmacyController {
         HttpStatus status = p == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
         SimplePharmacyDTO dto = p == null ? null : new SimplePharmacyDTO(p);
         return new ResponseEntity<>(dto, status);
+    }
+
+    @GetMapping(value = "apoteke/{date}_{time}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SimplePharmacyDTO>> gettralal(@PathVariable String date, @PathVariable String time) {
+        //sastanak traje 30 minuta
+        String str = date + " " + time; //"2019-05-04 09:10";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+        LocalTime start = LocalTime.parse(time);
+        LocalTime end = start.plusMinutes(30); //svaki sastanak sa farmaceutom traje 30 minuta
+        List<Pharmacy> pharmacies = pharmacyService.getPharmaciesByTime(start, end, dateTime);
+
+        List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
+        for (Pharmacy p : pharmacies)
+        {
+            pharmaciesDTO.add(new SimplePharmacyDTO(p));
+        }
+        return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 }
