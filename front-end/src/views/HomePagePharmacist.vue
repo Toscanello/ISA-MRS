@@ -65,8 +65,9 @@
     <div class="id">
       <h1>Patients</h1>
     </div>
-    <v-row style="margin-left:350px">
-      <v-col v-for="i in patients" :key="i.email" cols="12" sm="6" md="4" lg="3">
+    <v-container>
+    <v-row class="l-5">
+      <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
         <v-card shaped>
           <v-list dense>
             <v-list-item>
@@ -91,6 +92,7 @@
         </v-card>
       </v-col>
     </v-row>
+    </v-container>
   </div>
 </template>
 

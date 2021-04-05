@@ -47,6 +47,15 @@ values('pera@gmail.com','pass','pera','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
 values('mika@gmail.com','pass','mika','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
+values('a@gmail.com','pass','mika','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id)
+values('b@gmail.com','pass','mika','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id)
+values('c@gmail.com','pass','mika','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id)
+values('d@gmail.com','pass','mika','luburic','+38154784566',1);
+
+insert into users(email,password,name,surname,phone_number,address_id)
 values('derm@gmail.com','pass','derm','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
 values('farm@gmail.com','pass','farm','luburic','+38154784566',1);
@@ -54,10 +63,18 @@ values('farm@gmail.com','pass','farm','luburic','+38154784566',1);
 insert into patients(email)values('ika@gmail.com');
 insert into patients(email)values('pera@gmail.com');
 insert into patients(email)values('mika@gmail.com');
+insert into patients(email)values('a@gmail.com');
+insert into patients(email)values('b@gmail.com');
+insert into patients(email)values('c@gmail.com');
+insert into patients(email)values('d@gmail.com');
 
 insert into medical_workers(email)values('derm@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 
 insert into appointment(patient_id,medical_worker_id,price)values('ika@gmail.com','derm@gmail.com',1000);
 insert into appointment(patient_id,medical_worker_id,price)values('pera@gmail.com','derm@gmail.com',1000);
+insert into appointment(patient_id,medical_worker_id,price)values('a@gmail.com','derm@gmail.com',1000);
+insert into appointment(patient_id,medical_worker_id,price)values('b@gmail.com','derm@gmail.com',1000);
+insert into appointment(patient_id,medical_worker_id,price)values('c@gmail.com','derm@gmail.com',1000);
+insert into appointment(patient_id,medical_worker_id,price)values('d@gmail.com','derm@gmail.com',1000);
 insert into appointment(patient_id,medical_worker_id,price)values('mika@gmail.com','farm@gmail.com',1000);

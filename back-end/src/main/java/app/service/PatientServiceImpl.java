@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -47,6 +48,14 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public List<Patient> searchPatients(Map<String, String> search){
+        System.out.println(search.get("email"));
+        System.out.println(search.get("name"));
+        System.out.println(search.get("surname"));
+        return patientRepository.searchPatients(search.get("email"),search.get("name"),search.get("surname"));
+    }
+
+    @Override
     public Pharmacy getPharmacy(String regNo) {
         for (Pharmacy p : pharmacies) {
             if (p.getRegNo().equals(regNo))
@@ -56,7 +65,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Patient> findAllStudentsByPharmacistEmail(String email) {
+    public List<Patient> findAllPatientsByPharmacistEmail(String email) {
         return patientRepository.findAllStudentsByPharmacistEmail(email);
     }
 }
