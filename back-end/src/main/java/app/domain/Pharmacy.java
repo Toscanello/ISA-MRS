@@ -31,6 +31,12 @@ public class Pharmacy {
             inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "medicine_code"))
     private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "pharmacy_dermatologists",
+            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
+            inverseJoinColumns = @JoinColumn(name = "dermatologist_email", referencedColumnName = "email"))
+    private Set<Dermatologist> dermatologists = new HashSet<>();
+
     public Pharmacy() { }
 
     public Pharmacy(String regNo, String name, Address address) {
@@ -96,5 +102,13 @@ public class Pharmacy {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public Set<Dermatologist> getDermatologists() {
+        return dermatologists;
+    }
+
+    public void setDermatologists(Set<Dermatologist> dermatologists) {
+        this.dermatologists = dermatologists;
     }
 }
