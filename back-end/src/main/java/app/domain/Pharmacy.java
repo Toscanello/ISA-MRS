@@ -22,6 +22,8 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Rating> ratings = new HashSet<>();
 
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<DermatologistAppointment> dermatologistAppointments = new HashSet<>();
 
 //    private Set<MedicalWorker> medicalWorkers = new HashSet<>();
 //    private Set<Appointment> appointments;
@@ -110,5 +112,13 @@ public class Pharmacy {
 
     public void setDermatologists(Set<Dermatologist> dermatologists) {
         this.dermatologists = dermatologists;
+    }
+
+    public Set<DermatologistAppointment> getDermatologistAppointments() {
+        return dermatologistAppointments;
+    }
+
+    public void setDermatologistAppointments(Set<DermatologistAppointment> dermatologistAppointments) {
+        this.dermatologistAppointments = dermatologistAppointments;
     }
 }

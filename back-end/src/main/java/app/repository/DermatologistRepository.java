@@ -1,6 +1,8 @@
 package app.repository;
 
 import app.domain.Dermatologist;
+import app.domain.DermatologistAppointment;
+import app.domain.WorkHour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,4 +16,16 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, St
             nativeQuery = true
     )
     public List<Dermatologist> findAllDermatologistsByPharmacyRegNo(String regNo);
+
+    @Query(
+            value = "select * from work_hour wh where wh.dermatologist_email = ?1",
+            nativeQuery = true
+    )
+    public List<WorkHour> findWorkHoursByDermatologistEmail(String email);
+
+    @Query(
+            value = "select * from dermatologist_appointment da where da.dermatologist_email = ?1",
+            nativeQuery = true
+    )
+    public List<DermatologistAppointment> findFreeAppointmetsByDermatologistEmail(String email);
 }

@@ -7,6 +7,9 @@ import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import SystemAdminHome from '../views/SystemAdminHome.vue'
 import PharmaciesList from '../views/patient/PharmaciesList.vue'
+import PharmacyDermatologists from '../views/PharmacyDermatologists.vue'
+import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.vue'
+
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -52,6 +55,16 @@ const routes = [
     path: '/systemadmin',
     name: 'SystemAdminHome',
     component: SystemAdminHome
+  },
+  {
+    path: '/dermatologists/pharmacy/:regNo',
+    name: 'PharmacyDermatologists',
+    component: PharmacyDermatologists
+  },
+  {
+    path: '/dermatologists/:email/appointment',
+    name: 'DermatologistAppointmentForm',
+    component: DermatologistAppointmentForm
   }
 ]
 
