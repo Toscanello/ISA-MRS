@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         goToAppointment: function(email) {
-            regNo = this.$route.params.regNo
+            let regNo = this.$route.params.regNo
             this.$router.push('/dermatologists/' + email + '/' + regNo + '/appointment')
         }
     },

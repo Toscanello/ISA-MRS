@@ -44,10 +44,10 @@ export default {
     },
     computed: {
       timeFromMins () {
-        if (mins == 60)
+        if (this.mins == 60)
           return '01:00:00'
         else
-          return '00:'+mins+':00'
+          return '00:'+this.mins+':00'
       }
     },
     methods: {
