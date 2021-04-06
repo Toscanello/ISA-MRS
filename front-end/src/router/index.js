@@ -9,6 +9,8 @@ import SystemAdminHome from '../views/SystemAdminHome.vue'
 import PharmaciesList from '../views/patient/PharmaciesList.vue'
 import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
 import Pharmacies from '../views/patient/Pharmacies.vue'
+import PharmacistList from '../views/patient/PharmacistList.vue'
+
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -60,7 +62,11 @@ const routes = [
     name: 'Pharmacies',
     component: Pharmacies
   },
-  
+  {
+    path: '/pharmacist-list',
+    name: 'PharmacistList',
+    component: PharmacistList
+  },
   {
     path: '/systemadmin',
     name: 'SystemAdminHome',

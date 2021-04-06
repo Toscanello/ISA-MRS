@@ -106,7 +106,7 @@ export default {
     axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
       this.pharmacies = resp.data;
     });
-  },
+  }
 }
 </script>
 
