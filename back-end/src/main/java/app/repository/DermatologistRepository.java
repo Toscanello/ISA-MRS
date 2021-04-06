@@ -1,5 +1,6 @@
 package app.repository;
 
+import app.domain.Appointment;
 import app.domain.Dermatologist;
 import app.domain.DermatologistAppointment;
 import app.domain.WorkHour;
@@ -28,4 +29,11 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, St
             nativeQuery = true
     )
     public List<DermatologistAppointment> findFreeAppointmetsByDermatologistEmail(String email);
+
+    @Query(
+            value="select * from appointment a where a.medical_worker_id = ?1",
+            nativeQuery = true
+    )
+    public List<Appointment> findAllAppointmentsByDermatologistEmail(String email);
+
 }

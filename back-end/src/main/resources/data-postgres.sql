@@ -74,7 +74,12 @@ values ('derm1@gmail.com', 'abc', '09:00', '17:00');
 insert into work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
 values ('derm2@gmail.com', 'abc', '17:00', '01:00');
 
+--insert into dermatologist_appointment()
 
-insert into appointment(patient_id,medical_worker_id,price)values('ika@gmail.com','derm1@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('pera@gmail.com','derm2@gmail.com',1000);
-insert into appointment(patient_id,medical_worker_id,price)values('mika@gmail.com','farm@gmail.com',1000);
+
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time)
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('mika@gmail.com','farm@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00');

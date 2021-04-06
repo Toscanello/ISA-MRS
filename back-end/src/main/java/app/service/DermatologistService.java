@@ -1,5 +1,6 @@
 package app.service;
 
+import app.domain.Appointment;
 import app.domain.Dermatologist;
 import app.domain.DermatologistAppointment;
 import app.domain.WorkHour;
@@ -24,5 +25,9 @@ public class DermatologistService {
 
     public List<DermatologistAppointment> getFreeAppointments(String email) {
         return dermatologistRepository.findFreeAppointmetsByDermatologistEmail(email);
+    }
+
+    public List<Appointment> getAllAppointments(String email) {
+        return dermatologistRepository.findAllAppointmentsByDermatologistEmail(email);
     }
 }
