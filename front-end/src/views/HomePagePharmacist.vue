@@ -73,7 +73,8 @@
       <h1>Patients</h1>
     </div>
     <v-container>
-      <PatientSearch id="search" @clicked="onSearchClick"/>
+      <PatientSearch id="search" @clicked="onSearchClick" />
+      <PatientSort id="search" @clicked="onSortClick" />
       <v-row class="l-5">
         <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
           <v-card shaped>
@@ -107,15 +108,20 @@
 <script>
 import axios from "axios";
 import PatientSearch from '@/components/PatientSearch.vue'
+import PatientSort from '@/components/PatientSort.vue'
+
 export default {
   name: "HomePagePharmacist",
   components:{
-    PatientSearch
+    PatientSearch,
+    PatientSort
   },
   data: () => ({
+    
     drawer: false,
     group: null,
-    patients: [],
+    patients: []
+    
   }),
   created() {
     axios.get("http://localhost:9090/patients/farm@gmail.com").then((resp) => {
@@ -134,6 +140,34 @@ export default {
         }
       })
       .then(response=>this.patients = response.data)
+    },
+    onSortClick:function(sorting){
+      console.log(sorting)
+      if(sorting == "NameAsc"){
+        this.patients.sort(function(a, b){
+           if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        })
+      }else if(sorting == "NameDesc"){
+        this.patients.sort(function(a, b){
+           if(a.name < b.name) { return 1; }
+          if(a.name > b.name) { return -1; }
+          return 0;
+        })
+      }else if(sorting == "SurnameAsc"){
+        this.patients.sort(function(a, b){
+           if(a.surname < b.surname) { return -1; }
+          if(a.surname > b.surname) { return 1; }
+          return 0;
+        })
+      }else if(sorting == "SurnameDesc"){
+        this.patients.sort(function(a, b){
+           if(a.surname < b.surname) { return -1; }
+          if(a.surname > b.surname) { return 1; }
+          return 0;
+        })
+      }
     }
   }
 };
