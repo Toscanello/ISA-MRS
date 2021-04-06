@@ -61,4 +61,17 @@ public class PharmacyController {
         }
         return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
+    @GetMapping(value = "pharmacist/{date}_{time}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> findPharmacistByWorkHour(@PathVariable String date, @PathVariable String time, @PathVariable String regNo) {
+        //sastanak traje 30 minuta
+        String str = date + " " + time; //"2019-05-04 09:10";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+        LocalTime start = LocalTime.parse(time);
+        LocalTime end = start.plusMinutes(30); //svaki sastanak sa farmaceutom traje 30 minuta
+        List<String> pharmacists = pharmacyService.findPharmacist(start, end, dateTime, regNo);
+
+        return new ResponseEntity<>(pharmacists, HttpStatus.OK);
+    }
 }

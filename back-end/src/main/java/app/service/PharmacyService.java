@@ -23,4 +23,7 @@ public class PharmacyService {
 
     public List<Pharmacy> getPharmaciesByTime(LocalTime start, LocalTime end, LocalDateTime localDate)
     { return pharmacyRepository.findPharmacyPharmacistWorkHour(start, end, localDate);}
+    public List<String> findPharmacist(LocalTime start, LocalTime end, LocalDateTime startDate, String pharmacyRegNo){
+        return pharmacyRepository.findPharmacist( start, end, startDate, pharmacyRegNo);
+    }
 }
