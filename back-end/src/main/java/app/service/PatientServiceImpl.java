@@ -49,10 +49,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> searchPatients(Map<String, String> search){
-        System.out.println(search.get("email"));
-        System.out.println(search.get("name"));
-        System.out.println(search.get("surname"));
-        return patientRepository.searchPatients(search.get("email"),search.get("name"),search.get("surname"));
+        return patientRepository.searchPatients(search.get("email"),search.getOrDefault("name",""),search.getOrDefault("surname",""));
     }
 
     @Override

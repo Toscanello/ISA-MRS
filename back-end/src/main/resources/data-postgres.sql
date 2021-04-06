@@ -49,9 +49,9 @@ values('pera@gmail.com','pass','pera','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
 values('mika@gmail.com','pass','mika','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
-values('a@gmail.com','pass','mika','luburic','+38154784566',1);
+values('a@gmail.com','pass','a','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
-values('b@gmail.com','pass','mika','luburic','+38154784566',1);
+values('b@gmail.com','pass','b','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
 values('c@gmail.com','pass','mika','luburic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
@@ -80,5 +80,7 @@ insert into work_hour(start_time, end_time, pharmacy) values ('07:00:00','07:15:
 insert into pharmacist(email, work_hour, pharmacists_pharmacy) values ('derm@gmail.com', 2, 'aaa');
 
 insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('ika@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
+insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('a@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
+insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('b@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-

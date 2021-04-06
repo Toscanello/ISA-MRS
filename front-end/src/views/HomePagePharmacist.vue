@@ -35,30 +35,37 @@
             <v-list-item-icon>
               <v-icon style="color: Tomato">mdi-calendar</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">Calendar</v-list-item-title>
+            <v-list-item-title style="color: Tomato"
+              >Calendar</v-list-item-title
+            >
           </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
               <v-icon style="color: Tomato">mdi-minus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">Dispensing drugs</v-list-item-title>
+            <v-list-item-title style="color: Tomato"
+              >Dispensing drugs</v-list-item-title
+            >
           </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
               <v-icon style="color: Tomato">mdi-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">Vacation</v-list-item-title>
+            <v-list-item-title style="color: Tomato"
+              >Vacation</v-list-item-title
+            >
           </v-list-item>
 
           <v-list-item>
             <v-list-item-icon>
               <v-icon style="color: Tomato">mdi-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">New appointment</v-list-item-title>
+            <v-list-item-title style="color: Tomato"
+              >New appointment</v-list-item-title
+            >
           </v-list-item>
-
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -66,51 +73,69 @@
       <h1>Patients</h1>
     </div>
     <v-container>
-    <v-row class="l-5">
-      <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
-        <v-card shaped>
-          <v-list dense>
-            <v-list-item>
+      <PatientSearch id="search" @clicked="onSearchClick"/>
+      <v-row class="l-5">
+        <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
+          <v-card shaped>
+            <v-list dense>
+              <v-list-item>
                 <v-list-item-content>Email:</v-list-item-content>
-              <v-list-item-content class="align-end">
-                {{ i.email }}
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>Name:</v-list-item-content>
-              <v-list-item-content class="align-end">
-                {{ i.name }}
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>Surname:</v-list-item-content>
-              <v-list-item-content class="align-end">
-                {{ i.surname }}
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card>
-      </v-col>
-    </v-row>
+                <v-list-item-content class="align-end">
+                  {{ i.email }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>Name:</v-list-item-content>
+                <v-list-item-content class="align-end">
+                  {{ i.name }}
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>Surname:</v-list-item-content>
+                <v-list-item-content class="align-end">
+                  {{ i.surname }}
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PatientSearch from '@/components/PatientSearch.vue'
 export default {
   name: "HomePagePharmacist",
-
+  components:{
+    PatientSearch
+  },
   data: () => ({
     drawer: false,
     group: null,
     patients: [],
   }),
   created() {
-    axios.get("http://localhost:9090/patients/derm@gmail.com").then((resp) => {
+    axios.get("http://localhost:9090/patients/farm@gmail.com").then((resp) => {
       this.patients = resp.data;
     });
   },
+  methods:{
+    onSearchClick:function(search){
+      console.log(search)
+      axios
+      .get("http://localhost:9090/patients/search",{
+        params:{
+          email:"farm@gmail.com",
+          name:search.name,
+          surname:search.surname
+        }
+      })
+      .then(response=>this.patients = response.data)
+    }
+  }
 };
 </script>
 

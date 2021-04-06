@@ -27,6 +27,7 @@ public class PatientController {
     }
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
+        System.out.println(search);
         List<Patient>patients = service.searchPatients(search);
 
         List<PatientDTO> patientDTOS = new ArrayList<>();
