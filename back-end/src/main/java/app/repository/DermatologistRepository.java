@@ -36,4 +36,6 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, St
     )
     public List<Appointment> findAllAppointmentsByDermatologistEmail(String email);
 
+    public Dermatologist findDermatologistByEmail(String email);
+
 }

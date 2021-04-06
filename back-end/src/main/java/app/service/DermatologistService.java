@@ -30,4 +30,8 @@ public class DermatologistService {
     public List<Appointment> getAllAppointments(String email) {
         return dermatologistRepository.findAllAppointmentsByDermatologistEmail(email);
     }
+
+    public Dermatologist findDermatologist(String email) {
+        return dermatologistRepository.findDermatologistByEmail(email);
+    }
 }

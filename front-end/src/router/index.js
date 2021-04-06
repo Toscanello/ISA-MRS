@@ -62,7 +62,7 @@ const routes = [
     component: PharmacyDermatologists
   },
   {
-    path: '/dermatologists/:email/appointment',
+    path: '/dermatologists/:email/:regNo/appointment',
     name: 'DermatologistAppointmentForm',
     component: DermatologistAppointmentForm
   }

@@ -1,11 +1,13 @@
 package app.controller;
 
-import app.domain.Appointment;
-import app.domain.Dermatologist;
-import app.domain.WorkHour;
+import app.domain.*;
 import app.dto.FreeAppointmentDTO;
 import app.dto.SimpleDermatologistDTO;
+import app.repository.AppointmentRepository;
+import app.service.AppointmentService;
+import app.service.DermatologistAppointmentService;
 import app.service.DermatologistService;
+import app.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,10 @@ import java.util.Set;
 public class DermatologistController {
     @Autowired
     DermatologistService dermatologistService;
+    @Autowired
+    DermatologistAppointmentService dermatologistAppointmentService;
+    @Autowired
+    PharmacyService pharmacyService;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<SimpleDermatologistDTO>>
@@ -50,7 +56,6 @@ public class DermatologistController {
             if (!wh.getPharmacy().getRegNo().equals(newAppointment.getPharmacyRegNo()))
                 continue;
             if (wh.getBegginingHour().isAfter(appointmentBegin) || wh.getEnding_hour().isBefore(appointmentEnd)) {
-                available = false;
                 return new ResponseEntity<>("Dermatologist isn't in office at that hour", HttpStatus.NOT_ACCEPTABLE);
             }
         }
@@ -60,9 +65,19 @@ public class DermatologistController {
         for (Appointment ap : dermatologistAppointments) {
             if (ap.getStartTime().isAfter(newAppointment.getBegin()) ||
                 ap.getEndTime().isBefore(newAppointment.getBegin().plusMinutes(appointmentDurationInMinutes))) {
-                available = false;
-                return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.NOT_ACCEPTABLE)
+                return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.NOT_ACCEPTABLE);
             }
         }
+        Pharmacy p = pharmacyService.getPharmacy(newAppointment.getPharmacyRegNo());
+        Dermatologist d = dermatologistService.findDermatologist(newAppointment.getDermatologistEmail());
+        DermatologistAppointment da = new DermatologistAppointment(
+                newAppointment.getBegin(),
+                newAppointment.getDuration(),
+                d,
+                p,
+                newAppointment.getPrice()
+        );
+        dermatologistAppointmentService.save(da);
+        return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 }
