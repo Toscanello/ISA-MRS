@@ -1,8 +1,12 @@
 <template>
   <div>
     <div id="pickers">
-      <v-date-picker v-model="date"></v-date-picker>
-      <v-time-picker v-model="time" format="24hrs"></v-time-picker>
+      <div id="date-pickr">
+        <v-date-picker v-model="date"></v-date-picker>
+      </div>
+      <div id="time-pickr">
+        <v-time-picker v-model="time" format="24hrs"></v-time-picker>
+      </div>
     </div>
     <br />
     <hr />
@@ -81,13 +85,23 @@ export default {
 </script>
 
 <style>
- .v-date-picker-title {
+ /*.v-date-picker-title {
      color: darkcyan;
  }
 
  .v-time-picker-title {
      background-color: darkcyan;
      padding: 10px;
+ }*/
+
+ #date-pickr {
+   margin: 15px;
+   display: inline;
+ }
+
+ #time-pickr {
+   display: inline;
+   margin: 15px;
  }
 
  #minutes {

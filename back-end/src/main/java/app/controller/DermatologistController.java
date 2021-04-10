@@ -73,8 +73,7 @@ public class DermatologistController {
         List<Appointment> dermatologistAppointments
                 = appointmentService.getAllAppointments(newAppointment.getDermatologistEmail());
         for (Appointment ap : dermatologistAppointments) {
-            if (ap.getStartTime().isAfter(appointmentBeginLDT) && ap.getStartTime().isBefore(appointmentEndLDT)||
-                    ap.getEndTime().isBefore(appointmentEndLDT) && ap.getEndTime().isAfter(appointmentBeginLDT)) {
+            if (ap.getStartTime().isBefore(appointmentEndLDT) && ap.getEndTime().isAfter(appointmentBeginLDT)) {
                 return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.OK);
             }
         }
