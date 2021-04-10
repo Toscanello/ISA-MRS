@@ -25,13 +25,23 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Pharmacist> pharmacists = new HashSet<>();
 
-//    private Set<MedicalWorker> medicalWorkers = new HashSet<>();
-//    private Set<Appointment> appointments;
+    @ManyToMany
+    @JoinTable(name = "pharmacy_dermatologists",
+            joinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
+            inverseJoinColumns = @JoinColumn(name = "dermatologist_email", referencedColumnName = "email"))
+    private Set<Dermatologist> dermatologists = new HashSet<>();
+
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<DermatologistAppointment> dermatologistAppointments = new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "pharmacy_medicine",
             joinColumns =  @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
             inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "medicine_code"))
     private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
+
+//    private Set<MedicalWorker> medicalWorkers = new HashSet<>();
+//    private Set<Appointment> appointments;
 
     public Pharmacy() { }
 
@@ -107,5 +117,21 @@ public class Pharmacy {
 
     public void setPharmacists(Set<Pharmacist> pharmacists) {
         this.pharmacists = pharmacists;
+    }
+
+    public Set<Dermatologist> getDermatologists() {
+        return dermatologists;
+    }
+
+    public void setDermatologists(Set<Dermatologist> dermatologists) {
+        this.dermatologists = dermatologists;
+    }
+
+    public Set<DermatologistAppointment> getDermatologistAppointments() {
+        return dermatologistAppointments;
+    }
+
+    public void setDermatologistAppointments(Set<DermatologistAppointment> dermatologistAppointments) {
+        this.dermatologistAppointments = dermatologistAppointments;
     }
 }

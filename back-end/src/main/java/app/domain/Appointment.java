@@ -46,11 +46,11 @@ public class Appointment {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getDuration() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setDuration(LocalDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
