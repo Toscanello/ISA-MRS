@@ -57,8 +57,8 @@ export default {
     },
     methods: {
         scheduleAppointment() {
-            alert(this.time + '\n' + this.date + '\n' 
-            + this.mins + '\n' + this.price)
+            // alert(this.time + '\n' + this.date + '\n' 
+            // + this.mins + '\n' + this.price)
             let appointment = {
               begin: this.date + ' ' + this.time,
               duration: this.timeFromMins,
