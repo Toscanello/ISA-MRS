@@ -79,10 +79,6 @@ public class PharmacyController {
     @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SimplePharmacyDTO>
     editPharmacy(@PathVariable String regNo, @RequestBody SimplePharmacyDTO editedPharmacy) {
-        Location loc = new Location(
-                editedPharmacy.getAddress().getLocation().getGeoWidth(),
-                editedPharmacy.getAddress().getLocation().getGeoHeight()
-        );
         Pharmacy oldPharmacy = pharmacyService.getPharmacy(editedPharmacy.getRegNo());
         oldPharmacy.setName(editedPharmacy.getName());
         oldPharmacy.setAddress(editedPharmacy.getAddress());
