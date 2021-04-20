@@ -86,4 +86,13 @@ public class Address {
                 ", location=" + location +
                 '}';
     }
+
+    public void fromAddress(Address a) {
+        this.street = a.getStreet();
+        this.streetNumber = a.getStreetNumber();
+        this.place = a.getPlace();
+        this.country = a.getCountry();
+        this.location.setGeoHeight(a.getLocation().getGeoHeight());
+        this.location.setGeoWidth(a.getLocation().getGeoWidth());
+    }
 }

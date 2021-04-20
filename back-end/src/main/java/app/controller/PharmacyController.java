@@ -81,7 +81,7 @@ public class PharmacyController {
     editPharmacy(@PathVariable String regNo, @RequestBody SimplePharmacyDTO editedPharmacy) {
         Pharmacy oldPharmacy = pharmacyService.getPharmacy(editedPharmacy.getRegNo());
         oldPharmacy.setName(editedPharmacy.getName());
-        oldPharmacy.setAddress(editedPharmacy.getAddress());
+        oldPharmacy.getAddress().fromAddress(editedPharmacy.getAddress());  //Using setAddress would put a new Address in DB
         pharmacyService.save(oldPharmacy);  //save changes to database
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
     }
