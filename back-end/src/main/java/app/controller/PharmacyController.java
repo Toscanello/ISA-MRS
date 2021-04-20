@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.domain.DPharmacy;
+import app.domain.Location;
 import app.domain.Pharmacy;
 import app.dto.SimplePharmacyDTO;
 import app.service.PharmacyService;
@@ -74,4 +75,15 @@ public class PharmacyController {
 
         return new ResponseEntity<>(pharmacists, HttpStatus.OK);
     }
+
+    @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SimplePharmacyDTO>
+    editPharmacy(@PathVariable String regNo, @RequestBody SimplePharmacyDTO editedPharmacy) {
+        Pharmacy oldPharmacy = pharmacyService.getPharmacy(editedPharmacy.getRegNo());
+        oldPharmacy.setName(editedPharmacy.getName());
+        oldPharmacy.getAddress().fromAddress(editedPharmacy.getAddress());  //Using setAddress would put a new Address in DB
+        pharmacyService.save(oldPharmacy);  //save changes to database
+        return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
+    }
+
 }
