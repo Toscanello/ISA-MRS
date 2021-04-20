@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import HomePagePharmacist from '../views/HomePagePharmacist.vue'
 import HomePageDermatologist from '../views/HomePageDermatologist.vue'
 import Pharmacy from '../views/Pharmacy.vue'
@@ -15,6 +14,7 @@ import PharmacyDermatologists from '../views/PharmacyDermatologists.vue'
 import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.vue'
 import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
 import PharmacyEdit from '../views/PharmacyEdit.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
@@ -26,8 +26,8 @@ Vue.use(VueGoogleMaps, {
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Login',
+    component: Login
   },
   {
     path: '/about',
