@@ -177,7 +177,16 @@
         else {
             this.pharmacy.address.location.geoHeight = this.marker.position.lat
             this.pharmacy.address.location.geoWidth = this.marker.position.lng
-            alert(JSON.stringify(this.pharmacy))
+            axios
+            .put('http://localhost:9090/api/pharmacy/edit/' + this.$route.params.regNo, this.pharmacy)
+            .then(response => {
+              console.log(response.data)
+              alert('Uspesno izmenjena apoteka!')
+            })
+            .catch(response => {
+              console.log(response.data)
+              alert('Ups! Desila se greska')
+            })
         }
       },
       mark(event) {
@@ -192,14 +201,14 @@
         axios
         .get(path)
         .then(response => {
-        this.pharmacy = response.data
-        this.name = this.pharmacy.name
-        this.address = this.pharmacy.address.street
-        this.streetNo = this.pharmacy.address.streetNumber
-        this.place = this.pharmacy.address.place
-        this.country = 'Serbia'
-        this.marker.position.lat = Number(this.pharmacy.address.location.geoHeight)
-        this.marker.position.lng = Number(this.pharmacy.address.location.geoWidth)
+          this.pharmacy = response.data
+          this.name = this.pharmacy.name
+          this.address = this.pharmacy.address.street
+          this.streetNo = this.pharmacy.address.streetNumber
+          this.place = this.pharmacy.address.place
+          this.country = 'Serbia'
+          this.marker.position.lat = Number(this.pharmacy.address.location.geoHeight)
+          this.marker.position.lng = Number(this.pharmacy.address.location.geoWidth)
         })
     }
   }
