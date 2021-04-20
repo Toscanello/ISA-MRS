@@ -16,6 +16,9 @@ public class AppointmentService {
     public List<Appointment> getAllAppointments(String email) {
         return appointmentRepository.findAllByMedicalWorkerEmail(email);
     }
+    public List<Appointment> getAllAppointmentsByPatientId(String email) {
+        return appointmentRepository.findAllByPatientId(email);
+    }
 
     public Appointment save(Appointment ap) {
         return appointmentRepository.save(ap);

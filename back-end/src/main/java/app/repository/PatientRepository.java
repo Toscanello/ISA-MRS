@@ -24,4 +24,5 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
             nativeQuery = true)
     public List<Patient> searchPatients(String email, String name, String surname);
 
+    public Patient findOneByEmail(String email);
 }

@@ -50,8 +50,9 @@ export default {
               begin: this.date + ' ' + this.time,
               duration: this.timeFromMins,
               pharmacyRegNo: this.$route.params.regNo,
-              pharmacistEmail: this.$route.params.email,
-              price: this.price
+              dermatologistEmail: this.$route.params.email,
+              price: this.price,
+              patientEmail:'mika@gmail.com'
             }
             console.log(appointment)
             axios

@@ -19,4 +19,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     )
     public List<Appointment> findAllByMedicalWorkerEmail(String email);
 
+    @Query(
+            value="select * from appointment a where a.patient_id = ?1",
+            nativeQuery = true
+    )
+    public List<Appointment> findAllByPatientId(String email);
+
 }

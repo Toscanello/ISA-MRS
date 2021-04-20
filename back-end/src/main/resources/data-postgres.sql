@@ -77,6 +77,11 @@ insert into medical_workers(email)values('derm1@gmail.com');
 insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 
+insert into work_hour(start_time,end_time,pharmacy)
+values('09:00','17:00','abc');
+insert into pharmacist(email,work_hour,pharmacy)
+values('farm@gmail.com',1,'abc');
+
 insert into dermatologist(email)values('derm1@gmail.com');
 insert into dermatologist(email)values('derm2@gmail.com');
 

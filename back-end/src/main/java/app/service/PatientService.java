@@ -11,4 +11,5 @@ public interface PatientService {
     List<Patient> searchPatients(Map<String,String> search);
     Pharmacy getPharmacy(String regNo);
     List<Patient> findAllPatientsByPharmacistEmail(String email);
+    Patient findOneByEmail(String email);
 }
