@@ -15,6 +15,7 @@ import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.
 import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
 import PharmacyEdit from '../views/PharmacyEdit.vue'
 import Login from '../views/Login.vue'
+import Calendar from '../views/CalendarPatient.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
@@ -28,6 +29,11 @@ const routes = [
     path: '/',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: Calendar
   },
   {
     path: '/about',

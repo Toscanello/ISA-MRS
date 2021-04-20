@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "patients")
 public class Patient extends User {
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<Appointment>();
 
     public Patient() {
