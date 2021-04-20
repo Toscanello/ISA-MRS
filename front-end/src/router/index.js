@@ -13,6 +13,7 @@ import Pharmacies from '../views/patient/Pharmacies.vue'
 import PharmacistList from '../views/patient/PharmacistList.vue'
 import PharmacyDermatologists from '../views/PharmacyDermatologists.vue'
 import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.vue'
+import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
@@ -89,6 +90,11 @@ const routes = [
     path: '/dermatologists/:email/:regNo/appointment',
     name: 'DermatologistAppointmentForm',
     component: DermatologistAppointmentForm
+  },
+  {
+    path: '/pharmacist/:email/:regNo/appointment',
+    name: 'PharmacistNewAppointment',
+    component: PharmacistNewAppointment
   }
 ]
 

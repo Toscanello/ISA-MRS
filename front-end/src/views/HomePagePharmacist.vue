@@ -1,78 +1,47 @@
 <template>
-  <div>
-    <v-toolbar style="background-color: darkcyan">
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Pharmacist</v-toolbar-title>
-    </v-toolbar>
-    <v-navigation-drawer v-model="drawer" app temporary>
-      <v-list nav dense>
+  <v-container>
+    <v-navigation-drawer
+      id="core-navigation-drawer"
+      v-model="drawer"
+      :expand-on-hover="expandOnHover"
+      app
+      width="260"
+    >
+      <v-list nav expand>
         <v-list-item-group v-model="group">
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato">Account</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-pencil</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato"
-              >Start appointment</v-list-item-title
-            >
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-calendar</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato"
-              >Calendar</v-list-item-title
-            >
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-minus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato"
-              >Dispensing drugs</v-list-item-title
-            >
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato"
-              >Vacation</v-list-item-title
-            >
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color: Tomato">mdi-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color: Tomato"
-              >New appointment</v-list-item-title
-            >
-          </v-list-item>
+          <template v-for="item in items">
+            <v-list-item :key="item.title" :to="item.to">
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title >{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </template>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <div class="id">
-      <h1>Patients</h1>
-    </div>
+    <v-app-bar
+      id="app-bar"
+      absolute
+      app
+      style="background-color: darkcyan"
+      flat
+      height="75"
+    >
+      <v-btn
+        class="mr-3"
+        style="background-color: darkcyan"
+        elevation="0"
+        fab
+        small
+        @click="drawer = !drawer"
+      >
+        <v-icon> mdi-dots-vertical </v-icon>
+      </v-btn>
+      <v-toolbar-title>Pharmacist</v-toolbar-title>
+    </v-app-bar>
     <v-container>
+      <h1 style="background-color: darkcyan">Patients</h1>
       <PatientSearch id="search" @clicked="onSearchClick" />
       <PatientSort id="search" @clicked="onSortClick" />
       <v-row class="l-5">
@@ -102,84 +71,133 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import axios from "axios";
-import PatientSearch from '@/components/PatientSearch.vue'
-import PatientSort from '@/components/PatientSort.vue'
+import PatientSearch from "@/components/PatientSearch.vue";
+import PatientSort from "@/components/PatientSort.vue";
 
 export default {
   name: "HomePagePharmacist",
-  components:{
+  components: {
     PatientSearch,
-    PatientSort
+    PatientSort,
+  },
+  props: {
+    expandOnHover: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => ({
-    
     drawer: false,
     group: null,
-    patients: []
-    
+    patients: [],
+    items: [
+      {
+        icon: "mdi-home",
+        title: "Home",
+        to: "/",
+      },
+      {
+        icon: "mdi-account",
+        title: "Acoount",
+        to: "/",
+      },
+      {
+        icon: "mdi-pencil",
+        title: "Start appointment",
+        to: "/",
+      },
+      {
+        icon: "mdi-calendar",
+        title: "Calendar",
+        to: "/",
+      },
+      {
+        icon: "mdi-minus",
+        title: "Dispensing drugs",
+        to: "/",
+      },
+      {
+        icon: "mdi-plus",
+        title: "Vaccation",
+        to: "/",
+      },
+      {
+        icon: "mdi-plus",
+        title: "New appointment",
+        to: "/pharmacist/farm@gmail.com/abc/appointment",
+      },
+    ],
   }),
   created() {
     axios.get("http://localhost:9090/patients/farm@gmail.com").then((resp) => {
       this.patients = resp.data;
     });
   },
-  methods:{
-    onSearchClick:function(search){
-      console.log(search)
+  methods: {
+    onSearchClick: function (search) {
+      console.log(search);
       axios
-      .get("http://localhost:9090/patients/search",{
-        params:{
-          email:"farm@gmail.com",
-          name:search.name,
-          surname:search.surname
-        }
-      })
-      .then(response=>this.patients = response.data)
+        .get("http://localhost:9090/patients/search", {
+          params: {
+            email: "farm@gmail.com",
+            name: search.name,
+            surname: search.surname,
+          },
+        })
+        .then((response) => (this.patients = response.data));
     },
-    onSortClick:function(sorting){
-      console.log(sorting)
-      if(sorting == "NameAsc"){
-        this.patients.sort(function(a, b){
-           if(a.name < b.name) { return -1; }
-          if(a.name > b.name) { return 1; }
+    onSortClick: function (sorting) {
+      console.log(sorting);
+      if (sorting == "NameAsc") {
+        this.patients.sort(function (a, b) {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
           return 0;
-        })
-      }else if(sorting == "NameDesc"){
-        this.patients.sort(function(a, b){
-           if(a.name < b.name) { return 1; }
-          if(a.name > b.name) { return -1; }
+        });
+      } else if (sorting == "NameDesc") {
+        this.patients.sort(function (a, b) {
+          if (a.name < b.name) {
+            return 1;
+          }
+          if (a.name > b.name) {
+            return -1;
+          }
           return 0;
-        })
-      }else if(sorting == "SurnameAsc"){
-        this.patients.sort(function(a, b){
-           if(a.surname < b.surname) { return -1; }
-          if(a.surname > b.surname) { return 1; }
+        });
+      } else if (sorting == "SurnameAsc") {
+        this.patients.sort(function (a, b) {
+          if (a.surname < b.surname) {
+            return -1;
+          }
+          if (a.surname > b.surname) {
+            return 1;
+          }
           return 0;
-        })
-      }else if(sorting == "SurnameDesc"){
-        this.patients.sort(function(a, b){
-           if(a.surname < b.surname) { return -1; }
-          if(a.surname > b.surname) { return 1; }
+        });
+      } else if (sorting == "SurnameDesc") {
+        this.patients.sort(function (a, b) {
+          if (a.surname < b.surname) {
+            return -1;
+          }
+          if (a.surname > b.surname) {
+            return 1;
+          }
           return 0;
-        })
+        });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-div.id {
-  height: 100px;
-  width: 100%;
-  background: rgb(19, 185, 185);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 </style>
