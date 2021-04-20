@@ -82,7 +82,7 @@ public class PharmacyController {
         Pharmacy oldPharmacy = pharmacyService.getPharmacy(editedPharmacy.getRegNo());
         oldPharmacy.setName(editedPharmacy.getName());
         oldPharmacy.setAddress(editedPharmacy.getAddress());
-        pharmacyService.save(oldPharmacy);  //Save to database
+        pharmacyService.save(oldPharmacy);
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
     }
 
