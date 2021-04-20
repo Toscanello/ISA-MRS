@@ -1,8 +1,11 @@
 package app.controller;
 
+import app.domain.Appointment;
 import app.domain.Patient;
 import app.domain.Pharmacy;
+import app.dto.AppointmentDTO;
 import app.dto.PatientDTO;
+import app.service.AppointmentService;
 import app.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,8 @@ import java.util.Map;
 public class PatientController {
     @Autowired
     private PatientService service;
+    @Autowired
+    AppointmentService appointmentService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getPatients() {
@@ -55,5 +60,16 @@ public class PatientController {
             patientDTOS.add(new PatientDTO(p));
         }
         return new ResponseEntity<>(patientDTOS,HttpStatus.OK);
+    }
+    @GetMapping(path = "/appointments/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
+
+        List<Appointment> appointments = appointmentService.getAllAppointmentsByPatientId(email);
+
+        List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+        for (Appointment a : appointments) {
+            appointmentDTOS.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
 }
