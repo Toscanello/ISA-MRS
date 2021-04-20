@@ -58,9 +58,12 @@ insert into users(email,password,name,surname,phone_number,address_id)
 values('d@gmail.com','pass','mika','luburic','+38154784566',1);
 
 insert into users(email,password,name,surname,phone_number,address_id)
-values('derm@gmail.com','pass','derm','luburic','+38154784566',1);
+values('derm1@gmail.com','pass','derm','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id)
+values('derm2@gmail.com','pass','drmtlg','matovic','+38154784566',1);
 insert into users(email,password,name,surname,phone_number,address_id)
 values('farm@gmail.com','pass','farm','luburic','+38154784566',1);
+
 
 insert into patients(email)values('ika@gmail.com');
 insert into patients(email)values('pera@gmail.com');
@@ -70,17 +73,34 @@ insert into patients(email)values('b@gmail.com');
 insert into patients(email)values('c@gmail.com');
 insert into patients(email)values('d@gmail.com');
 
-insert into medical_workers(email)values('derm@gmail.com');
+insert into medical_workers(email)values('derm1@gmail.com');
+insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 
-insert into work_hour(start_time, end_time, pharmacy) values ('07:00:00','11:00:00', 'abc');
-insert into pharmacist(email, work_hour, pharmacists_pharmacy) values ('farm@gmail.com', 1, 'abc');
+insert into dermatologist(email)values('derm1@gmail.com');
+insert into dermatologist(email)values('derm2@gmail.com');
 
-insert into work_hour(start_time, end_time, pharmacy) values ('07:00:00','07:15:00', 'aaa');
-insert into pharmacist(email, work_hour, pharmacists_pharmacy) values ('derm@gmail.com', 2, 'aaa');
+insert into pharmacy_dermatologists(pharmacy_reg_no, dermatologist_email)
+values ('abc', 'derm1@gmail.com');
+insert into pharmacy_dermatologists(pharmacy_reg_no, dermatologist_email)
+values ('abc', 'derm2@gmail.com');
 
-insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('ika@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
-insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('a@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
-insert into appointment(patient_id, medical_worker_id, price, start_time, end_time)values('b@gmail.com','farm@gmail.com',1000, '2019-05-04 09:00:00', '2019-05-04 09:25:00');
+insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
+values ('derm1@gmail.com', 'abc', '09:00', '17:00');
+insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
+values ('derm2@gmail.com', 'abc', '17:00', '23:00');
+
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time)
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('mika@gmail.com','farm@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00');
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time)
+values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time)
+values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 12:15:00', '2021-04-06 12:45:00');
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-
