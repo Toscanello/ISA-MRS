@@ -20,7 +20,7 @@
 
                                 <v-card-actions>
                                     <v-btn @click="viewPricing(med.code)">Pregled cenovnika</v-btn>
-                                    <v-btn outlined rounded small>Obrisi iz ponude</v-btn>
+                                    <v-btn outlined rounded small @click="deleteMed(med.code)">Obrisi iz ponude</v-btn>
                                 </v-card-actions>
                             </div>
                         </div>
@@ -53,6 +53,18 @@ export default {
     methods: {
         viewPricing(code) {
             this.$router.push('/pricing/medicine/' + this.$route.params.regNo + '/' + code)
+        },
+        deleteMed(code) {
+            axios
+            .delete('http://localhost:9090/api/medicine/remove/pricing/' + this.$route.params.regNo + '/' + code)
+            .then(response => {
+                alert(response.data)
+                this.$router.go()
+            })
+            .catch(response => {
+                alert('Ups! Desila se greška na serveru!')
+                console.log(response.data)
+            })
         }
     }
 }

@@ -1,9 +1,12 @@
 package app.repository;
 
+import app.domain.Medicine;
 import app.domain.MedicinePricing;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,4 +30,12 @@ public interface MedicinePricingRepository extends JpaRepository<MedicinePricing
             nativeQuery = true
     )
     public MedicinePricing findActivePricingByCodeForPharmacy(String regNo, String code);
+
+    @Transactional
+    @Modifying
+    @Query(
+            value="delete from medicine_pricing mp where mp.pharmacy_reg_no = ?1 and mp.medicine_code = ?2",
+            nativeQuery = true
+    )
+    public void deleteMedicinePricingByPharmacyRegNo(String regNo, String code);
 }

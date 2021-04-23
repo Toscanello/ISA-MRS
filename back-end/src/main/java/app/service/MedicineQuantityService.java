@@ -15,4 +15,8 @@ public class MedicineQuantityService {
     public List<MedicineQuantity> findMedicineQuantitiesByPharmacyRegNo(String regNo) {
         return medicineQuantityRepository.findMedicineQuantitiesByPharmacyRegNo(regNo);
     }
+
+    public void deleteMedicineQuantityByPharmacy(String regNo, String code) {
+        medicineQuantityRepository.deleteMedicineQuantityByPharmacy(regNo, code);
+    }
 }
