@@ -21,7 +21,7 @@ public class Medicine {
 
     /* Pastile, Tablete, Prasak */
     @Column(name = "drug_form", unique = false, nullable = false)
-    private String drugaForm;
+    private String drugForm;
 
     @ManyToMany
     @JoinTable(name = "alternative_medicine",
@@ -45,13 +45,13 @@ public class Medicine {
     }
 
     public Medicine(String name, String code, String type, String manufacturer,
-                    String drugaForm, List<Medicine> alternativeMedicine, String composition,
+                    String drugForm, List<Medicine> alternativeMedicine, String composition,
                     String description, Category category) {
         this.name = name;
         this.code = code;
         this.type = type;
         this.manufacturer = manufacturer;
-        this.drugaForm = drugaForm;
+        this.drugForm = drugForm;
         this.alternativeMedicine = alternativeMedicine;
         this.composition = composition;
         this.description = description;
@@ -59,12 +59,12 @@ public class Medicine {
     }
 
     public Medicine(String name, String code, String type, String manufacturer,
-                    String drugaForm, String composition, String description, Category category) {
+                    String drugForm, String composition, String description, Category category) {
         this.name = name;
         this.code = code;
         this.type = type;
         this.manufacturer = manufacturer;
-        this.drugaForm = drugaForm;
+        this.drugForm = drugForm;
         this.composition = composition;
         this.description = description;
         this.category = category;
@@ -102,12 +102,12 @@ public class Medicine {
         this.manufacturer = manufacturer;
     }
 
-    public String getDrugaForm() {
-        return drugaForm;
+    public String getDrugForm() {
+        return drugForm;
     }
 
-    public void setDrugaForm(String drugaForm) {
-        this.drugaForm = drugaForm;
+    public void setDrugForm(String drugForm) {
+        this.drugForm = drugForm;
     }
 
     public List<Medicine> getAlternativeMedicine() {
