@@ -28,4 +28,8 @@ public class MedicinePricingService {
     public MedicinePricing save(MedicinePricing medicinePricing) {
         return medicinePricingRepository.save(medicinePricing);
     }
+
+    public void deletePricingFromPharmacy(String regNo, String code) {
+        medicinePricingRepository.deleteMedicinePricingByPharmacyRegNo(regNo, code);
+    }
 }

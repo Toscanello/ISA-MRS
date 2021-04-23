@@ -91,4 +91,11 @@ public class MedicineController {
         medicinePricingService.save(newPricing);
         return new ResponseEntity<>(newPricingDTO, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/remove/pricing/{regNo}/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deletePricing(@PathVariable String regNo, @PathVariable String code) {
+        //medicinePricingService.deletePricingFromPharmacy(regNo, code);
+        medicineQuantityService.deleteMedicineQuantityByPharmacy(regNo, code);
+        return new ResponseEntity<>("Uspešno obrisan lek iz apoteke", HttpStatus.OK);
+    }
 }
