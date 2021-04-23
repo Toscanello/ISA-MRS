@@ -16,6 +16,8 @@ import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue
 import PharmacyEdit from '../views/PharmacyEdit.vue'
 import Login from '../views/Login.vue'
 import Calendar from '../views/CalendarPatient.vue'
+import MedicineList from '../views/MedicineList.vue'
+import MedicinePricing from '../views/MedicinePricing.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
@@ -107,6 +109,16 @@ const routes = [
     path: '/edit/pharmacy/:regNo',
     name: 'PharmacyEdit',
     component: PharmacyEdit
+  },
+  {
+    path: '/pricing/pharmacy/:regNo',
+    name: 'MedicineList',
+    component: MedicineList
+  },
+  {
+    path: '/pricing/medicine/:regNo/:code',
+    name: 'MedicinePricing',
+    component: MedicinePricing
   }
 ]
 

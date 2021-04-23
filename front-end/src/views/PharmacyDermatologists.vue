@@ -1,12 +1,40 @@
 <template>
-  <div id="wrapper">
+  <!-- <div id="wrapper">
       <div class="dermatologist-card" 
       :key="dermatologist.email" v-for="dermatologist in dermatologists">
           <h3>{{dermatologist.name}} {{dermatologist.surname}}</h3>
           <p>{{dermatologist.email}}</p>
           <v-btn depressed @click="goToAppointment(dermatologist.email)">Zakazi</v-btn>
       </div>
-  </div>
+  </div> -->
+  <v-card class="mx-auto" justify="center" style="width: 60%">
+        <v-app-bar dark color="dark cyan" prominent>
+            <v-toolbar-title>Zakazivanje pregleda</v-toolbar-title>
+        </v-app-bar>
+        <v-container>
+            <v-row dense>
+                <v-col cols="12"
+                    v-for="dermatologist in dermatologists"
+                    :key="dermatologist.email">
+                    <v-card>
+                        <div class="d-flex flex-no-wrap justify-space-between">
+                            <div>
+                                <v-card-title
+                                class="text-h5"
+                                v-text="dermatologist.name + ' ' + dermatologist.surname"></v-card-title>
+
+                                <v-card-subtitle class="text-h6" v-text="dermatologist.email"></v-card-subtitle>
+
+                                <v-card-actions>
+                                    <v-btn depressed @click="goToAppointment(dermatologist.email)">Zakazi pregled</v-btn>
+                                </v-card-actions>
+                            </div>
+                        </div>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-card>
 </template>
 
 <script>

@@ -34,14 +34,8 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DermatologistAppointment> dermatologistAppointments = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "pharmacy_medicine",
-            joinColumns =  @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"),
-            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "medicine_code"))
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
-
-//    private Set<MedicalWorker> medicalWorkers = new HashSet<>();
-//    private Set<Appointment> appointments;
 
     public Pharmacy() { }
 
@@ -49,8 +43,6 @@ public class Pharmacy {
         this.regNo = regNo;
         this.name = name;
         this.address = address;
-//        appointments = new HashSet<>();
-//        medicineQuantities = new HashSet<>();
         ratings = new HashSet<>();
         pharmacists = new HashSet<>();
     }
@@ -79,22 +71,6 @@ public class Pharmacy {
         this.address = address;
     }
 
-//    public Set<MedicalWorker> getMedicalWorkers() {
-//        return medicalWorkers;
-//    }
-//
-//    public void setMedicalWorkers(Set<MedicalWorker> medicalWorkers) {
-//        this.medicalWorkers = medicalWorkers;
-//    }
-//
-//    public Set<Appointment> getAppointments() {
-//        return appointments;
-//    }
-//
-//    public void setAppointments(Set<Appointment> appointments) {
-//        this.appointments = appointments;
-//    }
-//
     public Set<MedicineQuantity> getMedicineQuantities() {
         return medicineQuantities;
     }

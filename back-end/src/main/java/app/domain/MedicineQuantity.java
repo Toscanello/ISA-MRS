@@ -1,34 +1,35 @@
 package app.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "medicine_quantity")
-public class MedicineQuantity implements Serializable {
+@Table(
+        name = "medicine_quantity",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"medicine_code", "pharmacy_reg_no"})}
+)
+public class MedicineQuantity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicine_code", referencedColumnName = "code")
     private Medicine medicine;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no")
+    private Pharmacy pharmacy;
+
     @Column(name = "quantity", nullable = false)
     private  int quantity;
 
-    public MedicineQuantity() {}
+    public MedicineQuantity() { }
 
-    public MedicineQuantity(Medicine medicine, int quantity) {
-        //this.medicine = medicine;
-        this.quantity = quantity;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -38,6 +39,14 @@ public class MedicineQuantity implements Serializable {
 
     public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 
     public int getQuantity() {
