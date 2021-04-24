@@ -114,6 +114,11 @@
               </v-btn>
             </v-toolbar>
             <v-card-text>
+              Price: <ins v-html="selectedEvent.price"></ins>
+              <br><br>
+              Doctor: <ins v-html="selectedEvent.medicalWorker"></ins>
+              <br><br>
+              Adderss: <ins v-html="selectedEvent.address"></ins>
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
             <v-card-actions>
@@ -168,6 +173,10 @@ import axios from 'axios'
           events.push({
             name: 'Appointment',
             start: first,
+            price: this.sastanci[i].price,
+            medicalWorker: this.sastanci[i].medicalWorker.name + " " + this.sastanci[i].medicalWorker.surname,
+            address: this.sastanci[i].address.street + " " + this.sastanci[i].address.streetNumber
+                      +", "+ this.sastanci[i].address.place,
             end: second,
             color: 'orange',
             timed: false,
