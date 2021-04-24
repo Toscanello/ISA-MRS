@@ -26,16 +26,20 @@ public class Appointment {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "canceled", nullable = false)
+    private boolean isCanceled;
+
     public Appointment() {
     }
 
     public Appointment(LocalDateTime startTime, LocalDateTime endTime,
-                       Patient patient, MedicalWorker medicalWorker, Double price) {
+                       Patient patient, MedicalWorker medicalWorker, Double price, boolean isCanceled) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.patient = patient;
         this.medicalWorker = medicalWorker;
         this.price = price;
+        this.isCanceled = isCanceled;
     }
 
     public LocalDateTime getStartTime() {
@@ -77,4 +81,8 @@ public class Appointment {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public boolean isCanceled() { return isCanceled; }
+
+    public void setCanceled(boolean canceled) { isCanceled = canceled; }
 }

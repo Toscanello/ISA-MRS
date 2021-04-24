@@ -20,6 +20,10 @@ public class AppointmentService {
         return appointmentRepository.findAllByPatientId(email);
     }
 
+    public List<Appointment> findActiveAppointmentsByPatientId(String email){
+        return appointmentRepository.findActiveAppointmentsByPatientId(email);
+    }
+
     public Appointment save(Appointment ap) {
         return appointmentRepository.save(ap);
     }

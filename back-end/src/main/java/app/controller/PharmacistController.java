@@ -66,7 +66,7 @@ public class PharmacistController {
             }
         }
 
-        Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist, newAppointment.getPrice());
+        Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist, newAppointment.getPrice(), false);
         appointmentService.save(ap);
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }

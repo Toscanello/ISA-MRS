@@ -64,7 +64,7 @@ public class PatientController {
     @GetMapping(path = "/appointments/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
 
-        List<Appointment> appointments = appointmentService.getAllAppointmentsByPatientId(email);
+        List<Appointment> appointments = appointmentService.findActiveAppointmentsByPatientId(email);
 
         List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
         for (Appointment a : appointments) {
