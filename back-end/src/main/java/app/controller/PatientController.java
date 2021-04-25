@@ -72,4 +72,11 @@ public class PatientController {
         }
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/cancelAppointment",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO id){
+        appointmentService.cancelAppointment(id.getId());
+        return new ResponseEntity<>("Canceled appointment", HttpStatus.OK);
+    }
 }

@@ -98,7 +98,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-16 09:15:00', '2021-04-16 09:45:00', true);
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)

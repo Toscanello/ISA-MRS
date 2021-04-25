@@ -27,4 +27,6 @@ public class AppointmentService {
     public Appointment save(Appointment ap) {
         return appointmentRepository.save(ap);
     }
+
+    public void cancelAppointment(Long id){appointmentRepository.cancelAppointment(id); }
 }

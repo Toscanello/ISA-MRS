@@ -20,8 +20,11 @@ public class AppointmentDTO {
 
     public AppointmentDTO() {
     }
-
+    public AppointmentDTO(Long id) {
+        this.id = id;
+    }
     public AppointmentDTO(Appointment a) {
+        this.id = a.getId();
         this.startTime = a.getStartTime();
         this.endTime = a.getEndTime();
         this.patient = new PatientDTO(a.getPatient());
@@ -30,6 +33,8 @@ public class AppointmentDTO {
         this.address = a.getMedicalWorker().getAddress();
 
     }
+
+    public Long getId() { return id; }
 
     public LocalDateTime getStartTime() {
         return startTime;

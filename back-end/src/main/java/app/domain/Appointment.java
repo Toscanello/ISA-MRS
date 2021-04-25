@@ -42,6 +42,8 @@ public class Appointment {
         this.isCanceled = isCanceled;
     }
 
+    public Long getId() { return id; }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }

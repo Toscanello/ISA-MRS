@@ -122,10 +122,11 @@
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
             <v-card-actions>
-              <v-btn
+              <v-btn v-if="selectedEvent.cancel"
                 text
-                color="secondary"
-                @click="selectedOpen = false"
+                color="secondary" 
+                @click ="cacncelEvent"
+                @change="updateRange"
               >
                 Cancel
               </v-btn>
@@ -155,34 +156,42 @@ import axios from 'axios'
       selectedElement: null,
       selectedOpen: false,
       events: [],
-      sastanci: []
+      appointments: []
     }),
      created() {
       let path = "http://localhost:9090/patients/appointments/ika@gmail.com"
       
       axios.get(path)
       .then(response => {
-        this.sastanci = response.data
+        this.appointments = response.data
         const events = []
 
-        for (let i = 0; i < this.sastanci.length; i++) {
-          //const allDay = this.rnd(0, 3) === 0
-          const first = this.sastanci[i].startTime
-          const second = this.sastanci[i].endTime
+        for (let i = 0; i < this.appointments.length; i++) {
 
+          const first = this.appointments[i].startTime
+          const second = this.appointments[i].endTime
+          var startDate = new Date(first)
+          var now = new Date()
+          var cancel = false
+          startDate.setDate(startDate.getDate()-1)
+          if(startDate > now)
+            cancel = true
           events.push({
             name: 'Appointment',
             start: first,
-            price: this.sastanci[i].price,
-            medicalWorker: this.sastanci[i].medicalWorker.name + " " + this.sastanci[i].medicalWorker.surname,
-            address: this.sastanci[i].address.street + " " + this.sastanci[i].address.streetNumber
-                      +", "+ this.sastanci[i].address.place,
+            price: this.appointments[i].price,
+            medicalWorker: this.appointments[i].medicalWorker.name + " " +
+                           this.appointments[i].medicalWorker.surname,
+            address: this.appointments[i].address.street + " " + 
+                     this.appointments[i].address.streetNumber
+                      + ", " + this.appointments[i].address.place,
             end: second,
             color: 'orange',
             timed: false,
+            cancel: cancel,
+            id: this.appointments[i].id,
           })
         }
-
         this.events = events
         })
       
@@ -192,6 +201,13 @@ import axios from 'axios'
       this.$refs.calendar.checkChange()
     },
     methods: {
+      cacncelEvent(){
+        this.selectedOpen = false
+        console.log(this.selectedEvent.id)
+        axios
+        .post('http://localhost:9090/patients/cancelAppointment/' , {id : this.selectedEvent.id})
+        window.location.reload()
+      },
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
