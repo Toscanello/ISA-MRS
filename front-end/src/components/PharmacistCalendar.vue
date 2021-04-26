@@ -90,7 +90,6 @@
         </v-sheet>
       </v-col>
     </v-row>
-    <v-btn color="primary" elevation="5" @click="goBack">Go back</v-btn>
   </div>
 </template>
 
@@ -195,10 +194,7 @@ export default {
     updateRange() {},
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
-    },
-    goBack(){
-        this.$router.go(-1);
     }
-  },
+  }
 };
 </script>
