@@ -6,6 +6,7 @@ import Pharmacy from '../views/Pharmacy.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import SystemAdminHome from '../views/SystemAdminHome.vue'
+import PharmacyAdminHome from '../views/PharmacyAdminHome.vue'
 import PharmaciesList from '../views/patient/PharmaciesList.vue'
 import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
 import Pharmacies from '../views/patient/Pharmacies.vue'
@@ -46,6 +47,9 @@ const routes = [
         }
         else if (role == 'ROLE_DERMATOLOGIST') {
           next({name: 'HomePageDermatologist'})
+        }
+        else if (role == 'ROLE_PHARMACYADMIN') {
+          next({name: 'PharmacyAdminHome'})
         }
         else if (role == 'ROLE_SYSADMIN') {
           next({name: 'SystemAdminHome'})
@@ -111,6 +115,11 @@ const routes = [
     path: '/systemadmin',
     name: 'SystemAdminHome',
     component: SystemAdminHome
+  },
+  {
+    path: '/home-pharmacy-admin',
+    name: 'PharmacyAdminHome',
+    component: PharmacyAdminHome
   },
   {
     path: '/dermatologists/pharmacy/:regNo',
