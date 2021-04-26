@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.Appointment;
 import app.domain.Pharmacist;
 import app.domain.WorkHour;
+import app.dto.AppointmentDTO;
 import app.dto.FreeAppointmentDTO;
 import app.dto.FreeAppointmentPatientDTO;
 import app.service.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -69,6 +71,18 @@ public class PharmacistController {
         Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist, newAppointment.getPrice(), false);
         appointmentService.save(ap);
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/appointments/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
+
+        List<Appointment> appointments = appointmentService.findActiveAppointmentsByPharmacistId(email);
+
+        List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+        for (Appointment a : appointments) {
+            appointmentDTOS.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
 
 }
