@@ -19,6 +19,8 @@ import Calendar from '../views/CalendarPatient.vue'
 import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
 
+import TokenDecoder from '../services/token-decoder'
+
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -31,6 +33,17 @@ const routes = [
     path: '/',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/home',
+    beforeEnter: (to, from, next) => {
+        let role = TokenDecoder.getUserRole()
+        if (role == 'ROLE_USER') {
+          next({name: 'HomePagePatient'})
+        }
+        else 
+          next({name: 'Login'})
+    }
   },
   {
     path: '/calendar',

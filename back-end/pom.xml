@@ -59,6 +59,7 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-releasetrain</artifactId>
             <version>Lovelace-SR11</version>
+            <type>pom</type>
         </dependency>
         <!-- ukljucena podrska za Spring Security -->
         <dependency>
@@ -92,6 +93,21 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.5</version>
         </dependency>
     </dependencies>
 
