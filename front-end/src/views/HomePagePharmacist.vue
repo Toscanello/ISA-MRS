@@ -114,7 +114,7 @@ export default {
       {
         icon: "mdi-calendar",
         title: "Calendar",
-        to: "/",
+        to: "/pharmacist-calendar",
       },
       {
         icon: "mdi-minus",

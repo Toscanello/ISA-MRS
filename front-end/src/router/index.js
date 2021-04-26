@@ -18,6 +18,7 @@ import Login from '../views/Login.vue'
 import Calendar from '../views/CalendarPatient.vue'
 import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
+import PharmacistCalendar from '../components/PharmacistCalendar.vue'
 
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
@@ -36,6 +37,11 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: Calendar
+  },
+  {
+    path: '/pharmacist-calendar',
+    name: 'PharmacistCalendar',
+    component: PharmacistCalendar
   },
   {
     path: '/about',

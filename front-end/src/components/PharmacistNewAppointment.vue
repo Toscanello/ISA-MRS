@@ -52,7 +52,7 @@ export default {
               pharmacyRegNo: this.$route.params.regNo,
               dermatologistEmail: this.$route.params.email,
               price: this.price,
-              patientEmail:'mika@gmail.com'
+              patientEmail:'mika95455@gmail.com'
             }
             console.log(appointment)
             axios
