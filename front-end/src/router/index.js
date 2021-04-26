@@ -38,8 +38,17 @@ const routes = [
     path: '/home',
     beforeEnter: (to, from, next) => {
         let role = TokenDecoder.getUserRole()
-        if (role == 'ROLE_USER') {
+        if (role == 'ROLE_USER') {  /* TODO: ROLE_PATIENT */
           next({name: 'HomePagePatient'})
+        }
+        else if (role == 'ROLE_PHARMACIST') {
+          next({name: 'HomePagePharmacist'})
+        }
+        else if (role == 'ROLE_DERMATOLOGIST') {
+          next({name: 'HomePageDermatologist'})
+        }
+        else if (role == 'ROLE_SYSADMIN') {
+          next({name: 'SystemAdminHome'})
         }
         else 
           next({name: 'Login'})
