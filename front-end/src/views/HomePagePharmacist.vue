@@ -43,6 +43,7 @@
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
+      <PharmacistNewAppointment v-if="show_menu==='appointment'" @clicked="onScheduleClick"/>
     </v-main>
   </v-container>
 </template>
@@ -50,12 +51,14 @@
 <script>
 import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
+import PharmacistNewAppointment from "@/components/PharmacistNewAppointment.vue";
 
 export default {
   name: "HomePagePharmacist",
   components: {
     PatientList,
-    PharmacistCalendar
+    PharmacistCalendar,
+    PharmacistNewAppointment
   },
   props: {
     expandOnHover: {
@@ -81,7 +84,7 @@ export default {
       {
         icon: "mdi-pencil",
         title: "Start appointment",
-        to: "patients",
+        to: "appointment",
       },
       {
         icon: "mdi-calendar",
@@ -108,6 +111,10 @@ export default {
   methods: {
     show(param){
       this.show_menu=param;
+      this.drawer=false;
+    },
+    onScheduleClick:function(check){
+      this.show_menu=check;
       this.drawer=false;
     }
   }
