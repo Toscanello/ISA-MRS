@@ -2,50 +2,55 @@
 
   <div
   >
+  <div>
+    <v-toolbar style="background-color:darkcyan;">
+    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    <v-toolbar-title>Title</v-toolbar-title>
+    </v-toolbar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+        >
+          <template v-for="item in items">
+            <v-list-item :key="item.title" :to="item.to">
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title >{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
     <v-row class= "row">
     <v-col v-for="pharmacist in pharmacists" :key="pharmacist" cols="12" sm="6" md="4" lg="3">
-
       <v-card
-        class="pharmacy-card"
-      >
-        <v-img class = "card-img"
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-        ></v-img>
-
-        <v-card-title>
-        {{pharmacist}}
-        </v-card-title>
-
-        <v-card-subtitle>
-        Ovdje ce biti ispisani neki dodatni podaci
-        </v-card-subtitle>
-
-        <v-card-actions>
-          <v-btn class="open-btn"
-            text
+            color="#385F73"
+            dark
+            style="margin-top: 5px; margin-left: 5px;"
           >
-            Open
-          </v-btn>
+            <v-card-title class="text-h5">
+              Farmaceut Farmacetovic
+            </v-card-title>
 
-          <v-spacer></v-spacer>
+            <v-card-subtitle>Kontakt {{pharmacist}}</v-card-subtitle>
 
-          <v-btn
-            icon
-            @click="show = !show"
-          >
-            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-
-        <v-expand-transition>
-          <div v-show="show">
-            <v-divider></v-divider>
-            <v-card-text>
-              Radno vrijeme
-            </v-card-text>
-          </div>
-        </v-expand-transition>
-      </v-card>
+            <v-card-actions>
+              <v-btn text v-on:click="open()">
+                Add appointment
+              </v-btn>
+            </v-card-actions>
+          </v-card>
       </v-col>
     </v-row>
   </div>
@@ -57,11 +62,55 @@
     name: "PharmacistList",
     data () {
       return {
-        pharmacists : []
+        pharmacists : [],
+         drawer: false,
+      group: null,
+      items: [
+      {
+        icon: "mdi-home",
+        title: "Home",
+        to: "/pharmacies-list",
+      },
+      {
+        icon: "mdi-account",
+        title: "Acoount",
+        to: "/",
+      },
+      {
+        icon: "mdi-calendar",
+        title: "Calendar",
+        to: "/calendar",
+      },
+      {
+        icon: "mdi-hospital-box",
+        title: "Drugs",
+        to: "/",
+      },
+      {
+        icon: "mdi-prescription",
+        title: "Prescription",
+        to: "/",
+      },
+      {
+        icon: "mdi-plus",
+        title: "Appointment",
+        to: "/appointment-pharmacist",
+      },
+      {
+        icon: "mdi-plus",
+        title: "Allegries",
+        to: "/",
+      },
+      {
+        icon: "mdi-emoticon-angry-outline",
+        title: "Complaints",
+        to: "/",
+      },
+    ],
       }
     },
     mounted() {
-      let path = "http://localhost:9090/api/pharmacy/pharmacist/2021-01-01_08:00_abc"
+      let path = "http://localhost:9090/api/pharmacy/pharmacist/2021-01-01_10:00_abc"
       axios.get(path)
       .then(response => {
         this.pharmacists = response.data
