@@ -45,9 +45,9 @@ values('lek4', 'lek3');
 insert into users(email,password,name,surname,phone_number,address_id,enabled, last_password_reset_date)
 values('ika@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ivan','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('pera@gmail.com','pass','pera','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('pera@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','pera','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('mika95455@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('mika95455@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('a@gmail.com','pass','a','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
@@ -58,11 +58,11 @@ insert into users(email,password,name,surname,phone_number,address_id, enabled, 
 values('d@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('derm1@gmail.com','pass','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('derm1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('derm2@gmail.com','pass','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('derm2@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farm@gmail.com','pass','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('farm@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_PHARMACIST');
