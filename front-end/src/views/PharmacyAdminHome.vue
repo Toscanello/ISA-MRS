@@ -25,11 +25,11 @@
         <v-list-item-group
           v-model="group"
         >
-          <v-list-item>
+          <v-list-item to="edit/pharmacy/abc">
             <v-list-item-title style="color:Tomato;">Izmeni apoteku</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/dermatologists/pharmacy/abc">
             <v-list-item-title style="color:Tomato;">Novi termin (dermatolog)</v-list-item-title>
           </v-list-item>
 
@@ -45,7 +45,7 @@
             <v-list-item-title style="color:Tomato;">Dermatolozi</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/pricing/pharmacy/abc">
             <v-list-item-title style="color:Tomato;">Lekovi</v-list-item-title>
           </v-list-item>
 

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePagePharmacist from '../views/HomePagePharmacist.vue'
 import HomePageDermatologist from '../views/HomePageDermatologist.vue'
+import PharmacyAdminHome from '../views/PharmacyAdminHome.vue'
 import Pharmacy from '../views/Pharmacy.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
@@ -117,6 +118,11 @@ const routes = [
     path: '/systemadmin',
     name: 'SystemAdminHome',
     component: SystemAdminHome
+  },
+  {
+    path: '/pharmacyadmin',
+    name: 'PharmacyAdminHome',
+    component: PharmacyAdminHome
   },
   {
     path: '/dermatologists/pharmacy/:regNo',

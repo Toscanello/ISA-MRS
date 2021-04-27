@@ -21,7 +21,7 @@
         <v-list-item-group
           v-model="group"
         >
-          <v-list-item>
+          <v-list-item @click="write">
             <v-list-item-icon>
               <v-icon style="color:Tomato;">mdi-home</v-icon>
             </v-list-item-icon>
@@ -105,5 +105,10 @@
       drawer: false,
       group: null,
     }),
+    methods: {
+      write() {
+        alert('a')
+      }
+    }
   }
 </script>
