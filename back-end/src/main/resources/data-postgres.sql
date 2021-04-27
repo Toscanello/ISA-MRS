@@ -42,28 +42,40 @@ values('lek3', 'lek4');
 insert into alternative_medicine(medicine_code, alternative_code)
 values('lek4', 'lek3');
 
-insert into users(email,password,name,surname,phone_number,address_id)
-values('ika@gmail.com','pass','ivan','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('pera@gmail.com','pass','pera','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('mika95455@gmail.com','pass','mika','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('a@gmail.com','pass','a','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('b@gmail.com','pass','b','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('c@gmail.com','pass','mika','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('d@gmail.com','pass','mika','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id,enabled, last_password_reset_date)
+values('ika@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ivan','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('pera@gmail.com','pass','pera','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('mika95455@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('a@gmail.com','pass','a','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('b@gmail.com','pass','b','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('c@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('d@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
-insert into users(email,password,name,surname,phone_number,address_id)
-values('derm1@gmail.com','pass','derm','luburic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('derm2@gmail.com','pass','drmtlg','matovic','+38154784566',1);
-insert into users(email,password,name,surname,phone_number,address_id)
-values('farm@gmail.com','pass','farm','luburic','+38154784566',1);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('derm1@gmail.com','pass','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('derm2@gmail.com','pass','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farm@gmail.com','pass','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
+INSERT INTO ROLE (name) VALUES ('ROLE_USER');
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('ika@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('pera@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('mika95455@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('a@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('b@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('c@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('d@gmail.com', 1);
+
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('derm1@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('derm2@gmail.com', 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('farm@gmail.com', 1);
 
 insert into patients(email)values('ika@gmail.com');
 insert into patients(email)values('pera@gmail.com');
@@ -98,7 +110,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false);
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', true);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
