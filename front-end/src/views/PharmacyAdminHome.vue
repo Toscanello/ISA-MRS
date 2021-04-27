@@ -1,11 +1,15 @@
 <template>
 
   <div>
-    <v-toolbar
-      style="background-color:#00bcd4; color: white;">
+    <v-toolbar style="background-color:#00bcd4; color: white;">
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-toolbar-title>Administrator apoteke</v-toolbar-title>
 
-    <v-toolbar-title>Administrator apoteke</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <v-btn icon @click="logout">
+        <v-icon>mdi-export</v-icon>
+      </v-btn>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -77,9 +81,13 @@
 <script>
   export default {
     name: "PharmacyAdminHome",
-    components: {
- 
-  },
+    components: { },
+    methods: {
+      logout() {
+        localStorage.removeItem('user')
+        this.$router.push('/')
+      }
+    },
     data: () => ({
       drawer: false,
       group: null,
