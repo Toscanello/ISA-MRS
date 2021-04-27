@@ -24,6 +24,10 @@ public class AppointmentService {
         return appointmentRepository.findActiveAppointmentsByPatientId(email);
     }
 
+    public List<Appointment> findActiveAppointmentsByPharmacistId(String email){
+        return appointmentRepository.findActiveAppointmentsByPharmacistId(email);
+    }
+
     public Appointment save(Appointment ap) {
         return appointmentRepository.save(ap);
     }

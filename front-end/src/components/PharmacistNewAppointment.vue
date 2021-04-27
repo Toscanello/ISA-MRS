@@ -49,10 +49,10 @@ export default {
             let appointment = {
               begin: this.date + ' ' + this.time,
               duration: this.timeFromMins,
-              pharmacyRegNo: this.$route.params.regNo,
-              dermatologistEmail: this.$route.params.email,
+              pharmacyRegNo: 'abc',
+              dermatologistEmail: "farm@gmail.com",
               price: this.price,
-              patientEmail:'mika@gmail.com'
+              patientEmail:'mika95455@gmail.com'
             }
             console.log(appointment)
             axios
@@ -60,14 +60,14 @@ export default {
             .then(response => {
               console.log(response.data)
               alert(response.data)
-              this.$router.go(-1)
+              this.$emit("clicked", 'calendar');
             })
             .catch(response => {
               console.log(response)
               console.log(response.data)
               this.status = response.data
               alert(status)
-              this.$router.go(-1)
+              this.$emit("clicked", 'patients');
             })
         }
     }
