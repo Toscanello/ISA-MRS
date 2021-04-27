@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import AuthService from '../services/auth.service'
 export default {
     name: 'Login',
     data (){
@@ -41,7 +42,18 @@ export default {
     methods:{
         login(){
             console.log(this.username+' '+this.password)
-        }
+            AuthService
+            .login({username: this.username, password: this.password})
+            .then(response => {
+              console.log(response)
+              alert('Uspešno prijavljeni')
+              this.$router.push('/home')
+            })
+            .catch(response => {
+              console.log(response)
+              alert('Neuspesno')
+            })
+        },
     }
 }
 </script>

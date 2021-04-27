@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <home-page-patient></home-page-patient>
   <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
@@ -136,12 +138,15 @@
       </v-sheet>
     </v-col>
   </v-row>
+  </div>
 </template>
 
 
 <script>
 import axios from 'axios'
+import HomePagePatient from './HomePagePatient.vue'
   export default {
+  components: { HomePagePatient },
       name: 'Calendar',
     data: () => ({
       focus: '',

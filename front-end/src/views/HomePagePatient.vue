@@ -17,72 +17,68 @@
         <v-list-item-group
           v-model="group"
         >
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Account</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-calendar</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Appointments</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-hospital-box</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Drugs</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-prescription</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Prescriptions</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Allegries</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon style="color:Tomato;">mdi-emoticon-angry-outline</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title style="color:Tomato;">Complaints</v-list-item-title>
-          </v-list-item>
-
+          <template v-for="item in items">
+            <v-list-item :key="item.title" :to="item.to">
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title >{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </template>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <PharmaciesList></PharmaciesList>
   </div>
 </template>
 
 <script>
-  import PharmaciesList from '../views/patient/PharmaciesList.vue'
   export default {
     name: "HomePagePatient",
-    components: {
-      PharmaciesList
-  },
     data: () => ({
       drawer: false,
       group: null,
+      items: [
+      {
+        icon: "mdi-home",
+        title: "Home",
+        to: "/pharmacies-list",
+      },
+      {
+        icon: "mdi-account",
+        title: "Acoount",
+        to: "/",
+      },
+      {
+        icon: "mdi-calendar",
+        title: "Calendar",
+        to: "/calendar",
+      },
+      {
+        icon: "mdi-hospital-box",
+        title: "Drugs",
+        to: "/",
+      },
+      {
+        icon: "mdi-prescription",
+        title: "Prescription",
+        to: "/",
+      },
+      {
+        icon: "mdi-plus",
+        title: "Appointment",
+        to: "/appointment-pharmacist",
+      },
+      {
+        icon: "mdi-plus",
+        title: "Allegries",
+        to: "/",
+      },
+      {
+        icon: "mdi-emoticon-angry-outline",
+        title: "Complaints",
+        to: "/",
+      },
+    ],
     }),
   }
 </script>

@@ -20,6 +20,8 @@ import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
 import PharmacistCalendar from '../components/PharmacistCalendar.vue'
 
+import TokenDecoder from '../services/token-decoder'
+
 Vue.use(VueRouter)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -32,6 +34,26 @@ const routes = [
     path: '/',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/home',
+    beforeEnter: (to, from, next) => {
+        let role = TokenDecoder.getUserRole()
+        if (role == 'ROLE_USER') {  /* TODO: ROLE_PATIENT */
+          next({name: 'HomePagePatient'})
+        }
+        else if (role == 'ROLE_PHARMACIST') {
+          next({name: 'HomePagePharmacist'})
+        }
+        else if (role == 'ROLE_DERMATOLOGIST') {
+          next({name: 'HomePageDermatologist'})
+        }
+        else if (role == 'ROLE_SYSADMIN') {
+          next({name: 'SystemAdminHome'})
+        }
+        else 
+          next({name: 'Login'})
+    }
   },
   {
     path: '/calendar',

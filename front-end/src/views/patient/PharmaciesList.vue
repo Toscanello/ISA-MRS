@@ -1,8 +1,8 @@
 <template>
-
   <div
-  >
-        <v-toolbar
+  >     
+  <home-page-patient></home-page-patient>
+  <v-toolbar
           dark
           class="mb-1"
         >
@@ -42,51 +42,25 @@
                 <v-icon>mdi-arrow-down</v-icon>
               </v-btn>
           </v-toolbar>
-
           <v-row class= "row">
             <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" cols="12" sm="6" md="4" lg="3">
-
               <v-card
-                class="pharmacy-card"
-              >
-                <v-img class = "card-img"
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                ></v-img>
+            color="#385F73"
+            dark
+            style="margin-top: 5px; margin-left: 5px;"
+          >
+            <v-card-title class="text-h5">
+              {{pharmacy.name}}
+            </v-card-title>
 
-                <v-card-title>
-                {{pharmacy.name}}
-                </v-card-title>
+            <v-card-subtitle>{{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}</v-card-subtitle>
 
-                <v-card-subtitle>
-                {{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}
-                </v-card-subtitle>
-
-                <v-card-actions>
-                <v-btn class="open-btn"
-                  text
-                >
-                  Open
-                </v-btn>
-
-                <v-spacer></v-spacer>
-
-                <v-btn
-                  icon
-                  @click="show = !show"
-                >
-                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                </v-btn>
-                </v-card-actions>
-
-                <v-expand-transition>
-                <div v-show="show">
-                  <v-divider></v-divider>
-                  <v-card-text>
-                  Radno vrijeme
-                  </v-card-text>
-                </div>
-            </v-expand-transition>
-        </v-card>
+            <v-card-actions>
+              <v-btn text v-on:click="open()">
+                Details
+              </v-btn>
+            </v-card-actions>
+          </v-card>
       </v-col>
     </v-row>
   </div>
@@ -95,7 +69,9 @@
 
 <script>
 import axios from 'axios'
+import HomePagePatient from '../HomePagePatient.vue';
 export default {
+  components: { HomePagePatient },
     name: 'PharmacyList',
     data: () => ({
     drawer: false,
