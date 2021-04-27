@@ -1,8 +1,8 @@
 <template>
-
   <div
-  >
-        <v-toolbar
+  >     
+  <home-page-patient></home-page-patient>
+  <v-toolbar
           dark
           class="mb-1"
         >
@@ -42,7 +42,6 @@
                 <v-icon>mdi-arrow-down</v-icon>
               </v-btn>
           </v-toolbar>
-
           <v-row class= "row">
             <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" cols="12" sm="6" md="4" lg="3">
 
@@ -95,7 +94,9 @@
 
 <script>
 import axios from 'axios'
+import HomePagePatient from '../HomePagePatient.vue';
 export default {
+  components: { HomePagePatient },
     name: 'PharmacyList',
     data: () => ({
     drawer: false,

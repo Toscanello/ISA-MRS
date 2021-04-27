@@ -17,7 +17,7 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
     @Nullable
     public Pharmacy findPharmacyByRegNo(String regNo);
 
-    @Query(value = "select * from pharmacy p" + " where p.reg_no IN (select a.pharmacists_pharmacy from pharmacist a where " +
+    @Query(value = "select * from pharmacy p" + " where p.reg_no IN (select a.pharmacy from pharmacist a where " +
             "a.work_hour IN (select w.id from work_hour w where w.start_time<?1 and w.end_time>?2) " +
             "and a.email not in (select appo.medical_worker_id from appointment appo where " +
             "(appo.start_time<=?3 and appo.end_time>=?3)))", nativeQuery = true)

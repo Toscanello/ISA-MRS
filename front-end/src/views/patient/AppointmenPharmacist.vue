@@ -1,6 +1,6 @@
 <template>
-<v-app>
-    <div style="background-color:darkcyan;">
+<div>
+  <div style="background-color:darkcyan;">
   <v-row no-gutters>
     <v-col
       cols="12"
@@ -85,7 +85,7 @@
   <div v-if="renderPharmaciesList"  class="listOfPharmacies">
        <Pharmacies :pharmacies="pharmacies"/>
   </div>
-  </v-app>
+</div>
 </template>
 
 
@@ -145,9 +145,6 @@
           alert('Error: status ' + error.response.status)
           this.$router.push('/')
         })
-      
     }
-  
-    
   }
 </script>
