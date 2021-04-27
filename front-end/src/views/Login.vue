@@ -1,8 +1,6 @@
 <template>
     <div>
-        
         <!------ Include the above in your HEAD tag ---------->
-
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <!-- Tabs Titles -->

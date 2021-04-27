@@ -1,120 +1,125 @@
 <template>
-  <v-row justify="center">
-    <v-col
-      cols="12"
-      sm="10"
-      md="8"
-      lg="6"
-    >
-      <v-card ref="form">
-        <v-app-bar 
-          color="dark cyan"
-          dark
-          prominent
-          flat>
-          <v-toolbar-title>Izmena podataka</v-toolbar-title>
-        </v-app-bar>
-        <v-spacer></v-spacer>
-        <v-card-text>
-          <v-text-field
-            ref="name"
-            v-model="pharmacy.name"
-            :rules="[() => !!pharmacy.name || 'This field is required']"
-            :error-messages="errorMessages"
-            label="Naziv apoteke"
-            required
-          ></v-text-field>
-          <v-text-field
-            ref="address"
-            v-model="pharmacy.address.street"
-            :rules="[
-              () => !!pharmacy.address.street || 'This field is required',
-              () => !!pharmacy.address.street && pharmacy.address.street.length <= 25 || 'Address must be less than 25 characters',
-              addressCheck
-            ]"
-            label="Adresa"
-            counter="25"
-            required
-          ></v-text-field>
-          <v-text-field
-            ref="street-no"
-            v-model="pharmacy.address.streetNumber"
-            :rules="[() => !!pharmacy.address.streetNumber || 'This field is required']"
-            label="Broj ulice"
-            required
-          ></v-text-field>
-          <v-text-field
-            ref="place"
-            v-model="pharmacy.address.place"
-            :rules="[() => !!pharmacy.address.place || 'This field is required', addressCheck]"
-            label="Mesto"
-            required
-          ></v-text-field>
-          <v-autocomplete
-            ref="country"
-            v-model="pharmacy.address.country"
-            :rules="[() => !!pharmacy.address.country || 'This field is required']"
-            :items="countries"
-            label="Država"
-            required
-          ></v-autocomplete>
-          <GmapMap
-            id='map'
-            :center="{lat:this.marker.position.lat, lng:this.marker.position.lng}"
-            :zoom="15"
-            map-type-id="terrain"
-            style="width: 100%; height: 500px"
-            @click='mark'
-            ><GmapMarker
-                :key="index"
-                :position="marker.position"
-                :clickable="true"
-                :draggable="true"
-                @click="center=m.position"
-            />
-          </GmapMap>
-        </v-card-text>
-        <v-divider class="mt-12"></v-divider>
-        <v-card-actions>
-          <v-btn text>
-            Cancel
-          </v-btn>
+  <div>
+    <pharmacy-admin-home></pharmacy-admin-home>
+    <v-row justify="center">
+      <v-col
+        cols="12"
+        sm="10"
+        md="8"
+        lg="6"
+      >
+        <v-card ref="form">
+          <v-app-bar 
+            color="dark cyan"
+            dark
+            prominent
+            flat>
+            <v-toolbar-title>Izmena podataka</v-toolbar-title>
+          </v-app-bar>
           <v-spacer></v-spacer>
-          <v-slide-x-reverse-transition>
-            <v-tooltip
-              v-if="formHasErrors"
-              left
+          <v-card-text>
+            <v-text-field
+              ref="name"
+              v-model="pharmacy.name"
+              :rules="[() => !!pharmacy.name || 'This field is required']"
+              :error-messages="errorMessages"
+              label="Naziv apoteke"
+              required
+            ></v-text-field>
+            <v-text-field
+              ref="address"
+              v-model="pharmacy.address.street"
+              :rules="[
+                () => !!pharmacy.address.street || 'This field is required',
+                () => !!pharmacy.address.street && pharmacy.address.street.length <= 25 || 'Address must be less than 25 characters',
+                addressCheck
+              ]"
+              label="Adresa"
+              counter="25"
+              required
+            ></v-text-field>
+            <v-text-field
+              ref="street-no"
+              v-model="pharmacy.address.streetNumber"
+              :rules="[() => !!pharmacy.address.streetNumber || 'This field is required']"
+              label="Broj ulice"
+              required
+            ></v-text-field>
+            <v-text-field
+              ref="place"
+              v-model="pharmacy.address.place"
+              :rules="[() => !!pharmacy.address.place || 'This field is required', addressCheck]"
+              label="Mesto"
+              required
+            ></v-text-field>
+            <v-autocomplete
+              ref="country"
+              v-model="pharmacy.address.country"
+              :rules="[() => !!pharmacy.address.country || 'This field is required']"
+              :items="countries"
+              label="Država"
+              required
+            ></v-autocomplete>
+            <GmapMap
+              id='map'
+              :center="{lat:this.marker.position.lat, lng:this.marker.position.lng}"
+              :zoom="15"
+              map-type-id="terrain"
+              style="width: 100%; height: 500px"
+              @click='mark'
+              ><GmapMarker
+                  :key="index"
+                  :position="marker.position"
+                  :clickable="true"
+                  :draggable="true"
+                  @click="center=m.position"
+              />
+            </GmapMap>
+          </v-card-text>
+          <v-divider class="mt-12"></v-divider>
+          <v-card-actions>
+            <v-btn text>
+              Cancel
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-slide-x-reverse-transition>
+              <v-tooltip
+                v-if="formHasErrors"
+                left
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    class="my-0"
+                    v-bind="attrs"
+                    @click="resetForm"
+                    v-on="on"
+                  >
+                    <v-icon>mdi-refresh</v-icon>
+                  </v-btn>
+                </template>
+                <span>Refresh form</span>
+              </v-tooltip>
+            </v-slide-x-reverse-transition>
+            <v-btn
+              color="primary"
+              text
+              @click="submit"
             >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  class="my-0"
-                  v-bind="attrs"
-                  @click="resetForm"
-                  v-on="on"
-                >
-                  <v-icon>mdi-refresh</v-icon>
-                </v-btn>
-              </template>
-              <span>Refresh form</span>
-            </v-tooltip>
-          </v-slide-x-reverse-transition>
-          <v-btn
-            color="primary"
-            text
-            @click="submit"
-          >
-            Submit
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+              Submit
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import PharmacyAdminHome from './PharmacyAdminHome.vue'
   export default {
+    components: { PharmacyAdminHome },
     name: 'PharmacyEdit',
     data: () => ({
       countries: ['Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Anguilla', 'Antigua &amp; Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia &amp; Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Cape Verde', 'Cayman Islands', 'Chad', 'Chile', 'China', 'Colombia', 'Congo', 'Cook Islands', 'Costa Rica', 'Cote D Ivoire', 'Croatia', 'Cruise Ship', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'French Polynesia', 'French West Indies', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyz Republic', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Norway', 'Oman', 'Pakistan', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russia', 'Rwanda', 'Saint Pierre &amp; Miquelon', 'Samoa', 'San Marino', 'Satellite', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'South Africa', 'South Korea', 'Spain', 'Sri Lanka', 'St Kitts &amp; Nevis', 'St Lucia', 'St Vincent', 'St. Lucia', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', `Timor L'Este`, 'Togo', 'Tonga', 'Trinidad &amp; Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks &amp; Caicos', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Virgin Islands (US)', 'Yemen', 'Zambia', 'Zimbabwe'],
@@ -215,5 +220,5 @@
 </script>
 
 <style>
-
+  
 </style>

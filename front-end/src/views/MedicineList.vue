@@ -1,39 +1,45 @@
 <template>
-  <!-- Na ovu foru: https://vuetifyjs.com/en/components/cards/#grids -->
-    <v-card class="mx-auto">
-        <v-app-bar dark color="dark cyan" prominent>
-            <v-toolbar-title>Lista lekova apoteke</v-toolbar-title>
-        </v-app-bar>
-        <v-container>
-            <v-row dense>
-                <v-col cols="12"
-                    v-for="(med, index) in medicine"
-                    :key="index">
-                    <v-card>
-                        <div class="d-flex flex-no-wrap justify-space-between">
-                            <div>
-                                <v-card-title
-                                class="text-h5"
-                                v-text="med.code + ' | ' + med.name"></v-card-title>
+    <div>
+        <!-- Na ovu foru: https://vuetifyjs.com/en/components/cards/#grids -->
+        <pharmacy-admin-home>
+        </pharmacy-admin-home>
+        <v-card class="mx-auto">
+            <v-app-bar dark color="dark cyan" prominent>
+                <v-toolbar-title>Lista lekova apoteke</v-toolbar-title>
+            </v-app-bar>
+            <v-container>
+                <v-row dense>
+                    <v-col cols="12"
+                        v-for="(med, index) in medicine"
+                        :key="index">
+                        <v-card>
+                            <div class="d-flex flex-no-wrap justify-space-between">
+                                <div>
+                                    <v-card-title
+                                    class="text-h5"
+                                    v-text="med.code + ' | ' + med.name"></v-card-title>
 
-                                <v-card-subtitle class="text-h6" v-text="'Proizvodjac: ' + med.manufacturer + ', Sastav: ' + med.composition + ', Forma: ' + med.drugForm"></v-card-subtitle>
+                                    <v-card-subtitle class="text-h6" v-text="'Proizvodjac: ' + med.manufacturer + ', Sastav: ' + med.composition + ', Forma: ' + med.drugForm"></v-card-subtitle>
 
-                                <v-card-actions>
-                                    <v-btn @click="viewPricing(med.code)">Pregled cenovnika</v-btn>
-                                    <v-btn outlined rounded small @click="deleteMed(med.code)">Obrisi iz ponude</v-btn>
-                                </v-card-actions>
+                                    <v-card-actions>
+                                        <v-btn @click="viewPricing(med.code)">Pregled cenovnika</v-btn>
+                                        <v-btn outlined rounded small @click="deleteMed(med.code)">Obrisi iz ponude</v-btn>
+                                    </v-card-actions>
+                                </div>
                             </div>
-                        </div>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-card>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
+import PharmacyAdminHome from './PharmacyAdminHome.vue'
 export default {
+  components: { PharmacyAdminHome },
     name: 'MedicineList',
     data () {
         return {
