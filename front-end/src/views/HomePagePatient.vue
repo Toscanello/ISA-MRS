@@ -55,6 +55,7 @@
       <PharmaciesList v-if="show_menu==='pharmacies'"/>
       <Calendar v-if="show_menu==='calendar'"/>
       <AppointmenPharmacist v-if="show_menu==='appointment'"/>
+      <PatientAccount v-if="show_menu==='acoount'"/>
     </v-main>
 
   </v-card>
@@ -64,12 +65,14 @@
   import PharmaciesList from '../views/patient/PharmaciesList.vue'
   import Calendar from '../views/CalendarPatient.vue'
   import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
+  import PatientAccount from '@/components/PatientAccount'
   export default {
     name: "HomePagePatient",
     components: {
       PharmaciesList,
       Calendar,
-      AppointmenPharmacist
+      AppointmenPharmacist,
+      PatientAccount
     },
     props: {
     expandOnHover: {
