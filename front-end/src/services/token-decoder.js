@@ -11,10 +11,21 @@ class TokenDecoder {
 
     getUserRole() {
         let user = localStorage.getItem('user')
+        
         if (!user) {
             return 'ERR'
         }
+        
         return this.parseJwt(user).role
+    }
+
+    getUserEmail(){
+        let user = localStorage.getItem('user')
+        
+        if (!user) {
+            return 'ERR'
+        }
+        return this.parseJwt(user).sub
     }
 }
 
