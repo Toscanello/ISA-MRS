@@ -1,10 +1,17 @@
 --insert into dpharmacy (name) values ('Apoteka Betty');
 
 insert into location (width, height) values (19.85, 45.26);
+insert into location (width, height) values (25.85, 45.26);
 insert into address (street, street_number, place, country,location_id) values ('Dimitrija Tucovica', '7', 'Uzice', 'Srbija',1);
-insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi sad', 'Srbija',1);
+insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi sad', 'Srbija',2);
 insert into pharmacy (reg_no, name, address_id) values ('abc', 'Apoteka Jankovic',1);
 insert into pharmacy (reg_no, name, address_id) values ('aaa', 'Apoteka Betty',2);
+insert into pharmacy (reg_no, name, address_id) values ('bbb', 'Apoteka Jankovic',1);
+insert into pharmacy (reg_no, name, address_id) values ('ccc', 'Apoteka Betty',2);
+insert into pharmacy (reg_no, name, address_id) values ('ddd', 'Apoteka Jankovic',1);
+insert into pharmacy (reg_no, name, address_id) values ('eee', 'Apoteka Betty',2);
+insert into pharmacy (reg_no, name, address_id) values ('fff', 'Apoteka Jankovic',1);
+insert into pharmacy (reg_no, name, address_id) values ('ggg', 'Apoteka Betty',2);
 --insert into pharmacy_address(address_id, pharmacy_reg_no) values (1, 'abc');
 
 insert into medicine(name, code, type, manufacturer, drug_form, composition, description, category)
@@ -112,7 +119,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false);
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-30 09:15:00', '2021-04-30 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
@@ -125,5 +132,24 @@ insert into appointment(patient_id,medical_worker_id,price, start_time, end_time
 values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 12:15:00', '2021-04-06 12:45:00', false);
+
+
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek1', 2);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek2', 3);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek4', 1);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('aaa', 'lek3', 4);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('aaa', 'lek2', 4);
+
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek1', 'abc', 300, '2021-04-21 12:00:00');
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek2', 'abc', 320, '2021-04-21 13:00:00');
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek4', 'abc', 320, '2021-04-21 13:00:00');
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-
