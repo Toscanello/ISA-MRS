@@ -1,7 +1,6 @@
 <template>
   <div
   >     
-  <home-page-patient></home-page-patient>
   <v-toolbar
           dark
           class="mb-1"
@@ -14,7 +13,7 @@
             hide-details
             prepend-inner-icon="mdi-magnify"
             label="Search"
-            style="padding-right: 50px;"
+            style="padding-right: 20px;"
             
           ></v-text-field>
           
@@ -44,23 +43,76 @@
           </v-toolbar>
           <v-row class= "row">
             <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" cols="12" sm="6" md="4" lg="3">
-              <v-card
-            color="#385F73"
-            dark
-            style="margin-top: 5px; margin-left: 5px;"
+          
+           <v-card
+            :loading="loading"
+            
+            
+            style="margin-top: 5px;"
           >
-            <v-card-title class="text-h5">
-              {{pharmacy.name}}
-            </v-card-title>
+            <template slot="progress">
+              <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+              ></v-progress-linear>
+            </template>
 
-            <v-card-subtitle>{{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}</v-card-subtitle>
+            <GmapMap
+                :center="{
+                  lat: pharmacy.address.location.geoHeight,
+                  lng: pharmacy.address.location.geoWidth
+                  }"
+                :zoom="9"
+                style="width:100%; height: 250px">
+                <GmapMarker
+                  :position="{
+                  lat: pharmacy.address.location.geoHeight,
+                  lng: pharmacy.address.location.geoWidth
+                  }"></GmapMarker>
+              </GmapMap>
+ 
+
+            <v-card-title>{{pharmacy.name}}</v-card-title>
+
+            <v-card-text>
+              <v-row
+                align="center"
+                class="mx-0"
+              >
+                <v-rating
+                  :value="4.5"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+
+                <div class="grey--text ml-4">
+                  4.5 (413)
+                </div>
+              </v-row>
+
+              <div class="my-4 subtitle-1">
+                {{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}
+              </div>
+
+              <div>Ovdje moze neki dodatni opis apoteke.</div>
+            </v-card-text>
 
             <v-card-actions>
-              <v-btn text v-on:click="open()">
-                Details
+              <v-btn
+                color="deep-purple lighten-2"
+                text
+               
+              >
+                Reserve
               </v-btn>
             </v-card-actions>
           </v-card>
+
+
       </v-col>
     </v-row>
   </div>
@@ -69,9 +121,7 @@
 
 <script>
 import axios from 'axios'
-import HomePagePatient from '../HomePagePatient.vue';
 export default {
-  components: { HomePagePatient },
     name: 'PharmacyList',
     data: () => ({
     drawer: false,

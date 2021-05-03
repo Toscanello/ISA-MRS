@@ -84,7 +84,7 @@ export default {
       {
         icon: "mdi-pencil",
         title: "Start appointment",
-        to: "appointment",
+        to: "home",
       },
       {
         icon: "mdi-calendar",
@@ -104,7 +104,7 @@ export default {
       {
         icon: "mdi-plus",
         title: "New appointment",
-        to: "patients",
+        to: "appointment",
       },
     ],
   }),

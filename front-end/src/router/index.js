@@ -7,10 +7,7 @@ import Pharmacy from '../views/Pharmacy.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import SystemAdminHome from '../views/SystemAdminHome.vue'
-import PharmaciesList from '../views/patient/PharmaciesList.vue'
 import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
-import Pharmacies from '../views/patient/Pharmacies.vue'
-import PharmacistList from '../views/patient/PharmacistList.vue'
 import PharmacyDermatologists from '../views/PharmacyDermatologists.vue'
 import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.vue'
 import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
@@ -95,24 +92,9 @@ const routes = [
     component: HomePagePatient
   },
   {
-    path: '/pharmacies-list',
-    name: 'PharmaciesList',
-    component: PharmaciesList
-  },
-  {
     path: '/appointment-pharmacist',
     name: 'AppointmenPharmacist',
     component: AppointmenPharmacist
-  },
-  {
-    path: '/bla',
-    name: 'Pharmacies',
-    component: Pharmacies
-  },
-  {
-    path: '/pharmacist-list',
-    name: 'PharmacistList',
-    component: PharmacistList
   },
   {
     path: '/systemadmin',
