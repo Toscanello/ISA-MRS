@@ -12,6 +12,7 @@ public class SimplePharmacyDTO {
     private String name;
     private Address address;
     private List<Integer> ratings = new ArrayList<>();
+    private Double appointmentPrice;
 
     public SimplePharmacyDTO() {}
 
@@ -21,6 +22,7 @@ public class SimplePharmacyDTO {
         this.address = p.getAddress();
         for (Rating r : p.getRatings())
             ratings.add(r.getRating());
+        this.appointmentPrice = p.getAppointmentPrice();
     }
 
     public String getRegNo() {
@@ -54,4 +56,8 @@ public class SimplePharmacyDTO {
     public void setRatings(List<Integer> ratings) {
         this.ratings = ratings;
     }
+
+    public Double getAppointmentPrice() { return appointmentPrice; }
+
+    public void setAppointmentPrice(Double appointmentPrice) { this.appointmentPrice = appointmentPrice; }
 }

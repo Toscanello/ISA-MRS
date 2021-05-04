@@ -4,14 +4,14 @@ insert into location (width, height) values (19.85, 45.26);
 insert into location (width, height) values (25.85, 45.26);
 insert into address (street, street_number, place, country,location_id) values ('Dimitrija Tucovica', '7', 'Uzice', 'Srbija',1);
 insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi sad', 'Srbija',2);
-insert into pharmacy (reg_no, name, address_id) values ('abc', 'Apoteka Jankovic',1);
-insert into pharmacy (reg_no, name, address_id) values ('aaa', 'Apoteka Betty',2);
-insert into pharmacy (reg_no, name, address_id) values ('bbb', 'Apoteka Jankovic',1);
-insert into pharmacy (reg_no, name, address_id) values ('ccc', 'Apoteka Betty',2);
-insert into pharmacy (reg_no, name, address_id) values ('ddd', 'Apoteka Jankovic',1);
-insert into pharmacy (reg_no, name, address_id) values ('eee', 'Apoteka Betty',2);
-insert into pharmacy (reg_no, name, address_id) values ('fff', 'Apoteka Jankovic',1);
-insert into pharmacy (reg_no, name, address_id) values ('ggg', 'Apoteka Betty',2);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('abc', 'Apoteka Jankovic', 1, 1000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('aaa', 'Apoteka Betty', 2, 2000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('bbb', 'Apoteka B', 1, 3000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ccc', 'Apoteka C', 2, 4000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ddd', 'Apoteka D', 1, 5000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('eee', 'Apoteka E', 2, 6000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('fff', 'Apoteka F', 1, 7000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ggg', 'Apoteka G', 2, 8000.00);
 --insert into pharmacy_address(address_id, pharmacy_reg_no) values (1, 'abc');
 
 insert into medicine(name, code, type, manufacturer, drug_form, composition, description, category)
@@ -26,6 +26,8 @@ values ('Probio Forte', 'lek4', 'tip', 'galenika', 'kapsula', 'sastav', 'opis', 
 insert into rating(pharmacy_reg_no, rating) values ('abc', 5);
 insert into rating(pharmacy_reg_no, rating) values ('abc', 4);
 insert into rating(pharmacy_reg_no, rating) values ('aaa', 4);
+insert into rating(pharmacy_reg_no, rating) values ('bbb', 5);
+insert into rating(pharmacy_reg_no, rating) values ('ccc', 2);
 --insert into medicine_quantity(medicine_code, quantity)
 --values ('lek1', 2);
 --insert into medicine_quantity(medicine_code, quantity)
@@ -70,6 +72,10 @@ insert into users(email,password,name,surname,phone_number,address_id, enabled, 
 values('derm2@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('farm@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_PHARMACIST');
@@ -97,11 +103,21 @@ insert into patients(email)values('d@gmail.com');
 insert into medical_workers(email)values('derm1@gmail.com');
 insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
+insert into medical_workers(email)values('farmA@gmail.com');
+insert into medical_workers(email)values('farmB@gmail.com');
 
 insert into work_hour(start_time,end_time,pharmacy)
 values('09:00','17:00','abc');
+insert into work_hour(start_time,end_time,pharmacy)
+values('09:00','17:00','bbb');
+insert into work_hour(start_time,end_time,pharmacy)
+values('09:00','17:00','ccc');
 insert into pharmacist(email,work_hour,pharmacy)
 values('farm@gmail.com',1,'abc');
+insert into pharmacist(email,work_hour,pharmacy)
+values('farmA@gmail.com',2,'bbb');
+insert into pharmacist(email,work_hour,pharmacy)
+values('farmB@gmail.com',3,'ccc');
 
 insert into dermatologist(email)values('derm1@gmail.com');
 insert into dermatologist(email)values('derm2@gmail.com');

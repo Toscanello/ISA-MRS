@@ -37,14 +37,18 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantity> medicineQuantities = new HashSet<>();
 
+    @Column(name = "appointment_price", unique = false, nullable = false)
+    private Double appointmentPrice;
+
     public Pharmacy() { }
 
-    public Pharmacy(String regNo, String name, Address address) {
+    public Pharmacy(String regNo, String name, Address address, Double appointmentPrice) {
         this.regNo = regNo;
         this.name = name;
         this.address = address;
         ratings = new HashSet<>();
         pharmacists = new HashSet<>();
+        this.appointmentPrice = appointmentPrice;
     }
 
     public String getRegNo() {
@@ -109,5 +113,13 @@ public class Pharmacy {
 
     public void setDermatologistAppointments(Set<DermatologistAppointment> dermatologistAppointments) {
         this.dermatologistAppointments = dermatologistAppointments;
+    }
+
+    public Double getAppointmentPrice() {
+        return appointmentPrice;
+    }
+
+    public void setAppointmentPrice(Double appointmentPrice) {
+        this.appointmentPrice = appointmentPrice;
     }
 }

@@ -43,7 +43,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientServiceImpl() {
         Location loc = new Location(19.8425, 43.8556);
         Address addr = new Address("Omladinska", "2a", "Uzice", "Serbia", loc);
-        Pharmacy p = new Pharmacy("abc", "Krsenkovic", addr);
+        Pharmacy p = new Pharmacy("abc", "Krsenkovic", addr, 1000.00);
         pharmacies.add(p);
     }
 
