@@ -4,9 +4,11 @@ import app.domain.Address;
 import app.domain.Location;
 import app.domain.Patient;
 import app.domain.Pharmacy;
+import app.dto.PatientDTO;
 import app.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +17,9 @@ import java.util.Map;
 
 @Service
 public class PatientServiceImpl implements PatientService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final List<Patient> patients = new ArrayList<Patient>() {
         {
@@ -69,5 +74,17 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient findOneByEmail(String email){
         return patientRepository.findOneByEmail(email);
+    }
+
+    @Override
+    public Patient save(Patient patient, PatientDTO editedPatient)
+    {
+        patient.setName(editedPatient.getName());
+        patient.setSurname(editedPatient.getSurname());
+        patient.setAddress(editedPatient.getAddress());
+        patient.setPhoneNumber(editedPatient.getPhoneNumber());
+        if(!patient.getPassword().equals(editedPatient.getPassword()))
+            patient.setPassword(passwordEncoder.encode(editedPatient.getPassword()));
+        return patientRepository.save(patient);
     }
 }

@@ -1,8 +1,9 @@
 <template>
-<div style="margin-left: 10px; margin-right: 10px; margin-top: 30px;">
+<div fluid style="margin-left: 10px; margin-right: 10px; margin-top: 30px;">
+  
    <v-row >
-    <v-col cols="6"
-        md="4">
+     
+    <v-col cols="6" md="4">
       <div>
         <template>
           <v-row >
@@ -32,9 +33,9 @@
       </v-btn>
     </v-col>
 
-        <v-col cols="12"
-        sm="6"
-        md="8" style = "background-color: #00b2b2;">
+    <v-col cols="12" sm="6" md="8" style = "background-color: #00b2b2;">
+      <PharmacySort v-if="show ==='pharmacy'"></PharmacySort>
+      <PharmacistSort v-if="show ==='pharmacist'"></PharmacistSort>
       <v-row class= "row" v-if="show ==='pharmacy'">
         <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" >
           
@@ -98,23 +99,18 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-
-
         </v-col>
       </v-row>
-
-
     </v-col>
   </v-row>
-
-  
- 
 </div>
 </template>
 
 
 <script>
   import axios from 'axios'
+  import PharmacySort from '@/components/patient/PharmacySort.vue'
+  import PharmacistSort from '@/components/patient/PharmacistSort.vue'
   export default {
     data () {
       return {
@@ -125,6 +121,10 @@
         show : "pharmacy",
       }
     },
+    components: {
+      PharmacySort,
+      PharmacistSort,
+      },
     methods: {
     search: function () {
         let path = "http://localhost:9090/api/pharmacy/apoteke/" + this.date + "_" + this.time

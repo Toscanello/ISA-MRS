@@ -23,6 +23,7 @@ import java.util.Map;
 public class PatientController {
     @Autowired
     private PatientService service;
+
     @Autowired
     AppointmentService appointmentService;
 
@@ -78,5 +79,20 @@ public class PatientController {
     public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO id){
         appointmentService.cancelAppointment(id.getId());
         return new ResponseEntity<>("Canceled appointment", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/patient/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PatientDTO> getPatientByEmail(@PathVariable String email){
+        Patient patient = service.findOneByEmail(email);
+        PatientDTO patientDTO = new PatientDTO(patient);
+        return new ResponseEntity<>(patientDTO,HttpStatus.OK);
+    }
+
+    @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PatientDTO>
+    editPharmacy(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+        Patient patient = service.findOneByEmail(email);
+        service.save(patient, editedPatient);
+        return new ResponseEntity<>(editedPatient, HttpStatus.OK);
     }
 }

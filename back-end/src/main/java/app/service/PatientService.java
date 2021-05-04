@@ -2,6 +2,7 @@ package app.service;
 
 import app.domain.Patient;
 import app.domain.Pharmacy;
+import app.dto.PatientDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -12,4 +13,5 @@ public interface PatientService {
     Pharmacy getPharmacy(String regNo);
     List<Patient> findAllPatientsByPharmacistEmail(String email);
     Patient findOneByEmail(String email);
+    Patient save(Patient patient, PatientDTO editedPatient);
 }

@@ -15,15 +15,16 @@
             </v-list-item-avatar> 
                 
                 <v-card-text>
-                    {{form.contactEmail}}
+                    {{user.email}} <br>
+                    Broj bodova i uloga 
                     <v-text-field
-                        v-model="form.firstName"
+                        v-model="user.name"
                         label="FirstName"></v-text-field>
                     <v-text-field
-                        v-model="form.lastName"
+                        v-model="user.surname"
                         label="Last Name"></v-text-field>
                     <v-text-field
-                        v-model="form.phoneNumber"
+                        v-model="user.phoneNumber"
                         label="Phone Number"></v-text-field>
 
                     <v-row
@@ -33,32 +34,31 @@
                     <v-col
                     >
                          <v-text-field
-                        v-model="form.streetNumber"
+                        v-model="user.address.streetNumber"
                         label="Street Number"></v-text-field>
                     </v-col>
                     <v-col
                     >
                         <v-text-field
-                        v-model="form.street"
+                        v-model="user.address.street"
                         label="Street"></v-text-field>
                     </v-col>
                     <v-col
                     >
                          <v-text-field
-                        v-model="form.place"
+                        v-model="user.address.place"
                         label="Place"></v-text-field>
                     </v-col>
                     <v-col
                     >
                         <v-text-field
-                        v-model="form.country"
+                        v-model="user.address.country"
                         label="Country"></v-text-field>
                     </v-col>
                     </v-row>
 
-
                     <v-text-field
-                    v-model="form.newPassword"
+                    v-model="newPassword"
                     label="New Password"></v-text-field>
 
                 </v-card-text>
@@ -74,29 +74,40 @@
 
 <script>
     import TokenDecoder from '../services/token-decoder'
+    import axios from "axios";
     export default {
         data () {
             return {
                 loading: false,
-                form: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    contactEmail: 'john@doe.com',
-                    phoneNumber: '064-2744/333',
-                    streetNumber:'7',
-                    street:'Bulevar Despota Stefana',
-                    place:'Novi Sad',
-                    country:'Srbija',
-                    newPassword:'',
-                },
+                user : null,
+                newPassword:'',    
             }
         },
-         methods: {
+        created() {
+            let usersEmail = TokenDecoder.getUserEmail()
+            let path = "http://localhost:9090/patients/patient/" + usersEmail;
+            axios.get(path).then((response) => {
+                this.user = response.data;
+                console.log(this.user)
+            })
+        },
+        methods: {
             update(){
-                let role = TokenDecoder.getUserEmail()
-            console.log(role)
-            },
-         }
+            let usersEmail = TokenDecoder.getUserEmail()
+            if(this.newPassword != ""){
+                this.user.password = this.newPassword
+            }
 
+            axios
+            .put('http://localhost:9090/patients/edit/' + usersEmail, this.user)
+            .then(response => {
+              alert('Uspesno izmenjeni podaci!' + response)
+            })
+            .catch(response => {
+                console.log(response)
+              alert('Error')
+            })
+            },
+        }
     }
 </script>
