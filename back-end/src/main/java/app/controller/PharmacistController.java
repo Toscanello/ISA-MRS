@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,9 @@ public class PharmacistController {
     PharmacistService pharmacistService;
     @Autowired
     PatientService patientService;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @PostMapping(value="/addAppointment",
         consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,6 +75,12 @@ public class PharmacistController {
 
         Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist, newAppointment.getPrice(), false);
         appointmentService.save(ap);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("servis.apoteka@gmail.com");
+        message.setTo(newAppointment.getPatientEmail());
+        message.setSubject("New appointment");
+        message.setText("Yeah");
+        emailSender.send(message);
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
