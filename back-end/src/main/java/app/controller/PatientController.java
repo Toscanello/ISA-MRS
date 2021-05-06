@@ -53,8 +53,8 @@ public class PatientController {
     }
 
     @GetMapping(path = "/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PatientDTO>> findAllStudentsByPharmacistEmail(@PathVariable String email){
-        List<Patient>patients = service.findAllPatientsByPharmacistEmail(email);
+    public ResponseEntity<List<PatientDTO>> findAllStudentsByMedicalEmail(@PathVariable String email){
+        List<Patient>patients = service.findAllPatientsByMedicalEmail(email);
 
         List<PatientDTO> patientDTOS = new ArrayList<>();
         for (Patient p : patients) {

@@ -11,7 +11,7 @@ public interface PatientService {
     List<Patient> getAll();
     List<Patient> searchPatients(Map<String,String> search);
     Pharmacy getPharmacy(String regNo);
-    List<Patient> findAllPatientsByPharmacistEmail(String email);
+    List<Patient> findAllPatientsByMedicalEmail(String email);
     Patient findOneByEmail(String email);
     Patient save(Patient patient, PatientDTO editedPatient);
 }
