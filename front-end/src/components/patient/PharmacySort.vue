@@ -10,12 +10,11 @@
 <script>
 export default {
   data: () => ({
-    select: "RatingAsc",
+    select: "Sort Pharmacies",
     items: ["RatingAsc", "RatingDesc", "PriceAsc", "PriceDesc"],
   }),
   methods: {
     sorting: function () {
-        console.log(this.select)
       this.$emit("clicked", this.select);
     }
   },

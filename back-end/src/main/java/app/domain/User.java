@@ -43,7 +43,7 @@ public class User implements UserDetails {
     private Timestamp lastPasswordResetDate;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @NotNull
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -28,13 +28,14 @@
         depressed 
         :value="false"
         style="margin-top: 10px;"
+        @clicked="onSortClick(sorting)"
       >
         Search
       </v-btn>
     </v-col>
 
     <v-col cols="12" sm="6" md="8" style = "background-color: #00b2b2;">
-      <PharmacySort v-if="show ==='pharmacy'"></PharmacySort>
+      <PharmacySort v-if="show ==='pharmacy'" @clicked="onSortClick"></PharmacySort>
       <PharmacistSort v-if="show ==='pharmacist'"></PharmacistSort>
       <v-row class= "row" v-if="show ==='pharmacy'">
         <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" >
@@ -48,7 +49,10 @@
                 {{pharmacy.name}}
               </v-card-title>
 
-              <v-card-subtitle style="color: black;">{{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}</v-card-subtitle>
+              <v-card-subtitle style="color: black;">{{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}} 
+                <br>
+                {{rating(pharmacy)}}  {{pharmacy.appointmentPrice}}
+              </v-card-subtitle>
 
               <v-card-actions>
                 <v-btn style="color: black;" text v-on:click="open(pharmacy.regNo)">
@@ -56,6 +60,7 @@
                 </v-btn>
               </v-card-actions>
             </v-card>
+            <br>
         </v-col>
       </v-row>
 
@@ -119,6 +124,7 @@
         pharmacies : [],
         pharmacists : [],
         show : "pharmacy",
+        sortParam : "",
       }
     },
     components: {
@@ -126,13 +132,25 @@
       PharmacistSort,
       },
     methods: {
+    rating(pharmacy) {
+        let avgRating = 0;
+        for (const rating of pharmacy.ratings) {
+          avgRating += rating;
+        }
+        if (pharmacy.ratings.length == 0)
+          return avgRating;
+        else
+          return avgRating / pharmacy.ratings.length
+    },
     search: function () {
         let path = "http://localhost:9090/api/pharmacy/apoteke/" + this.date + "_" + this.time
+        this.show = "a"
         this.show = "pharmacy"
         axios
         .get(path)
         .then(response => {
           this.pharmacies = response.data
+          this.onSortClick(this.sortParam)
           })
         .catch(error => {
           alert('Error: status ' + error.response.status)
@@ -152,6 +170,56 @@
           this.$router.push('/')
         })
     },
+    onSortClick: function (sorting) {
+      this.sortParam = sorting
+      if (sorting == "RatingAsc") {
+        this.pharmacies.sort(function (a, b) {
+          let ratingA = 0;
+          let ratingB = 0;
+          for (const rating of a.ratings)
+            ratingA += rating;
+          if (a.ratings.length != 0)
+            ratingA = ratingA / a.ratings.length
+
+          for (const rating of b.ratings)
+            ratingB += rating;
+          if (b.ratings.length != 0)
+            ratingB = ratingB / b.ratings.length
+
+          if (ratingA <ratingB) {
+            return -1;
+          }
+          if (ratingA > ratingB) {
+            return 1;
+          }
+          return 0;
+        });
+      } else if (sorting == "PriceAsc")
+      {
+        this.pharmacies.sort(function (a, b) {
+          if (a.appointmentPrice < b.appointmentPrice) {
+            return -1;
+          }
+          if (a.appointmentPrice > b.appointmentPrice) {
+            return 1;
+          }
+          return 0;
+        });
+      } else if (sorting == "PriceDesc")
+      {
+        
+        this.pharmacies.sort(function (a, b) {
+          if (a.appointmentPrice < b.appointmentPrice) {
+            return 1;
+          }
+          if (a.appointmentPrice > b.appointmentPrice) {
+            return -1;
+          }
+          return 0;
+        });
+
+      }
+    },
   },
-  }
+}
 </script>

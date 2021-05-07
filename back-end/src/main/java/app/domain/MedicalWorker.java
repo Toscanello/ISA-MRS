@@ -14,6 +14,9 @@ public class MedicalWorker extends User {
     @OneToMany(mappedBy = "medicalWorker", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<Appointment>();
 
+    @OneToMany(mappedBy = "medicalWorker", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<MedicalWorkerRating> ratings = new HashSet<>();
+
     public MedicalWorker() {
     }
 
@@ -27,5 +30,13 @@ public class MedicalWorker extends User {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Set<MedicalWorkerRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<MedicalWorkerRating> ratings) {
+        this.ratings = ratings;
     }
 }

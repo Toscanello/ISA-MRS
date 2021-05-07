@@ -1,9 +1,10 @@
 package app.controller;
 
-import app.domain.DPharmacy;
-import app.domain.Location;
-import app.domain.Pharmacy;
+import app.domain.*;
+import app.dto.PharmacistDTO;
+import app.dto.SimpleDermatologistDTO;
 import app.dto.SimplePharmacyDTO;
+import app.service.PharmacistService;
 import app.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -23,6 +26,9 @@ import java.util.List;
 public class PharmacyController {
     @Autowired
     private PharmacyService pharmacyService;
+
+    @Autowired
+    private PharmacistService pharmacistService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
@@ -71,9 +77,11 @@ public class PharmacyController {
 
         LocalTime start = LocalTime.parse(time);
         LocalTime end = start.plusMinutes(30); //svaki sastanak sa farmaceutom traje 30 minuta
-        List<String> pharmacists = pharmacyService.findPharmacist(start, end, dateTime, regNo);
-
-        return new ResponseEntity<>(pharmacists, HttpStatus.OK);
+        /*List<Pharmacist> pharmacists = pharmacistService.findPharmacist(start, end, dateTime, regNo);
+        List<PharmacistDTO> toReturn = new ArrayList<>();
+        for (Pharmacist p :pharmacists)
+            toReturn.add(new PharmacistDTO(p));*/
+        return new ResponseEntity<>(pharmacistService.findPharmacist(start, end, dateTime, regNo), HttpStatus.OK);
     }
 
     @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
