@@ -108,6 +108,10 @@ export default {
       },
     ],
   }),
+  created(){
+    localStorage.setItem('korisnik','farm');
+  }
+  ,
   methods: {
     show(param){
       this.show_menu=param;

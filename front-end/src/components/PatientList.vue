@@ -47,17 +47,20 @@ export default {
     patients:[]
   }),
   created() {
-    axios.get("http://localhost:9090/patients/farm@gmail.com").then((resp) => {
+    let kor = localStorage.getItem('korisnik');
+    console.log(kor);
+    axios.get(`http://localhost:9090/patients/${kor}@gmail.com`).then((resp) => {
       this.patients = resp.data;
     });
   },
   methods:{
       onSearchClick: function (search) {
       console.log(search);
+      let kor = localStorage.getItem('korisnik');
       axios
         .get("http://localhost:9090/patients/search", {
           params: {
-            email: "farm@gmail.com",
+            email: `${kor}@gmail.com`,
             name: search.name,
             surname: search.surname,
           },

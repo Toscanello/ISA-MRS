@@ -15,7 +15,7 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
     @Query(value = "select * from users p" +
             " where p.email IN (select a.patient_id from appointment a where a.medical_worker_id = ?1)",
             nativeQuery = true)
-    public List<Patient> findAllStudentsByPharmacistEmail(String email);
+    public List<Patient> findAllStudentsByMedicalEmail(String email);
 
     @Query(value = "select * from users p" +
             " where p.email IN (select a.patient_id from appointment a where a.medical_worker_id = :email)" +

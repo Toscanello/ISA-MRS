@@ -62,9 +62,9 @@ values('a@gmail.com','pass','a','luburic','+38154784566',1, true, '2017-10-01 21
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('b@gmail.com','pass','b','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('c@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('c@gmail.com','pass','c','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('d@gmail.com','pass','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('d@gmail.com','pass','d','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('derm1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
@@ -135,7 +135,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-30 09:15:00', '2021-04-30 09:45:00', false);
+values('ika@gmail.com','farm@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)

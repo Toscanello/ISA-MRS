@@ -67,8 +67,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Patient> findAllPatientsByPharmacistEmail(String email) {
-        return patientRepository.findAllStudentsByPharmacistEmail(email);
+    public List<Patient> findAllPatientsByMedicalEmail(String email) {
+        return patientRepository.findAllStudentsByMedicalEmail(email);
     }
 
     @Override

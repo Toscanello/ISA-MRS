@@ -25,7 +25,7 @@
         <v-list-item-group
           v-model="group"
         >
-          <v-list-item to="edit/pharmacy/abc">
+          <v-list-item to="/edit/pharmacy/abc">
             <v-list-item-title style="color:Tomato;">Izmeni apoteku</v-list-item-title>
           </v-list-item>
 
