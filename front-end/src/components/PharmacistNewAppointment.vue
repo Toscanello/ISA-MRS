@@ -2,7 +2,7 @@
   <div>
     <div id="pickers">
       <div id="date-pickr">
-        <v-date-picker v-model="date"></v-date-picker>
+        <v-date-picker v-model="date" :min="new Date().toISOString().slice(0,10)"></v-date-picker>
       </div>
       <div id="time-pickr">
         <v-time-picker v-model="time" format="24hrs"></v-time-picker>
