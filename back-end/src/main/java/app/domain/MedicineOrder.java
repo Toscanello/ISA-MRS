@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class MedicineOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    private  Long id;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medicine")
@@ -26,20 +26,21 @@ public class MedicineOrder {
     private Double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "medicine_order_list",referencedColumnName = "id",nullable = false)
     @JsonIgnore
     private MedicineOrderList medicineOrderList;
 
     public MedicineOrder() {
     }
 
-    public MedicineOrder(Medicine medicine, Integer quantity, Double price) {
+    public MedicineOrder(Medicine medicine, Integer quantity, Double price, MedicineOrderList medicineOrderList) {
         this.medicine = medicine;
         this.quantity = quantity;
         this.price = price;
+        this.medicineOrderList = medicineOrderList;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

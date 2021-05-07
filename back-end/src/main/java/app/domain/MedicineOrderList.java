@@ -2,6 +2,7 @@ package app.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,9 +10,9 @@ import java.util.List;
 public class MedicineOrderList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    private  Long id;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MedicineOrder> order;
 
     @Column(name = "end_time", nullable = false)
@@ -27,9 +28,10 @@ public class MedicineOrderList {
         this.order = order;
         this.endDate = endDate;
         this.price = price;
+        this.order = new ArrayList<>();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
