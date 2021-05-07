@@ -167,5 +167,8 @@ insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_star
 values('lek2', 'abc', 320, '2021-04-21 13:00:00');
 insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
 values('lek4', 'abc', 320, '2021-04-21 13:00:00');
---insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
---insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-
+
+--MEDICINE ORDER
+insert into medicine_order_list (end_time, price) values ('2021-04-28', 600);
+insert into medicine_order(medicine, quantity, price, medicine_order_list) values ('lek1', 2, 600, 1);
+
