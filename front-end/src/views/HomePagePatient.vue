@@ -57,7 +57,8 @@
       <AppointmenPharmacist v-if="show_menu==='appointment'"/>
       <PatientAccount v-if="show_menu==='acoount'"/>
       <MedicineOrder v-if="show_menu==='medicineOrder'"/>
-      
+      <MedicineList v-if="show_menu==='MedicineList'"/>
+         
     </v-main>
 
   </v-card>
@@ -69,6 +70,7 @@
   import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
   import PatientAccount from '@/components/PatientAccount'
   import MedicineOrder from '@/components/patient/MedicineOrder.vue'
+  import MedicineList from '@/components/patient/MedicineList.vue'
   export default {
     name: "HomePagePatient",
     components: {
@@ -77,6 +79,7 @@
       AppointmenPharmacist,
       PatientAccount, 
       MedicineOrder,
+      MedicineList,
     },
     props: {
     expandOnHover: {
@@ -122,7 +125,7 @@
       {
         icon: "mdi-plus",
         title: "Allegries",
-        to: "allegries",
+        to: "MedicineList",
       },
       {
         icon: "mdi-emoticon-angry-outline",
