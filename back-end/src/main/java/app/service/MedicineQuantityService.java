@@ -16,6 +16,10 @@ public class MedicineQuantityService {
         return medicineQuantityRepository.findMedicineQuantitiesByPharmacyRegNo(regNo);
     }
 
+    public MedicineQuantity findMedicineQuantityByPharmacyRegNo(String regNo, String code) {
+        return medicineQuantityRepository.findMedicineQuantityByPharmacy(regNo, code);
+    }
+
     public void deleteMedicineQuantityByPharmacy(String regNo, String code) {
         medicineQuantityRepository.deleteMedicineQuantityByPharmacy(regNo, code);
     }

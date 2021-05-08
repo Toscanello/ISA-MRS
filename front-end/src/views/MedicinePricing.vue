@@ -69,7 +69,7 @@ export default {
         inactivePricings() {
             return this.pastPricings.filter(function(pricing) {
                 return pricing.pricingEnd != null
-            })
+            }).sort((a, b) => (a.pricingEnd > b.pricingEnd) ? -1 : 1)
         },
         startDateTime() {
             return this.startDate + ' ' + '00:00'
@@ -90,6 +90,11 @@ export default {
     },
     methods: {
         submitPricing() {
+            if (this.startDateTime < this.currentPricing.pricingStart) {
+                alert('Novi cenovnik ne može početi pre trenutnog!')
+                return
+            }
+            
             alert('Ovaj lek će imati cenu ' + this.price + ' počevši od datuma ' + this.startDate)
 
             let pricing = {
@@ -109,6 +114,7 @@ export default {
             .then(response => {
                 alert('Uspešno promenjen cenovnik leka')
                 console.log(response.data)
+                this.$router.go()
             })
             .catch(response => {
                 console.log(response.data)
