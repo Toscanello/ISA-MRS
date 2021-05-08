@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -38,4 +39,11 @@ public interface MedicinePricingRepository extends JpaRepository<MedicinePricing
             nativeQuery = true
     )
     public void deleteMedicinePricingByPharmacyRegNo(String regNo, String code);
+
+    @Query(
+            value="select * from medicine_pricing mp where (mp.pricing_start <= ?1 and mp.pricing_end is null)" +
+                    "or (mp.pricing_start <= ?1 and mp.pricing_end >= ?1)",
+            nativeQuery = true
+    )
+    public List<MedicinePricing> findMedicinePricingsByDate(LocalDateTime currentDateTime);
 }

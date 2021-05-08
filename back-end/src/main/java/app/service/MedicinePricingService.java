@@ -6,6 +6,7 @@ import app.repository.MedicinePricingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,5 +32,9 @@ public class MedicinePricingService {
 
     public void deletePricingFromPharmacy(String regNo, String code) {
         medicinePricingRepository.deleteMedicinePricingByPharmacyRegNo(regNo, code);
+    }
+
+    public List<MedicinePricing> findMedicinePricingsByDate(){
+        return medicinePricingRepository.findMedicinePricingsByDate(LocalDateTime.now());
     }
 }

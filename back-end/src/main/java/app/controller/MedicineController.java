@@ -98,4 +98,14 @@ public class MedicineController {
         medicineQuantityService.deleteMedicineQuantityByPharmacy(regNo, code);
         return new ResponseEntity<>("Uspešno obrisan lek iz apoteke", HttpStatus.OK);
     }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicinePricingDTO>>
+    getMedicinePricingsDate() {
+        List<MedicinePricing> pricings = medicinePricingService.findMedicinePricingsByDate();
+        List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
+        for (MedicinePricing mp : pricings)
+            pricingDTOS.add(new MedicinePricingDTO(mp));
+        return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
+    }
 }
