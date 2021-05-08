@@ -14,7 +14,7 @@
       ></v-date-picker>
     </v-row>
     <v-row justify="center"> 
-        <v-btn>
+        <v-btn @click="onScheduleClick">
             Submit
         </v-btn>
     </v-row>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "Vaccation",
   data() {
@@ -29,6 +30,21 @@ export default {
       date: [],
     };
   },
+  methods:{
+    onScheduleClick:function(){
+      let vaccation={
+        medicalWorkerId: `${localStorage.getItem('korisnik')}@gmail.com`,
+        startDate: this.date[0],
+        endDate: this.date[1],
+        status: 'STANDBY'
+      };
+      if(this.date.length==2){
+        console.log(vaccation);
+        axios.post('http://localhost:9090/api/vaccation/addVaccation',vaccation);
+        this.$emit("clicked");
+      }
+    }
+  }
 };
 </script>
 

@@ -159,6 +159,8 @@ values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
 values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 12:15:00', '2021-04-06 12:45:00', false);
 
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');
 
 -- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
 -- values ('abc', 'lek1', 2);

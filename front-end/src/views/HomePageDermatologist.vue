@@ -42,7 +42,7 @@
     </v-app-bar>
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
-      <Vaccation v-if="show_menu==='vaccation'"/>
+      <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
     </v-main>
   </v-container>
 </template>
@@ -108,6 +108,10 @@ export default {
       this.show_menu=param;
       this.drawer=false;
     },
+    onVaccationClick:function(){
+      this.show_menu = "patients";
+      this.drawer = false;
+    }
   }
 };
 </script>

@@ -44,7 +44,7 @@
       <PatientList v-if="show_menu==='patients'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
       <PharmacistNewAppointment v-if="show_menu==='appointment'" @clicked="onScheduleClick"/>
-      <Vaccation v-if="show_menu==='vaccation'"/>
+      <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
     </v-main>
   </v-container>
 </template>
@@ -123,6 +123,10 @@ export default {
     onScheduleClick:function(check){
       this.show_menu=check;
       this.drawer=false;
+    },
+    onVaccationClick:function(){
+      this.show_menu = "patients";
+      this.drawer = false;
     }
   }
 };
