@@ -1,5 +1,6 @@
 package app.service;
 
+import app.domain.MedicineOrder;
 import app.domain.Patient;
 import app.domain.Pharmacy;
 import app.dto.PatientDTO;

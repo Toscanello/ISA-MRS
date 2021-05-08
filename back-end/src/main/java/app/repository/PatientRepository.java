@@ -1,5 +1,6 @@
 package app.repository;
 
+import app.domain.MedicineOrder;
 import app.domain.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

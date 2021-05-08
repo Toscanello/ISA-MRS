@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "medicine_order")
@@ -23,13 +27,18 @@ public class MedicineOrder {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="patient_id",referencedColumnName = "email",nullable = false)
+    private Patient patient;
+
     public MedicineOrder() {
     }
 
-    public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price) {
+    public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price, Patient patient) {
         this.medicine = medicine;
         this.quantity = quantity;
         this.price = price;
+        this.patient = patient;
     }
 
     public Long getId() {
@@ -58,5 +67,13 @@ public class MedicineOrder {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

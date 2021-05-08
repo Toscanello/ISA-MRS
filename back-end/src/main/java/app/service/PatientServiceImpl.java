@@ -1,9 +1,6 @@
 package app.service;
 
-import app.domain.Address;
-import app.domain.Location;
-import app.domain.Patient;
-import app.domain.Pharmacy;
+import app.domain.*;
 import app.dto.PatientDTO;
 import app.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
