@@ -26,5 +26,9 @@ public class PharmacyService {
         return pharmacyRepository.findPharmacyPharmacistWorkHour(start, end, localDate);
     }
 
+    public Pharmacy getPharmacyByAdmin(String email) {
+        return pharmacyRepository.findPharmacyByAdmin(email);
+    }
+
     public Pharmacy save(Pharmacy p) { return pharmacyRepository.save(p); }
 }

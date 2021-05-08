@@ -49,6 +49,9 @@ const routes = [
         else if (role == 'ROLE_SYSADMIN') {
           next({name: 'SystemAdminHome'})
         }
+        else if (role == 'ROLE_PH_ADMIN') {
+          next({name: 'PharmacyAdminHome'})
+        }
         else 
           next({name: 'Login'})
     }
