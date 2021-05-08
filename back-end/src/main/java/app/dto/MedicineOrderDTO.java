@@ -1,25 +1,26 @@
 package app.dto;
 
 import app.domain.MedicineOrder;
-import app.domain.MedicinePricing;
-import app.domain.Patient;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class MedicineOrderDTO {
-    private  Long id;
+    private Long id;
     private MedicinePricingDTO medicine;
     private Integer quantity;
     private Double price;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public MedicineOrderDTO() {
     }
 
     public MedicineOrderDTO(MedicineOrder medicineOrder) {
+        this.id = medicineOrder.getId();
         this.medicine = new MedicinePricingDTO(medicineOrder.getMedicine());
         this.quantity = medicineOrder.getQuantity();
         this.price = medicineOrder.getPrice();
+        this.startTime = medicineOrder.getStartTime();
+        this.endTime = medicineOrder.getEndTime();
     }
 
     public Long getId() {
@@ -48,5 +49,21 @@ public class MedicineOrderDTO {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

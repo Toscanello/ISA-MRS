@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,14 +32,23 @@ public class MedicineOrder {
     @JoinColumn(name="patient_id",referencedColumnName = "email",nullable = false)
     private Patient patient;
 
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
+
     public MedicineOrder() {
     }
 
-    public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price, Patient patient) {
+    public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price, Patient patient,
+                         LocalDateTime startTime, LocalDateTime endTime) {
         this.medicine = medicine;
         this.quantity = quantity;
         this.price = price;
         this.patient = patient;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Long getId() {
@@ -75,5 +85,21 @@ public class MedicineOrder {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

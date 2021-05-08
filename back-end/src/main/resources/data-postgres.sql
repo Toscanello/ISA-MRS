@@ -169,5 +169,17 @@ insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_star
 values('lek4', 'abc', 320, '2021-04-21 13:00:00');
 
 --MEDICINE ORDER
-insert into medicine_order(medicine, quantity, price, patient_id) values (1, 2, 600, 'ika@gmail.com');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 2, 600,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-21 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 3, 900,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-11 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (2, 3, 960,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-29 12:00:00');
+
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 2, 600,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-21 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 3, 900,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-16 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (2, 3, 960,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-29 12:00:00');
 
