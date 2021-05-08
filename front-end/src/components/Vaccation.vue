@@ -1,5 +1,8 @@
 <template>
   <div>
+    <v-row class="head" justify="center" style="margin-top:5px;">
+      Vaccation form
+    </v-row>
     <v-row justify="center">
       <v-date-picker
         v-model="date"
@@ -31,6 +34,11 @@ export default {
 
 <style scoped>
 .row {
-  margin-top: 100px;
+  margin-top: 50px;
+}
+.head{
+  font: bold;
+  color: rgb(0, 140, 255);
+  font-size: 50px;
 }
 </style>

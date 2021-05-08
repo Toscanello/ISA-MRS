@@ -42,17 +42,20 @@
     </v-app-bar>
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
+      <Vaccation v-if="show_menu==='vaccation'"/>
     </v-main>
   </v-container>
 </template>
 
 <script>
 import PatientList from "@/components/PatientList.vue";
+import Vaccation from '@/components/Vaccation.vue';
 
 export default {
   name: "HomePageDermatologist",
   components: {
-    PatientList
+    PatientList,
+    Vaccation
   },
   props: {
     expandOnHover: {
@@ -86,9 +89,9 @@ export default {
         to: "patients",
       },
       {
-        icon: "mdi-plus",
+        icon: "mdi-airplane-takeoff",
         title: "Vaccation",
-        to: "patients",
+        to: "vaccation",
       },
       {
         icon: "mdi-plus",

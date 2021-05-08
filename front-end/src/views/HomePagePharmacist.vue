@@ -44,6 +44,7 @@
       <PatientList v-if="show_menu==='patients'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
       <PharmacistNewAppointment v-if="show_menu==='appointment'" @clicked="onScheduleClick"/>
+      <Vaccation v-if="show_menu==='vaccation'"/>
     </v-main>
   </v-container>
 </template>
@@ -52,13 +53,15 @@
 import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
 import PharmacistNewAppointment from "@/components/PharmacistNewAppointment.vue";
+import Vaccation from "@/components/Vaccation.vue";
 
 export default {
   name: "HomePagePharmacist",
   components: {
     PatientList,
     PharmacistCalendar,
-    PharmacistNewAppointment
+    PharmacistNewAppointment,
+    Vaccation
   },
   props: {
     expandOnHover: {
@@ -97,9 +100,9 @@ export default {
         to: "patients",
       },
       {
-        icon: "mdi-plus",
+        icon: "mdi-airplane-takeoff",
         title: "Vaccation",
-        to: "patients",
+        to: "vaccation",
       },
       {
         icon: "mdi-plus",
