@@ -169,6 +169,5 @@ insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_star
 values('lek4', 'abc', 320, '2021-04-21 13:00:00');
 
 --MEDICINE ORDER
-insert into medicine_order_list (end_time, price) values ('2021-04-28', 600);
-insert into medicine_order(medicine, quantity, price, medicine_order_list) values ('lek1', 2, 600, 1);
+insert into medicine_order(medicine, quantity, price) values (1, 2, 600);
 

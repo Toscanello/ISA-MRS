@@ -15,7 +15,7 @@ public class MedicineOrder {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medicine")
     @NotNull
-    private Medicine medicine;
+    private MedicinePricing medicine;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -23,38 +23,24 @@ public class MedicineOrder {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "medicine_order_list",referencedColumnName = "id",nullable = false)
-    @JsonIgnore
-    private MedicineOrderList medicineOrderList;
-
     public MedicineOrder() {
     }
 
-    public MedicineOrder(Medicine medicine, Integer quantity, Double price, MedicineOrderList medicineOrderList) {
+    public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price) {
         this.medicine = medicine;
         this.quantity = quantity;
         this.price = price;
-        this.medicineOrderList = medicineOrderList;
     }
 
     public Long getId() {
         return id;
     }
 
-    public MedicineOrderList getMedicineOrderList() {
-        return medicineOrderList;
-    }
-
-    public void setMedicineOrderList(MedicineOrderList medicineOrderList) {
-        this.medicineOrderList = medicineOrderList;
-    }
-
-    public Medicine getMedicine() {
+    public MedicinePricing getMedicine() {
         return medicine;
     }
 
-    public void setMedicine(Medicine medicine) {
+    public void setMedicine(MedicinePricing medicine) {
         this.medicine = medicine;
     }
 
