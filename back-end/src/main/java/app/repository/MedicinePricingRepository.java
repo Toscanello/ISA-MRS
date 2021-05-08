@@ -13,21 +13,18 @@ import java.util.List;
 @Repository
 public interface MedicinePricingRepository extends JpaRepository<MedicinePricing, Long> {
     @Query(
-            value="select * from medicine_pricing mp where mp.pharmacy_reg_no = ?1",
-            nativeQuery = true
+            value="select mp from MedicinePricing mp where mp.pharmacy.regNo = ?1"
     )
     public List<MedicinePricing> findMedicinePricingsByPharmacyRegNo(String regNo);
 
     @Query(
-            value="select * from medicine_pricing mp where mp.pharmacy_reg_no = ?1 and mp.medicine_code = ?2",
-            nativeQuery = true
+            value="select mp from MedicinePricing mp where mp.pharmacy.regNo = ?1 and mp.medicine.code = ?2"
     )
     public List<MedicinePricing> findMedicinePricingsByCodeForPharmacy(String regNo, String code);
 
     @Query(
-            value="select * from medicine_pricing mp " +
-                    "where mp.pharmacy_reg_no = ?1 and mp.medicine_code = ?2 and mp.pricing_end is NULL",
-            nativeQuery = true
+            value="select mp from MedicinePricing mp " +
+                    "where mp.pharmacy.regNo = ?1 and mp.medicine.code = ?2 and mp.pricingEnd is NULL"
     )
     public MedicinePricing findActivePricingByCodeForPharmacy(String regNo, String code);
 

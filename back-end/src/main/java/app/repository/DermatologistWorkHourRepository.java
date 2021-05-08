@@ -10,8 +10,7 @@ import java.util.List;
 @Repository
 public interface DermatologistWorkHourRepository extends JpaRepository<DermatologistWorkHour, String> {
     @Query(
-            value = "select * from d_work_hour wh where wh.dermatologist_email = ?1",
-            nativeQuery = true
+            value = "select wh from DermatologistWorkHour wh where wh.dermatologist.email = ?1"
     )
     public List<DermatologistWorkHour> findWorkHoursByDermatologistEmail(String email);
 }

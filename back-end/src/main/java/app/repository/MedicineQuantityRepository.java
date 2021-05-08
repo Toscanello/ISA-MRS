@@ -12,10 +12,14 @@ import java.util.List;
 @Repository
 public interface MedicineQuantityRepository extends JpaRepository<MedicineQuantity, Long> {
     @Query(
-            value = "select * from medicine_quantity mq where mq.pharmacy_reg_no = ?1",
-            nativeQuery = true
+            value = "select mq from MedicineQuantity mq where mq.pharmacy.regNo = ?1"
     )
     public List<MedicineQuantity> findMedicineQuantitiesByPharmacyRegNo(String regNo);
+
+    @Query(
+            value = "select mq from MedicineQuantity mq where mq.pharmacy.regNo = ?1 and mq.medicine.code = ?2"
+    )
+    public MedicineQuantity findMedicineQuantityByPharmacy(String regNo, String code);
 
     @Transactional
     @Modifying

@@ -28,14 +28,24 @@ insert into rating(pharmacy_reg_no, rating) values ('abc', 4);
 insert into rating(pharmacy_reg_no, rating) values ('aaa', 4);
 insert into rating(pharmacy_reg_no, rating) values ('bbb', 5);
 insert into rating(pharmacy_reg_no, rating) values ('ccc', 2);
---insert into medicine_quantity(medicine_code, quantity)
---values ('lek1', 2);
---insert into medicine_quantity(medicine_code, quantity)
---values ('lek2', 3);
---insert into medicine_quantity(medicine_code, quantity)
---values ('lek3', 3);
---insert into medicine_quantity(medicine_code, quantity)
---values ('lek4', 4);
+
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek1', 2);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek2', 3);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('abc', 'lek4', 1);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('aaa', 'lek3', 4);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+values ('aaa', 'lek2', 4);
+
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek1', 'abc', 300, '2021-04-21 12:00:00');
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek2', 'abc', 320, '2021-04-21 13:00:00');
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek4', 'abc', 320, '2021-04-21 13:00:00');
 
 --insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
 --values ('abc', 'lek1');
@@ -150,22 +160,22 @@ insert into appointment(patient_id,medical_worker_id,price, start_time, end_time
 values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 12:15:00', '2021-04-06 12:45:00', false);
 
 
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek1', 2);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek2', 3);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek4', 1);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek3', 4);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek2', 4);
-
-insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
-values('lek1', 'abc', 300, '2021-04-21 12:00:00');
-insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
-values('lek2', 'abc', 320, '2021-04-21 13:00:00');
-insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
-values('lek4', 'abc', 320, '2021-04-21 13:00:00');
+-- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+-- values ('abc', 'lek1', 2);
+-- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+-- values ('abc', 'lek2', 3);
+-- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+-- values ('abc', 'lek4', 1);
+-- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+-- values ('aaa', 'lek3', 4);
+-- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
+-- values ('aaa', 'lek2', 4);
+--
+-- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+-- values('lek1', 'abc', 300, '2021-04-21 12:00:00');
+-- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+-- values('lek2', 'abc', 320, '2021-04-21 13:00:00');
+-- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+-- values('lek4', 'abc', 320, '2021-04-21 13:00:00');
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
 --insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-
