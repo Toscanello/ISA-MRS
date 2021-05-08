@@ -11,6 +11,7 @@ import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
 import PharmacyDermatologists from '../views/PharmacyDermatologists.vue'
 import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.vue'
 import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
+import MedicineOrder from '@/components/patient/MedicineOrder.vue'
 import PharmacyEdit from '../views/PharmacyEdit.vue'
 import Login from '../views/Login.vue'
 import Calendar from '../views/CalendarPatient.vue'
@@ -57,6 +58,11 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: Calendar
+  },
+  {
+    path: '/medicine_order',
+    name: 'MedicineOrder',
+    component: MedicineOrder
   },
   {
     path: '/pharmacist-calendar',

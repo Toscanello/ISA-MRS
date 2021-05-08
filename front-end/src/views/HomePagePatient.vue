@@ -56,6 +56,8 @@
       <Calendar v-if="show_menu==='calendar'"/>
       <AppointmenPharmacist v-if="show_menu==='appointment'"/>
       <PatientAccount v-if="show_menu==='acoount'"/>
+      <MedicineOrder v-if="show_menu==='medicineOrder'"/>
+      
     </v-main>
 
   </v-card>
@@ -66,13 +68,15 @@
   import Calendar from '../views/CalendarPatient.vue'
   import AppointmenPharmacist from '../views/patient/AppointmenPharmacist.vue'
   import PatientAccount from '@/components/PatientAccount'
+  import MedicineOrder from '@/components/patient/MedicineOrder.vue'
   export default {
     name: "HomePagePatient",
     components: {
       PharmaciesList,
       Calendar,
       AppointmenPharmacist,
-      PatientAccount
+      PatientAccount, 
+      MedicineOrder,
     },
     props: {
     expandOnHover: {
@@ -123,7 +127,7 @@
       {
         icon: "mdi-emoticon-angry-outline",
         title: "Complaints",
-        to: "complaints",
+        to: "medicineOrder",
       },
     ],
   }),
