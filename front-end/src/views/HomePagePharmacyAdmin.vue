@@ -35,6 +35,7 @@
 <script>
 import PharmacyAdminHome from './PharmacyAdminHome.vue'
 import axios from 'axios'
+import authHeader from '../services/auth-header'
 import TokenDecoder from '../services/token-decoder'
 export default {
   components: { PharmacyAdminHome },
@@ -46,12 +47,16 @@ export default {
   },
   mounted () {
       let adminEmail = TokenDecoder.getUserEmail()
+      let path = 'http://localhost:9090/api/pharmacy/admin/' + adminEmail
+      console.log('Auth header:')
+      console.log(authHeader())
       axios
-      .get('http://localhost:9090/api/pharmacy/admin/' + adminEmail)
+      .get(path, { headers: authHeader() })
       .then(response => {
         this.pharmacy = response.data
       })
       .catch(response => {
+        console.log('HomePagePharmacyAdmin: ')
         console.log(response)
         this.$router.push('/')
       })

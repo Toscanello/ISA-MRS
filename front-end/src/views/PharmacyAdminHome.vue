@@ -77,6 +77,7 @@
 
 <script>
   import axios from 'axios'
+  import authHeader from '../services/auth-header'
   import TokenDecoder from '../services/token-decoder'
   export default {
     name: "PharmacyAdminHome",
@@ -94,12 +95,14 @@
     }),
     mounted () {
       let adminEmail = TokenDecoder.getUserEmail()
+      let path = 'http://localhost:9090/api/pharmacy/admin/' + adminEmail
       axios
-      .get('http://localhost:9090/api/pharmacy/admin/' + adminEmail)
+      .get(path, { headers: authHeader() })
       .then(response => {
         this.pharmacy = response.data
       })
       .catch(response => {
+        console.log('Admin toolbar: ')
         console.log(response)
         this.$router.push('/')
       })
