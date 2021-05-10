@@ -145,6 +145,7 @@ export default {
         if(this.dermappointments[i].duration[1]=='1')
           diff = "60";
         var newDateObj = new Date(first.getTime() + parseInt(diff)*60000);
+        
 
         this.events.push({
           name: "FreeAppointment",
