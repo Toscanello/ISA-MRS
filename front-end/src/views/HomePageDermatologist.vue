@@ -42,6 +42,7 @@
     </v-app-bar>
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
+      <DermatologistCalendar v-if="show_menu==='calendar'"/>
       <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
     </v-main>
   </v-container>
@@ -50,12 +51,14 @@
 <script>
 import PatientList from "@/components/PatientList.vue";
 import Vaccation from '@/components/Vaccation.vue';
+import DermatologistCalendar from '@/components/DermatologistCalendar.vue';
 
 export default {
   name: "HomePageDermatologist",
   components: {
     PatientList,
-    Vaccation
+    Vaccation,
+    DermatologistCalendar
   },
   props: {
     expandOnHover: {
@@ -86,7 +89,7 @@ export default {
       {
         icon: "mdi-calendar",
         title: "Calendar",
-        to: "patients",
+        to: "calendar",
       },
       {
         icon: "mdi-airplane-takeoff",
