@@ -23,6 +23,10 @@ public class Appointment {
     @JoinColumn(name="medical_worker_id",referencedColumnName = "email",nullable = false)
     private MedicalWorker medicalWorker;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no", nullable = false)
+    private Pharmacy pharmacy;
+
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -33,11 +37,13 @@ public class Appointment {
     }
 
     public Appointment(LocalDateTime startTime, LocalDateTime endTime,
-                       Patient patient, MedicalWorker medicalWorker, Double price, boolean isCanceled) {
+                       Patient patient, MedicalWorker medicalWorker, Pharmacy pharmacy,
+                       Double price, boolean isCanceled) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.patient = patient;
         this.medicalWorker = medicalWorker;
+        this.pharmacy = pharmacy;
         this.price = price;
         this.isCanceled = isCanceled;
     }
@@ -74,6 +80,14 @@ public class Appointment {
 
     public void setMedicalWorker(MedicalWorker medicalWorker) {
         this.medicalWorker = medicalWorker;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 
     public Double getPrice() {

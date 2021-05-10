@@ -15,4 +15,8 @@ public class DermatologistAppointmentService {
     public DermatologistAppointment save(DermatologistAppointment da) {
         return dermatologistAppointmentRepository.save(da);
     }
+
+    public List<DermatologistAppointment> findActiveAppointmentsByDermatologist(String email, String pharmacy){
+        return dermatologistAppointmentRepository.findFreeAppointmentsByDermatologistEmailAndPharmacy(email,pharmacy);
+    }
 }

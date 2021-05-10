@@ -46,4 +46,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             nativeQuery = true
     )
     public void cancelAppointment(Long id);
+
+    @Query(
+            value="select * from appointment a where a.medical_worker_id = ?1 and a.canceled = false and a.pharmacy_reg_no = ?2",
+            nativeQuery = true
+    )
+    List<Appointment> findActiveAppointmentsByDermatologist(String email, String pharmacy);
 }

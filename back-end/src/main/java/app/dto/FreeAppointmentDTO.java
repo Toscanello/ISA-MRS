@@ -1,5 +1,7 @@
 package app.dto;
 
+import app.domain.DermatologistAppointment;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -18,6 +20,13 @@ public class FreeAppointmentDTO {
         this.duration = duration;
         this.pharmacyRegNo = pharmacyRegNo;
         this.price = price;
+    }
+    public FreeAppointmentDTO(DermatologistAppointment a){
+        this.dermatologistEmail = a.getDermatologist().getEmail();
+        this.begin = a.getTime().toString();
+        this.duration = a.getDuration().toString();
+        this.pharmacyRegNo = a.getPharmacy().getRegNo();
+        this.price = a.getPrice();
     }
 
     public String getDermatologistEmail() {

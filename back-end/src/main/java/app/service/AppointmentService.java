@@ -33,4 +33,8 @@ public class AppointmentService {
     }
 
     public void cancelAppointment(Long id){appointmentRepository.cancelAppointment(id); }
+
+    public List<Appointment> findActiveAppointmentsByDermatologist(String email, String pharmacy) {
+        return appointmentRepository.findActiveAppointmentsByDermatologist(email, pharmacy);
+    }
 }

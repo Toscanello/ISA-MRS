@@ -140,24 +140,29 @@ values ('abc', 'derm2@gmail.com');
 insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
 values ('derm1@gmail.com', 'abc', '09:00', '17:00');
 insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
+values ('derm1@gmail.com', 'ccc', '17:30', '19:30');
+insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
 values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('ika@gmail.com','farm@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
-values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-27 18:15:00', '2021-04-27 18:45:00', false);
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled)
-values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00', false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
-values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00', false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled)
-values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 12:15:00', '2021-04-06 12:45:00', false);
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no)
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no)
+values('ika@gmail.com','farm@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29 09:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
+values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-06 09:15:00', '2021-04-06 09:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-27 10:15:00', '2021-04-27 10:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no)
+values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
+values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00', false,'abc');
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
+values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 18:15:00', '2021-04-06 18:45:00', false,'ccc');
+
+insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
+values('2021-05-18 09:15:00','00:15:00','derm1@gmail.com','abc',1000);
 
 insert into vaccation(medical_worker_id,start_date,end_date,status)
 values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');

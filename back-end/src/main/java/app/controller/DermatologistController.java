@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.domain.*;
+import app.dto.AppointmentDTO;
 import app.dto.FreeAppointmentDTO;
 import app.dto.SimpleDermatologistDTO;
 import app.service.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -88,5 +90,25 @@ public class DermatologistController {
         );
         dermatologistAppointmentService.save(da);
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
+    }
+    @GetMapping(path = "/appointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
+        List<Appointment> appointments = appointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
+
+        List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+        for (Appointment a : appointments) {
+            appointmentDTOS.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
+    }
+    @GetMapping(path = "/dermAppointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<FreeAppointmentDTO>> findAllDermAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
+        List<DermatologistAppointment> appointments = dermatologistAppointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
+
+        List<FreeAppointmentDTO> appointmentDTOS = new ArrayList<>();
+        for (DermatologistAppointment a : appointments) {
+            appointmentDTOS.add(new FreeAppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
 }
