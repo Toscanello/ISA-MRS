@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MedicinePricingDTO {
+    private Long id;
     private SimpleMedicineDTO medicineDTO;
     private SimplePharmacyDTO pharmacyDTO;
     private Double price;
@@ -14,7 +15,7 @@ public class MedicinePricingDTO {
 
     public MedicinePricingDTO() { }
 
-    public MedicinePricingDTO(SimpleMedicineDTO medicineDTO, SimplePharmacyDTO pharmacyDTO,
+    public MedicinePricingDTO(Long id, SimpleMedicineDTO medicineDTO, SimplePharmacyDTO pharmacyDTO,
                               Double price, String pricingStart, String pricingEnd) {
         this.medicineDTO = medicineDTO;
         this.pharmacyDTO = pharmacyDTO;
@@ -24,6 +25,7 @@ public class MedicinePricingDTO {
     }
 
     public MedicinePricingDTO(MedicinePricing mp) {
+        this.id = mp.getId();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm");
         this.medicineDTO = new SimpleMedicineDTO(mp.getMedicine());
         this.pharmacyDTO = new SimplePharmacyDTO(mp.getPharmacy());
@@ -70,5 +72,13 @@ public class MedicinePricingDTO {
 
     public void setPricingEnd(String pricingEnd) {
         this.pricingEnd = pricingEnd;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -1,7 +1,9 @@
 package app.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,6 +12,9 @@ public class Patient extends User {
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<Appointment>();
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<MedicineOrder> orders = new HashSet<>();
 
     public Patient() {
     }
@@ -24,5 +29,13 @@ public class Patient extends User {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Set<MedicineOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<MedicineOrder> orders) {
+        this.orders = orders;
     }
 }

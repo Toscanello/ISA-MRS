@@ -4,13 +4,11 @@ import app.domain.Medicine;
 import app.domain.MedicinePricing;
 import app.domain.MedicineQuantity;
 import app.domain.Pharmacy;
+import app.dto.MedicineOrderDTO;
 import app.dto.MedicinePricingDTO;
 import app.dto.SimpleMedicineDTO;
 import app.dto.SimplePharmacyDTO;
-import app.service.MedicinePricingService;
-import app.service.MedicineQuantityService;
-import app.service.MedicineService;
-import app.service.PharmacyService;
+import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -37,6 +36,9 @@ public class MedicineController {
 
     @Autowired
     PharmacyService pharmacyService;
+
+    @Autowired
+    MedicineOrderService medicineOrderService;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimpleMedicineDTO>> getMedicineByPharmacy(@PathVariable String regNo) {
@@ -97,5 +99,42 @@ public class MedicineController {
         //medicinePricingService.deletePricingFromPharmacy(regNo, code);
         medicineQuantityService.deleteMedicineQuantityByPharmacy(regNo, code);
         return new ResponseEntity<>("Uspešno obrisan lek iz apoteke", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicinePricingDTO>>
+    getMedicinePricingsDate() {
+        List<MedicinePricing> pricings = medicinePricingService.findMedicinePricingsByDate();
+        List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
+        for (MedicinePricing mp : pricings)
+            pricingDTOS.add(new MedicinePricingDTO(mp));
+        return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/order/{userEmail}/{quantity}/{endTime}",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    addNewOrder(@PathVariable String userEmail, @PathVariable int quantity,  @PathVariable String endTime, @RequestBody MedicinePricingDTO medicinePricingDTO) {
+
+        Set<String> medIds = medicinePricingService.findMedicineIDByMedicinePricingID(medicinePricingDTO.getId());
+
+        String medId = medIds.iterator().next();
+        String regNo = medicinePricingDTO.getPharmacyDTO().getRegNo();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm");
+
+        int medicineQuantity = medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, medicinePricingDTO.getMedicineDTO().getCode());
+        medicineQuantityService.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, medId, medicineQuantity-quantity);
+
+        medicineOrderService.insertNewOrder(medicinePricingDTO.getId(),quantity,quantity*medicinePricingDTO.getPrice(),
+                userEmail, LocalDateTime.now(), LocalDateTime.parse(endTime, formatter));
+
+        return new ResponseEntity<>("mq", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/quantity/{regNo}/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer>
+    getMedicineQuantityByPharmacyRegNoAndMedicineCode(@PathVariable String regNo, @PathVariable String code) {
+        int quantity = medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code);
+        return new ResponseEntity<>(quantity, HttpStatus.OK);
     }
 }

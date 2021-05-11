@@ -1,11 +1,14 @@
 package app.controller;
 
 import app.domain.Appointment;
+import app.domain.MedicineOrder;
 import app.domain.Patient;
 import app.domain.Pharmacy;
 import app.dto.AppointmentDTO;
+import app.dto.MedicineOrderDTO;
 import app.dto.PatientDTO;
 import app.service.AppointmentService;
+import app.service.MedicineOrderService;
 import app.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,9 @@ public class PatientController {
 
     @Autowired
     AppointmentService appointmentService;
+
+    @Autowired
+    private MedicineOrderService medicineOrderService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getPatients() {
@@ -54,9 +60,10 @@ public class PatientController {
 
     @GetMapping(path = "/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> findAllStudentsByMedicalEmail(@PathVariable String email){
-        List<Patient>patients = service.findAllPatientsByMedicalEmail(email);
 
+        List<Patient>patients = service.findAllPatientsByMedicalEmail(email);
         List<PatientDTO> patientDTOS = new ArrayList<>();
+
         for (Patient p : patients) {
             patientDTOS.add(new PatientDTO(p));
         }
@@ -66,8 +73,8 @@ public class PatientController {
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
 
         List<Appointment> appointments = appointmentService.findActiveAppointmentsByPatientId(email);
-
         List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+
         for (Appointment a : appointments) {
             appointmentDTOS.add(new AppointmentDTO(a));
         }
@@ -77,12 +84,14 @@ public class PatientController {
     @PostMapping(value = "/cancelAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO id){
+
         appointmentService.cancelAppointment(id.getId());
         return new ResponseEntity<>("Canceled appointment", HttpStatus.OK);
     }
 
     @GetMapping(path = "/patient/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDTO> getPatientByEmail(@PathVariable String email){
+
         Patient patient = service.findOneByEmail(email);
         PatientDTO patientDTO = new PatientDTO(patient);
         return new ResponseEntity<>(patientDTO,HttpStatus.OK);
@@ -90,9 +99,29 @@ public class PatientController {
 
     @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDTO>
-    editPharmacy(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+    editPatient(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+
         Patient patient = service.findOneByEmail(email);
         service.save(patient, editedPatient);
         return new ResponseEntity<>(editedPatient, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/orders/patient/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicineOrderDTO>> getPatientsOrders(@PathVariable String email){
+
+        List<MedicineOrder> orders = medicineOrderService.findPatientsMedicineOrders(email);
+        List<MedicineOrderDTO> orderDTOS = new ArrayList<>();
+
+        for (MedicineOrder mo : orders) {
+            orderDTOS.add(new MedicineOrderDTO(mo));
+        }
+        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "add/order/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    newOrder(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+        System.out.println(editedPatient);
+        return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
 }
