@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface MedicinePricingRepository extends JpaRepository<MedicinePricing, Long> {
@@ -46,4 +47,10 @@ public interface MedicinePricingRepository extends JpaRepository<MedicinePricing
             nativeQuery = true
     )
     public List<MedicinePricing> findMedicinePricingsByDate(LocalDateTime currentDateTime);
+
+    @Query(
+            value="select mp.medicine_code from medicine_pricing mp where mp.id = ?1",
+            nativeQuery = true
+    )
+    public Set<String> findMedicineIDByMedicinePricingID(long medicinePricingId);
 }

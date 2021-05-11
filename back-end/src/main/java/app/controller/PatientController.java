@@ -99,7 +99,7 @@ public class PatientController {
 
     @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDTO>
-    editPharmacy(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+    editPatient(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
 
         Patient patient = service.findOneByEmail(email);
         service.save(patient, editedPatient);
@@ -116,5 +116,12 @@ public class PatientController {
             orderDTOS.add(new MedicineOrderDTO(mo));
         }
         return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "add/order/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    newOrder(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
+        System.out.println(editedPatient);
+        return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
 }

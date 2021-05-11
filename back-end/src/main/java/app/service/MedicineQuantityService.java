@@ -19,4 +19,16 @@ public class MedicineQuantityService {
     public void deleteMedicineQuantityByPharmacy(String regNo, String code) {
         medicineQuantityRepository.deleteMedicineQuantityByPharmacy(regNo, code);
     }
+
+    public MedicineQuantity findById(long id){
+        return medicineQuantityRepository.findById(id);
+    }
+
+    public int findMedicineQuantityByPharmacyRegNoAndMedicineCode(String regNo, String code){
+        return medicineQuantityRepository.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code);
+    }
+
+    public void updateMedicineQuantityByPharmacyRegNoAndMedicineCode(String regNo, String code, int newQuantity){
+        medicineQuantityRepository.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code, newQuantity);
+    }
 }

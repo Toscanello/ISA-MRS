@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MedicinePricingService {
@@ -36,5 +37,9 @@ public class MedicinePricingService {
 
     public List<MedicinePricing> findMedicinePricingsByDate(){
         return medicinePricingRepository.findMedicinePricingsByDate(LocalDateTime.now());
+    }
+
+    public Set<String> findMedicineIDByMedicinePricingID(long medicinePricingId){
+        return medicinePricingRepository.findMedicineIDByMedicinePricingID(medicinePricingId);
     }
 }

@@ -1,5 +1,3 @@
-
-
 <template>
   <v-data-table
     :headers="headers"
@@ -57,6 +55,17 @@
                       label="Fat (g)"
                     ></v-text-field>
                   </v-col>
+
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="editedItem.endTime"
+                      label="Fat (g)"
+                    ></v-text-field>
+                  </v-col>
                   
                 </v-row>
               </v-container>
@@ -111,6 +120,7 @@ import TokenDecoder from '../../services/token-decoder'
         { text: 'Pharmacy', value: 'medicine.pharmacyDTO.name' },
         { text: 'Quantity', value: 'quantity' },
         { text: 'Price', value: 'price' },
+        { text: 'Date', value: 'endTime' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],
@@ -156,7 +166,7 @@ import TokenDecoder from '../../services/token-decoder'
             let path = "http://localhost:9090/patients/orders/patient/" + usersEmail;
             axios.get(path).then((response) => {
                 this.orders = response.data;
-                console.log(this.user)
+                console.log(this.orders)
             })
     },
 

@@ -64,8 +64,24 @@
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="headline">Cofirm order</v-card-title>
-            <label for="quantity">Quantity: </label>
+            
+            
+            <label for="quantity"> <b>Datum preuzimanja rezervacije </b> </label>
+            <br>
+            
+            <template>
+                <v-date-picker
+                  v-model="picker"
+                  width="100%"
+                  
+                ></v-date-picker>
+            </template>
+
+            <label for="quantity"> <b>Kolicina leka: </b> </label>
             <input type="number" id="quantity" name="quantity" min="1" max="5" value="1">
+            <br>
+            
+            
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -96,9 +112,11 @@
 </template>
 
 <script>
+  import TokenDecoder from '../../services/token-decoder'
   import axios from "axios";
   export default {
     data: () => ({
+      picker: new Date().toISOString().substr(0, 10),
       dialog: false,
       dialogDelete: false,
       headers: [
@@ -112,9 +130,10 @@
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       orders: [],
-      editedIndex: -1,
+      selectedItem: null,
+      medicineQuantity: 0,
       editedItem: {
-       id:0,
+       id: 0,
         medicineDTO
         :{code:"",name:"",type:"",manufacturer:"",drugForm:"",composition:"",description:"",category:""},
         pharmacyDTO:{regNo:"",name:"",
@@ -143,32 +162,45 @@
             let path = "http://localhost:9090/api/medicine/all" ;
             axios.get(path).then((response) => {
                 this.orders = response.data;
-                console.log(this.orders)
             })
     },
 
     methods: {
 
       deleteItem (item) {
-          console.log(item)
-          
-        //this.editedIndex = this.desserts.indexOf(item)
-        //this.editedItem = Object.assign({}, item)
+        this.selectedItem = item
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-          console.log(document.getElementById("quantity").value)
-        //this.desserts.splice(this.editedIndex, 1)
+        
+
+        let path = "http://localhost:9090/api/medicine/quantity/" +  this.selectedItem.pharmacyDTO.regNo + '/' + this.selectedItem.medicineDTO.code;
+        axios.get(path).then((response) => {
+
+            let quantity = document.getElementById("quantity").value
+            let usersEmail = TokenDecoder.getUserEmail()
+            
+            if(response.data >= quantity){
+              console.log(this.picker + '17:00')
+              axios
+              .post('http://localhost:9090/api/medicine/order/' + usersEmail + '/' + quantity + '/' + this.picker + ' 17:00', this.selectedItem )
+              .then(response => {
+                console.log(response)
+              })
+            }else{
+              alert('Prevelika kolicina lijeka')
+            }
+        })
+
+        
+
         this.closeDelete()
       },
 
       closeDelete () {
+        
         this.dialogDelete = false
-        //this.$nextTick(() => {
-          //this.editedItem = Object.assign({}, this.defaultItem)
-          //this.editedIndex = -1
-       //})
       },
 
     },
