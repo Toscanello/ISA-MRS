@@ -34,6 +34,12 @@ public class MedicineOrderService {
     public void insertNewOrder(Long medicinePricingId, int quantity,
                                double price, String patientEmail, LocalDateTime start, LocalDateTime end){
 
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("servis.apoteka@gmail.com");
+        message.setTo("klimentaj99@gmail.com");
+        message.setSubject("Rezervacija lijeka");
+        message.setText("Narucen je lijek " + Long.toString(medicinePricingId));
+        emailSender.send(message);
         medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
     }
 }
