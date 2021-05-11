@@ -167,22 +167,9 @@ values('2021-05-18 09:15:00','00:15:00','derm1@gmail.com','abc',1000);
 insert into vaccation(medical_worker_id,start_date,end_date,status)
 values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');
 
--- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
--- values ('abc', 'lek1', 2);
--- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
--- values ('abc', 'lek2', 3);
--- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
--- values ('abc', 'lek4', 1);
--- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
--- values ('aaa', 'lek3', 4);
--- insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
--- values ('aaa', 'lek2', 4);
---
--- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
--- values('lek1', 'abc', 300, '2021-04-21 12:00:00');
--- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
--- values('lek2', 'abc', 320, '2021-04-21 13:00:00');
--- insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
--- values('lek4', 'abc', 320, '2021-04-21 13:00:00');
---insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('pera@gmail.com','derm@gmail.com',1000, "2011-10-30 23:59:30", "2011-10-30 23:59:30");
---insert into appointment(patient_id,medical_worker_id,price, startTime, endTime)values('mika@gmail.com','farm@gmail.com',1000, "2011-10-30 23:59:30", "2011-
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 2, 600,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-21 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 3, 900,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-16 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (2, 3, 960,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-29 12:00:00');
