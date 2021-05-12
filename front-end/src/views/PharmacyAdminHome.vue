@@ -25,11 +25,11 @@
         <v-list-item-group
           v-model="group"
         >
-          <v-list-item to="/edit/pharmacy/abc">
+          <v-list-item :to="'/edit/pharmacy/' + pharmacy.regNo">
             <v-list-item-title style="color:Tomato;">Izmeni apoteku</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/dermatologists/pharmacy/abc">
+          <v-list-item :to="'/dermatologists/pharmacy/' + pharmacy.regNo">
             <v-list-item-title style="color:Tomato;">Novi termin (dermatolog)</v-list-item-title>
           </v-list-item>
 
@@ -45,7 +45,7 @@
             <v-list-item-title style="color:Tomato;">Dermatolozi</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/pricing/pharmacy/abc">
+          <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
             <v-list-item-title style="color:Tomato;">Lekovi</v-list-item-title>
           </v-list-item>
 
@@ -72,13 +72,13 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    
   </div>
-  
-  
 </template>
 
 <script>
+  import axios from 'axios'
+  import authHeader from '../services/auth-header'
+  import TokenDecoder from '../services/token-decoder'
   export default {
     name: "PharmacyAdminHome",
     components: { },
@@ -91,6 +91,21 @@
     data: () => ({
       drawer: false,
       group: null,
+      pharmacy: { },
     }),
+    mounted () {
+      let adminEmail = TokenDecoder.getUserEmail()
+      let path = 'http://localhost:9090/api/pharmacy/admin/' + adminEmail
+      axios
+      .get(path, { headers: authHeader() })
+      .then(response => {
+        this.pharmacy = response.data
+      })
+      .catch(response => {
+        console.log('Admin toolbar: ')
+        console.log(response)
+        this.$router.push('/')
+      })
+    },
   }
 </script>

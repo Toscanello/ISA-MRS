@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePagePharmacist from '../views/HomePagePharmacist.vue'
 import HomePageDermatologist from '../views/HomePageDermatologist.vue'
-import PharmacyAdminHome from '../views/PharmacyAdminHome.vue'
+import HomePagePharmacyAdmin from '../views/HomePagePharmacyAdmin.vue'
 import Pharmacy from '../views/Pharmacy.vue'
 import HomePagePatient from '../views/HomePagePatient.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
@@ -49,6 +49,9 @@ const routes = [
         }
         else if (role == 'ROLE_SYSADMIN') {
           next({name: 'SystemAdminHome'})
+        }
+        else if (role == 'ROLE_PH_ADMIN') {
+          next({name: 'HomePagePharmacyAdmin'})
         }
         else 
           next({name: 'Login'})
@@ -109,17 +112,38 @@ const routes = [
   },
   {
     path: '/pharmacyadmin',
-    name: 'PharmacyAdminHome',
-    component: PharmacyAdminHome
+    name: 'HomePagePharmacyAdmin',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
+    component: HomePagePharmacyAdmin
   },
   {
     path: '/dermatologists/pharmacy/:regNo',
     name: 'PharmacyDermatologists',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: PharmacyDermatologists
   },
   {
     path: '/dermatologists/:email/:regNo/appointment',
     name: 'DermatologistAppointmentForm',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: DermatologistAppointmentForm
   },
   {
@@ -130,16 +154,37 @@ const routes = [
   {
     path: '/edit/pharmacy/:regNo',
     name: 'PharmacyEdit',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: PharmacyEdit
   },
   {
     path: '/pricing/pharmacy/:regNo',
     name: 'MedicineList',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: MedicineList
   },
   {
     path: '/pricing/medicine/:regNo/:code',
     name: 'MedicinePricing',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: MedicinePricing
   }
 ]

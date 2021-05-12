@@ -87,9 +87,14 @@ values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zq
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('phadmin@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_PHARMACIST');
 INSERT INTO ROLE (name) VALUES ('ROLE_DERMATOLOGIST');
+INSERT INTO ROLE (name) VALUES ('ROLE_PH_ADMIN');
+
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('ika@gmail.com', 1);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('pera@gmail.com', 1);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('mika95455@gmail.com', 1);
@@ -101,6 +106,8 @@ INSERT INTO USER_ROLE (user_id, role_id) VALUES ('d@gmail.com', 1);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('derm1@gmail.com', 3);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('derm2@gmail.com', 3);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('farm@gmail.com', 2);
+
+INSERT INTO USER_ROLE (user_id, role_id) VALUES ('phadmin@gmail.com', 4);
 
 insert into patients(email)values('ika@gmail.com');
 insert into patients(email)values('pera@gmail.com');
@@ -115,6 +122,9 @@ insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 insert into medical_workers(email)values('farmA@gmail.com');
 insert into medical_workers(email)values('farmB@gmail.com');
+
+insert into pharmacy_admin(email, pharmacy_reg_no)
+values ('phadmin@gmail.com', 'abc');
 
 insert into work_hour(start_time,end_time,pharmacy)
 values('09:00','17:00','abc');
