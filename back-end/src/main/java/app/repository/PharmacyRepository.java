@@ -1,5 +1,6 @@
 package app.repository;
 import app.domain.DPharmacy;
+import app.domain.Dermatologist;
 import app.domain.Pharmacist;
 import app.domain.Pharmacy;
 import org.springframework.data.domain.Page;
@@ -29,5 +30,11 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
                     "(select a.pharmacy.regNo from PharmacyAdmin a where a.email = ?1)"
     )
     public Pharmacy findPharmacyByAdmin(String email);
+
+    @Query(
+            value = "select ph from Pharmacy ph join fetch ph.dermatologists ds" +
+                    " where ds.email = ?1"
+    )
+    public List<Pharmacy> findPharmacyByDermatologist(String email);
 }
 

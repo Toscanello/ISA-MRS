@@ -18,6 +18,7 @@ import Calendar from '../views/CalendarPatient.vue'
 import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
 import PharmacistCalendar from '../components/PharmacistCalendar.vue'
+import DermatologistList from '../views/dermatologistDisplay/DermatologistList.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -186,6 +187,11 @@ const routes = [
         next()
     },
     component: MedicinePricing
+  },
+  {
+    path: '/dermatologists/list/pharmacy/:regNo',
+    name: 'DermatologistList',
+    component: DermatologistList
   }
 ]
 

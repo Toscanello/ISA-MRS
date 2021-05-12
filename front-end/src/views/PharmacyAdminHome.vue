@@ -41,7 +41,7 @@
             <v-list-item-title style="color:Tomato;">Farmaceuti</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="'/dermatologists/list/pharmacy/' + pharmacy.regNo">
             <v-list-item-title style="color:Tomato;">Dermatolozi</v-list-item-title>
           </v-list-item>
 
