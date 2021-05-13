@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.*;
 import app.dto.AppointmentDTO;
+import app.dto.DetailedDermatologistDTO;
 import app.dto.FreeAppointmentDTO;
 import app.dto.SimpleDermatologistDTO;
 import app.service.*;
@@ -111,4 +112,45 @@ public class DermatologistController {
         }
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/list/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<DetailedDermatologistDTO>>
+    getPharmacyDetailedDermatologists(@PathVariable String regNo) {
+        List<Dermatologist> dermatologists = dermatologistService.findPharmacyDermatologists(regNo);
+        return createDetailedDermatologistDTO(dermatologists);
+    }
+
+    @GetMapping(value = "/list/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<DetailedDermatologistDTO>> getAllPharmacists() {
+        List<Dermatologist> dermatologists = dermatologistService.findAll();
+        return createDetailedDermatologistDTO(dermatologists);
+    }
+
+    @DeleteMapping(value = "/delete/employment/{regNo}/{email}")
+    public ResponseEntity<String>
+    deleteDermatologistFromPharmacy(@PathVariable String regNo, @PathVariable String email) {
+        List<Appointment> activeAppointments = appointmentService.findActiveAppointmentsByDermatologist(email, regNo);
+        if (activeAppointments.size() != 0)
+            return new ResponseEntity<>("Dermatologist has active appointments", HttpStatus.BAD_REQUEST);
+        pharmacyService.deleteDermatologistEmploymentFromPharmacy(regNo, email);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    public ResponseEntity<Set<DetailedDermatologistDTO>>
+    createDetailedDermatologistDTO(List<Dermatologist> dermatologists) {
+        Set<DetailedDermatologistDTO> toReturn = new HashSet<>();
+        for (Dermatologist d : dermatologists) {
+            DetailedDermatologistDTO dermatologistDTO = new DetailedDermatologistDTO(d);
+            List<Pharmacy> dermatologistPharmacies = pharmacyService.getPharmaciesByDermatologist(d.getEmail());
+            for (Pharmacy dermatologistPharmacy: dermatologistPharmacies) {
+                dermatologistDTO.getPharmacyNames().add(dermatologistPharmacy.getName());
+                dermatologistDTO.getPharmacyRegNos().add(dermatologistPharmacy.getRegNo());
+            }
+            toReturn.add(dermatologistDTO);
+        }
+
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
+
+
 }

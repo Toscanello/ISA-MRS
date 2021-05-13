@@ -16,6 +16,7 @@ import java.util.List;
 public class PharmacyService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
     public List<Pharmacy> findAll() {
         return pharmacyRepository.findAll();
     }
@@ -31,4 +32,12 @@ public class PharmacyService {
     }
 
     public Pharmacy save(Pharmacy p) { return pharmacyRepository.save(p); }
+
+    public List<Pharmacy> getPharmaciesByDermatologist(String email) {
+        return pharmacyRepository.findPharmacyByDermatologist(email);
+    }
+
+    public void deleteDermatologistEmploymentFromPharmacy(String regNo, String email) {
+        pharmacyRepository.deleteDermatologistEmploymentFromPharmacy(regNo, email);
+    }
 }

@@ -15,6 +15,10 @@ public class DermatologistService {
     @Autowired
     DermatologistRepository dermatologistRepository;
 
+    public List<Dermatologist> findAll() {
+        return dermatologistRepository.findAll();
+    }
+
     public List<Dermatologist> findPharmacyDermatologists(String regNo) {
         return dermatologistRepository.findAllDermatologistsByPharmacyRegNo(regNo);
     }

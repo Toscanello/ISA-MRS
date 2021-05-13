@@ -7,6 +7,9 @@ public class PharmacistDTO {
     private String email;
     private String name;
     private String surname;
+    private String phoneNumber;
+    private String pharmacyRegNo;
+    private String pharmacyName;
 
     public PharmacistDTO() {}
 
@@ -14,6 +17,9 @@ public class PharmacistDTO {
         this.email = p.getEmail();
         this.name = p.getName();
         this.surname = p.getSurname();
+        this.phoneNumber = p.getPhoneNumber();
+        this.pharmacyRegNo = p.getPharmacy().getRegNo();
+        this.pharmacyName = p.getPharmacy().getName();
     }
 
     public String getEmail() {
@@ -38,5 +44,29 @@ public class PharmacistDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPharmacyRegNo() {
+        return pharmacyRegNo;
+    }
+
+    public void setPharmacyRegNo(String pharmacyRegNo) {
+        this.pharmacyRegNo = pharmacyRegNo;
+    }
+
+    public String getPharmacyName() {
+        return pharmacyName;
+    }
+
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
     }
 }

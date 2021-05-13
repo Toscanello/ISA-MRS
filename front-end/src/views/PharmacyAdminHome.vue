@@ -26,43 +26,43 @@
           v-model="group"
         >
           <v-list-item :to="'/edit/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title style="color:Tomato;">Izmeni apoteku</v-list-item-title>
+            <v-list-item-title>Izmeni apoteku</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/dermatologists/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title style="color:Tomato;">Novi termin (dermatolog)</v-list-item-title>
+            <v-list-item-title>Novi termin (dermatolog)</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title style="color:Tomato;">Izveštaji</v-list-item-title>
+            <v-list-item-title>Izveštaji</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title style="color:Tomato;">Farmaceuti</v-list-item-title>
+          <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
+            <v-list-item-title>Farmaceuti</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title style="color:Tomato;">Dermatolozi</v-list-item-title>
+          <v-list-item :to="'/dermatologists/list/pharmacy/' + pharmacy.regNo">
+            <v-list-item-title>Dermatolozi</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title style="color:Tomato;">Lekovi</v-list-item-title>
+            <v-list-item-title>Lekovi</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title style="color:Tomato;">Upiti za lekove</v-list-item-title>
+            <v-list-item-title>Upiti za lekove</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title style="color:Tomato;">Narudžbenice za lekove</v-list-item-title>
+            <v-list-item-title>Narudžbenice za lekove</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title style="color:Tomato;">Nova narudžbenica</v-list-item-title>
+            <v-list-item-title>Nova narudžbenica</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title style="color:Tomato;">Akcije/Promocije</v-list-item-title>
+            <v-list-item-title>Akcije/Promocije</v-list-item-title>
           </v-list-item>
 
           <v-list-item>

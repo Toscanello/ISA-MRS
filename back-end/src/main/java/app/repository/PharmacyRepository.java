@@ -1,12 +1,16 @@
 package app.repository;
 import app.domain.DPharmacy;
+import app.domain.Dermatologist;
 import app.domain.Pharmacist;
 import app.domain.Pharmacy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.Nullable;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -29,5 +33,19 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
                     "(select a.pharmacy.regNo from PharmacyAdmin a where a.email = ?1)"
     )
     public Pharmacy findPharmacyByAdmin(String email);
+
+    @Query(
+            value = "select ph from Pharmacy ph join fetch ph.dermatologists ds" +
+                    " where ds.email = ?1"
+    )
+    public List<Pharmacy> findPharmacyByDermatologist(String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from pharmacy_dermatologists pd " +
+            "where pd.pharmacy_reg_no = ?1 and pd.dermatologist_email = ?2",
+            nativeQuery = true
+    )
+    public void deleteDermatologistEmploymentFromPharmacy(String regNo, String email);
 }
 
