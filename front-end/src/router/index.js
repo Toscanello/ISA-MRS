@@ -22,6 +22,7 @@ import PharmacyDermatologistList from '../views/dermatologistDisplay/PharmacyDer
 import AllDermatologistList from '../views/dermatologistDisplay/AllDermatologistList.vue'
 import PharmacyPharmacistList from '../views/pharmacistDisplay/PharmacyPharmacistList.vue'
 import AllPharmacistList from '../views/pharmacistDisplay/AllPharmacistList.vue'
+import PharmacyAdminAccount from '../views/PharmacyAdminAccount.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -225,6 +226,11 @@ const routes = [
     name: 'AllPharmacistList',
     component: AllPharmacistList
   },
+  {
+    path: '/admin/pharmacy/account',
+    name: 'PharmacyAdminAccount',
+    component: PharmacyAdminAccount
+  }
 ]
 
 const router = new VueRouter({
