@@ -27,4 +27,6 @@ public interface PharmacistRepository extends JpaRepository<Pharmacist, String> 
             "and a.email not in (select appo.medical_worker_id from appointment appo where " +
             "(appo.start_time<=?3 and appo.end_time>=?3))" , nativeQuery = true)
     public List<String> findPharmacist(LocalTime start, LocalTime end, LocalDateTime startDate, String pharmacyRegNo);
+
+    public List<Pharmacist> findPharmacistsByPharmacyRegNo(String regNo);
 }

@@ -2,10 +2,12 @@ package app.controller;
 
 import app.domain.Appointment;
 import app.domain.Pharmacist;
+import app.domain.Pharmacy;
 import app.domain.WorkHour;
 import app.dto.AppointmentDTO;
 import app.dto.FreeAppointmentDTO;
 import app.dto.FreeAppointmentPatientDTO;
+import app.dto.PharmacistDTO;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -95,6 +99,40 @@ public class PharmacistController {
             appointmentDTOS.add(new AppointmentDTO(a));
         }
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/list/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<PharmacistDTO>>
+    findAllPharmacistsByPharmacy(@PathVariable String regNo) {
+        List<Pharmacist> pharmacyPharmacists = pharmacistService.findPharmacistsByPharmacy(regNo);
+        return createPharmacistsDTO(pharmacyPharmacists);
+    }
+
+    @GetMapping(path = "/list/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<PharmacistDTO>> findAllPharmacists() {
+        List<Pharmacist> pharmacyPharmacists = pharmacistService.findAll();
+        return createPharmacistsDTO(pharmacyPharmacists);
+    }
+
+    @DeleteMapping(value = "/delete/employment/{email}")
+    public ResponseEntity<String>
+    deleteDermatologistFromPharmacy(@PathVariable String email) {
+        List<Appointment> activeAppointments = appointmentService.findActiveAppointmentsByPharmacistId(email);
+        if (activeAppointments.size() != 0)
+            return new ResponseEntity<>("Pharmacist has active appointments", HttpStatus.BAD_REQUEST);
+        Pharmacist toBeFired = pharmacistService.findPharmacistByEmail(email);
+        toBeFired.setPharmacy(null);
+        toBeFired.setWorkHour(null);
+        pharmacistService.save(toBeFired);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    public ResponseEntity<Set<PharmacistDTO>>
+    createPharmacistsDTO(List<Pharmacist> pharmacists) {
+        Set<PharmacistDTO> toRet = new HashSet<>();
+        for (Pharmacist p : pharmacists)
+            toRet.add(new PharmacistDTO(p));
+        return new ResponseEntity<>(toRet, HttpStatus.OK);
     }
 
 }

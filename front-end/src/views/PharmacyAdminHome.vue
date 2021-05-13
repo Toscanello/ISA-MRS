@@ -37,7 +37,7 @@
             <v-list-item-title style="color:Tomato;">Izveštaji</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
             <v-list-item-title style="color:Tomato;">Farmaceuti</v-list-item-title>
           </v-list-item>
 

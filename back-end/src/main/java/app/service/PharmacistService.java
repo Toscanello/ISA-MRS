@@ -21,4 +21,16 @@ public class PharmacistService {
     public List<String> findPharmacist(LocalTime start, LocalTime end, LocalDateTime startDate, String pharmacyRegNo){
         return pharmacistRepository.findPharmacist( start, end, startDate, pharmacyRegNo);
     }
+
+    public List<Pharmacist> findPharmacistsByPharmacy(String regNo) {
+        return pharmacistRepository.findPharmacistsByPharmacyRegNo(regNo);
+    }
+
+    public List<Pharmacist> findAll() {
+        return pharmacistRepository.findAll();
+    }
+
+    public void save(Pharmacist pharmacist) {
+        pharmacistRepository.save(pharmacist);
+    }
 }

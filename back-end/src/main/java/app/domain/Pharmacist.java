@@ -9,12 +9,12 @@ import javax.persistence.*;
 public class Pharmacist extends MedicalWorker{
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "work_hour",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "work_hour",referencedColumnName = "id")
     @JsonIgnore
     private WorkHour workHour;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pharmacy",referencedColumnName = "reg_no",nullable = false)
+    @JoinColumn(name = "pharmacy",referencedColumnName = "reg_no")
     @JsonIgnore
     private Pharmacy pharmacy;
 

@@ -18,7 +18,10 @@ import Calendar from '../views/CalendarPatient.vue'
 import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
 import PharmacistCalendar from '../components/PharmacistCalendar.vue'
-import DermatologistList from '../views/dermatologistDisplay/DermatologistList.vue'
+import PharmacyDermatologistList from '../views/dermatologistDisplay/PharmacyDermatologistList.vue'
+import AllDermatologistList from '../views/dermatologistDisplay/AllDermatologistList.vue'
+import PharmacyPharmacistList from '../views/pharmacistDisplay/PharmacyPharmacistList.vue'
+import AllPharmacistList from '../views/pharmacistDisplay/AllPharmacistList.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -190,9 +193,38 @@ const routes = [
   },
   {
     path: '/dermatologists/list/pharmacy/:regNo',
-    name: 'DermatologistList',
-    component: DermatologistList
-  }
+    name: 'PharmacyDermatologistList',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
+    component: PharmacyDermatologistList
+  },
+  {
+    path: '/dermatologists/all',
+    name: 'AllDermatologistList',
+    component: AllDermatologistList
+  },
+  {
+    path: '/pharmacists/list/pharmacy/:regNo',
+    name: 'PharmacyPharmacistList',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
+    component: PharmacyPharmacistList
+  },
+  {
+    path: '/pharmacists/all',
+    name: 'AllPharmacistList',
+    component: AllPharmacistList
+  },
 ]
 
 const router = new VueRouter({
