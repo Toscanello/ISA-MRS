@@ -58,6 +58,8 @@
       <PatientAccount v-if="show_menu==='acoount'"/>
       <MedicineOrder v-if="show_menu==='medicineOrder'"/>
       <MedicineList v-if="show_menu==='MedicineList'"/>
+      
+      <DermatologistAppointment v-if="show_menu==='DermatologistAppointment'"/>
          
     </v-main>
 
@@ -71,6 +73,7 @@
   import PatientAccount from '@/components/PatientAccount'
   import MedicineOrder from '@/components/patient/MedicineOrder.vue'
   import MedicineList from '@/components/patient/MedicineList.vue'
+  import DermatologistAppointment from '@/components/patient/DermatologistAppointment.vue'
   export default {
     name: "HomePagePatient",
     components: {
@@ -80,6 +83,7 @@
       PatientAccount, 
       MedicineOrder,
       MedicineList,
+      DermatologistAppointment
     },
     props: {
     expandOnHover: {
@@ -100,7 +104,7 @@
       {
         icon: "mdi-account",
         title: "Acoount",
-        to: "acoount",
+        to: "DermatologistAppointment",
       },
       {
         icon: "mdi-calendar",

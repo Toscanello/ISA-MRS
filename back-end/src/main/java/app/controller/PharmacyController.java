@@ -113,12 +113,12 @@ public class PharmacyController {
         return new ResponseEntity<>(dermatologistAppointmentDTOs, HttpStatus.OK);
     }
 
-    @GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('PH_ADMIN')")
     public ResponseEntity<SimplePharmacyDTO>
     getPharmacyByAdmin(@PathVariable String email) {
         Pharmacy p = pharmacyService.getPharmacyByAdmin(email);
         return new ResponseEntity<>(new SimplePharmacyDTO(p), HttpStatus.OK);
-    }
+    }*/
 
 }
