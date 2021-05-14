@@ -18,6 +18,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from '../PharmacyAdminHome.vue'
+import authHeader from '../../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
     name: 'VacationRequestTable',
@@ -43,7 +44,7 @@ export default {
     mounted() {
         let path = 'http://localhost:9090/api/vaccation/pharmacist/requests/' + this.$route.params.regNo
         axios
-        .get(path)
+        .get(path, { headers: authHeader() })
         .then(response => {
             this.requests = response.data
         })

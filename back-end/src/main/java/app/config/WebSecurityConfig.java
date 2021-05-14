@@ -88,6 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // .antMatchers("/admin").hasRole("ADMIN") ili .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/api/pharmacy/admin/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/vaccation/pharmacist/**").hasRole("PH_ADMIN")
+                .antMatchers("/api/pharmacy/edit/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/users/**").authenticated()
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()

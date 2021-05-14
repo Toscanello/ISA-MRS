@@ -38,6 +38,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from '../PharmacyAdminHome.vue'
+import authHeader from '../../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
   name: 'VacationResponseForm',
@@ -51,7 +52,7 @@ export default {
   mounted() {
       let path = 'http://localhost:9090/api/vaccation/pharmacist/request/' + this.$route.params.id
       axios
-      .get(path)
+      .get(path, { headers: authHeader() })
       .then(response => {
           this.request = response.data
       })
@@ -83,7 +84,7 @@ export default {
           .put('http://localhost:9090/api/vaccation/pharmacist/decline/request', {
               MedicalWorkerID: this.$route.params.id,
               text: this.declinationText
-          })
+          }, { headers: authHeader()})
           .then(response => {
               console.log(response)
               alert('Succesfully declined request')
