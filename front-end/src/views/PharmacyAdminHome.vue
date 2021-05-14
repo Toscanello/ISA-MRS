@@ -65,8 +65,12 @@
             <v-list-item-title>Akcije/Promocije</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title style="color:Tomato;">Izmeni profil</v-list-item-title>
+          <v-list-item :to="'/vacation/requests/' + pharmacy.regNo">
+            <v-list-item-title>Zahtevi za odmor</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/admin/pharmacy/account">
+            <v-list-item-title>Izmeni profil</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>

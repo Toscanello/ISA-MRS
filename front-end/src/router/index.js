@@ -23,6 +23,8 @@ import AllDermatologistList from '../views/dermatologistDisplay/AllDermatologist
 import PharmacyPharmacistList from '../views/pharmacistDisplay/PharmacyPharmacistList.vue'
 import AllPharmacistList from '../views/pharmacistDisplay/AllPharmacistList.vue'
 import PharmacyAdminAccount from '../views/PharmacyAdminAccount.vue'
+import VacationRequestTable from '../views/vacationRequests/VacationRequestTable.vue'
+import VacationResponseForm from '../views/vacationRequests/VacationResponseForm.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -229,7 +231,38 @@ const routes = [
   {
     path: '/admin/pharmacy/account',
     name: 'PharmacyAdminAccount',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
     component: PharmacyAdminAccount
+  },
+  {
+    path: '/vacation/requests/:regNo',
+    name: 'VacationRequestTable',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
+    component: VacationRequestTable
+  },
+  {
+    path: '/vacation/response/:id',
+    name: 'VacationResponseForm',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'Login'})
+      else
+        next()
+    },
+    component: VacationResponseForm
   }
 ]
 
