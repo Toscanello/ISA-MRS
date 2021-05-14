@@ -18,4 +18,10 @@ public interface DermatologistAppointmentRepository extends JpaRepository<Dermat
             nativeQuery = true
     )
     public List<DermatologistAppointment> findFreeAppointmentsByDermatologistEmailAndPharmacy(String email, String pharmacy);
+
+    @Query(
+            value = "select * from dermatologist_appointment da where da.pharmacy_reg_no = ?1",
+            nativeQuery = true
+    )
+    public List<DermatologistAppointment> findFreeAppointmentsByPharmacyRegNo(String regNo);
 }

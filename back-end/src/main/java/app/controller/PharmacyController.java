@@ -1,9 +1,11 @@
 package app.controller;
 
 import app.domain.*;
+import app.dto.DermatologistAppointmentDTO;
 import app.dto.PharmacistDTO;
 import app.dto.SimpleDermatologistDTO;
 import app.dto.SimplePharmacyDTO;
+import app.service.DermatologistAppointmentService;
 import app.service.PharmacistService;
 import app.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class PharmacyController {
 
     @Autowired
     private PharmacistService pharmacistService;
+
+    @Autowired
+    private DermatologistAppointmentService dermatologistAppointmentService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
@@ -88,12 +93,24 @@ public class PharmacyController {
 
     @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SimplePharmacyDTO>
-    editPharmacy(@PathVariable String regNo, @RequestBody SimplePharmacyDTO editedPharmacy) {
+    editPharmacy(@PathVariable String regNo, @org.jetbrains.annotations.NotNull @RequestBody SimplePharmacyDTO editedPharmacy) {
         Pharmacy oldPharmacy = pharmacyService.getPharmacy(editedPharmacy.getRegNo());
         oldPharmacy.setName(editedPharmacy.getName());
         oldPharmacy.getAddress().fromAddress(editedPharmacy.getAddress());  //Using setAddress would put a new Address in DB
         pharmacyService.save(oldPharmacy);  //save changes to database
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "pharmacy/appointments/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<DermatologistAppointmentDTO>>
+    getPharmacyAppointmentsByRegNo(@PathVariable String regNo) {
+        List<DermatologistAppointment> dermatologistAppointments = dermatologistAppointmentService.findFreeAppointmentsByPharmacyRegNo(regNo);
+        List<DermatologistAppointmentDTO> dermatologistAppointmentDTOs = new ArrayList<>();
+
+        for (DermatologistAppointment da : dermatologistAppointments) {
+            dermatologistAppointmentDTOs.add(new DermatologistAppointmentDTO(da)); }
+
+        return new ResponseEntity<>(dermatologistAppointmentDTOs, HttpStatus.OK);
     }
 
     @GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)

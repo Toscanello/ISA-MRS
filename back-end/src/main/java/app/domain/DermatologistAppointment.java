@@ -16,7 +16,7 @@ public class DermatologistAppointment {
     @Column(name = "duration")
     private LocalTime duration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="dermatologist_email",referencedColumnName = "email",nullable = false)
     private Dermatologist dermatologist;
 
