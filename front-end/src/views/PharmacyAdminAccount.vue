@@ -79,6 +79,7 @@
     import TokenDecoder from '../services/token-decoder'
     import axios from "axios";
 import PharmacyAdminHome from './PharmacyAdminHome.vue';
+import authHeader from '../services/auth-header';
     export default {
   components: { PharmacyAdminHome },
         name: 'PharmacyAdminAccount',
@@ -92,7 +93,9 @@ import PharmacyAdminHome from './PharmacyAdminHome.vue';
         created() {
             let usersEmail = TokenDecoder.getUserEmail()
             let path = "http://localhost:9090/api/users/get/" + usersEmail;
-            axios.get(path).then((response) => {
+            axios
+            .get(path, { headers: authHeader() })
+            .then((response) => {
                 this.user = response.data;
                 console.log(this.user)
             })
@@ -105,7 +108,9 @@ import PharmacyAdminHome from './PharmacyAdminHome.vue';
             }
 
             axios
-            .put('http://localhost:9090/api/users/edit/' + usersEmail, this.user)
+            .put('http://localhost:9090/api/users/edit/' + usersEmail, this.user, {
+                headers: authHeader()
+            })
             .then(response => {
               alert('User information successfully edited!')
               console.log(response)

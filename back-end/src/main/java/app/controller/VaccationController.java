@@ -24,6 +24,8 @@ public class VaccationController {
     DermatologistService dermatologistService;
     @Autowired
     VaccationService vaccationService;
+    @Autowired
+    JavaMailSender emailSender;
 
     @PostMapping(value = "/addVaccation",
             consumes = MediaType.APPLICATION_JSON_VALUE)
