@@ -14,7 +14,7 @@ public class DermatologistAppointmentDTO {
     private LocalDateTime time;
     private LocalTime duration;
     private SimpleDermatologistDTO dermatologist;
-    //private Pharmacy pharmacy;
+    private SimplePharmacyDTO pharmacy;
     private double price;
 
     public DermatologistAppointmentDTO(DermatologistAppointment da) {
@@ -23,6 +23,15 @@ public class DermatologistAppointmentDTO {
         this.duration = da.getDuration();
         this.dermatologist = new SimpleDermatologistDTO(da.getDermatologist());
         this.price = da.getPrice();
+        this.pharmacy = new SimplePharmacyDTO(da.getPharmacy());
+    }
+
+    public SimplePharmacyDTO getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(SimplePharmacyDTO pharmacy) {
+        this.pharmacy = pharmacy;
     }
 
     public Long getId() {

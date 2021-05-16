@@ -1,13 +1,9 @@
 package app.controller;
 
 import app.domain.*;
-import app.dto.DermatologistAppointmentDTO;
-import app.dto.PharmacistDTO;
-import app.dto.SimpleDermatologistDTO;
-import app.dto.SimplePharmacyDTO;
-import app.service.DermatologistAppointmentService;
-import app.service.PharmacistService;
-import app.service.PharmacyService;
+import app.dto.*;
+import app.repository.MedicalWorkerRepository;
+import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +32,15 @@ public class PharmacyController {
 
     @Autowired
     private DermatologistAppointmentService dermatologistAppointmentService;
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @Autowired
+    MedicalWorkerRepository medicalWorkerRepository;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
@@ -101,7 +106,7 @@ public class PharmacyController {
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
     }
 
-    @GetMapping(value = "pharmacy/appointments/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/pharmacy/appointments/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DermatologistAppointmentDTO>>
     getPharmacyAppointmentsByRegNo(@PathVariable String regNo) {
         List<DermatologistAppointment> dermatologistAppointments = dermatologistAppointmentService.findFreeAppointmentsByPharmacyRegNo(regNo);
@@ -113,12 +118,26 @@ public class PharmacyController {
         return new ResponseEntity<>(dermatologistAppointmentDTOs, HttpStatus.OK);
     }
 
-    /*@GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/new/appointment/{email}",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> cancelAppointment(@PathVariable String email, @RequestBody DermatologistAppointment dermatologistAppointment){
+
+        Appointment a = appointmentService.saveAppointment(dermatologistAppointment, patientService.findOneByEmail(email),
+                                            medicalWorkerRepository.findOneByEmail(dermatologistAppointment.getDermatologist().getEmail()),
+                                            pharmacyService.getPharmacy(dermatologistAppointment.getPharmacy().getRegNo()));
+
+        dermatologistAppointmentService.deleteDermatologistAppointment(dermatologistAppointment.getId());
+
+        appointmentService.sendEmail(a);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('PH_ADMIN')")
     public ResponseEntity<SimplePharmacyDTO>
     getPharmacyByAdmin(@PathVariable String email) {
         Pharmacy p = pharmacyService.getPharmacyByAdmin(email);
         return new ResponseEntity<>(new SimplePharmacyDTO(p), HttpStatus.OK);
-    }*/
+    }
 
 }
