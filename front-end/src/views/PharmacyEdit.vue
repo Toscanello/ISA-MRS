@@ -118,6 +118,7 @@
 <script>
   import axios from 'axios'
   import PharmacyAdminHome from './PharmacyAdminHome.vue'
+import authHeader from '../services/auth-header'
   export default {
     components: { PharmacyAdminHome },
     name: 'PharmacyEdit',
@@ -183,10 +184,11 @@
             this.pharmacy.address.location.geoHeight = this.marker.position.lat
             this.pharmacy.address.location.geoWidth = this.marker.position.lng
             axios
-            .put('http://localhost:9090/api/pharmacy/edit/' + this.$route.params.regNo, this.pharmacy)
+            .put('http://localhost:9090/api/pharmacy/edit/' + this.$route.params.regNo, this.pharmacy, { headers: authHeader() })
             .then(response => {
               console.log(response.data)
               alert('Uspesno izmenjena apoteka!')
+              this.$router.push('/pharmacyadmin')
             })
             .catch(response => {
               console.log(response.data)
