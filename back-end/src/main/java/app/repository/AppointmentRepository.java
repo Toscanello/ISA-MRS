@@ -1,6 +1,7 @@
 package app.repository;
 
 import app.domain.Appointment;
+import app.domain.Patient;
 import app.domain.Pharmacy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,4 +53,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             nativeQuery = true
     )
     List<Appointment> findActiveAppointmentsByDermatologist(String email, String pharmacy);
+
+    public Appointment findOneById(Long id);
 }

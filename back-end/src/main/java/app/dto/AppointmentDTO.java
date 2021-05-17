@@ -20,9 +20,11 @@ public class AppointmentDTO {
 
     public AppointmentDTO() {
     }
+
     public AppointmentDTO(Long id) {
         this.id = id;
     }
+
     public AppointmentDTO(Appointment a) {
         this.id = a.getId();
         this.startTime = a.getStartTime();

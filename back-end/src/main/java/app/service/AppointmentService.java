@@ -49,7 +49,8 @@ public class AppointmentService {
         a.setCanceled(false);
         a.setPrice(dermatologistAppointment.getPrice());
         a.setStartTime(dermatologistAppointment.getTime());
-        a.setEndTime(LocalDateTime.now());
+        LocalDateTime endTime = dermatologistAppointment.getTime().plusMinutes(dermatologistAppointment.getDuration().getMinute());
+        a.setEndTime(endTime);
         a.setPatient(patient);
         a.setMedicalWorker(medicalWorker);
         a.setPharmacy(pharmacy);
@@ -65,5 +66,9 @@ public class AppointmentService {
         message.setText("Rezervisan pregled " + a.getStartTime().getDayOfMonth() + "." +  a.getStartTime().getMonth() +
                 " sa pocetkom u " + a.getStartTime().getHour() + "h i" + a.getStartTime().getMinute() + "min" );
         emailSender.send(message);
+    }
+
+    public Appointment findOneById(Long id){
+        return appointmentRepository.findOneById(id);
     }
 }

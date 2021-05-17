@@ -120,15 +120,15 @@ public class PharmacyController {
 
     @PostMapping(value = "/new/appointment/{email}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> cancelAppointment(@PathVariable String email, @RequestBody DermatologistAppointment dermatologistAppointment){
+    public ResponseEntity<String> reserveAppointment(@PathVariable String email, @RequestBody DermatologistAppointment dermatologistAppointment){
 
         Appointment a = appointmentService.saveAppointment(dermatologistAppointment, patientService.findOneByEmail(email),
                                             medicalWorkerRepository.findOneByEmail(dermatologistAppointment.getDermatologist().getEmail()),
                                             pharmacyService.getPharmacy(dermatologistAppointment.getPharmacy().getRegNo()));
 
         dermatologistAppointmentService.deleteDermatologistAppointment(dermatologistAppointment.getId());
-
         appointmentService.sendEmail(a);
+
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 

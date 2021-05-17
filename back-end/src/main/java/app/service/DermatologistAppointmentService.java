@@ -1,5 +1,7 @@
 package app.service;
 
+import app.domain.Appointment;
+import app.domain.Dermatologist;
 import app.domain.DermatologistAppointment;
 import app.repository.DermatologistAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +34,16 @@ public class DermatologistAppointmentService {
         dermatologistAppointmentRepository.deleteDermatologistAppointment(id);
     }
 
+    public void saveNewAppointment(Appointment appointment, Dermatologist dermatologist){
+        if(appointment.getMedicalWorker().getRoles().get(0).getName().equals("ROLE_DERMATOLOGIST"))
+        {
+            DermatologistAppointment dt = new DermatologistAppointment();
+            dt.setPharmacy(appointment.getPharmacy());
+            dt.setPrice(appointment.getPrice());
+            dt.setTime(appointment.getStartTime());
+            dt.setDuration(appointment.getEndTime().toLocalTime().minusMinutes(appointment.getStartTime().toLocalTime().getMinute()));
+            dt.setDermatologist(dermatologist);
+            dermatologistAppointmentRepository.save(dt);
+        }
+    }
 }
