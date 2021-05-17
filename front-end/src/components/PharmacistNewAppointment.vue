@@ -46,26 +46,28 @@ export default {
     },
     methods: {
         scheduleAppointment() {
+            let user = localStorage.getItem('korisnik');
             let appointment = {
               begin: this.date + ' ' + this.time,
               duration: this.timeFromMins,
               pharmacyRegNo: 'abc',
-              dermatologistEmail: "farm@gmail.com",
+              dermatologistEmail: `${user}@gmail.com`,
               price: this.price,
               patientEmail:'mika95455@gmail.com',
               id:0
             }
-            console.log(appointment)
+            let path="";
+            if(user=="farm1")
+              path="http://localhost:9090/api/pharmacist/addAppointment";
+            else
+              path="http://localhost:9090/api/dermatologists/scheduleNewAppointmentByTime";
             axios
-            .post('http://localhost:9090/api/pharmacist/addAppointment', appointment)
+            .post(path, appointment)
             .then(response => {
-              console.log(response.data)
               alert(response.data)
               this.$emit("clicked", 'calendar');
             })
             .catch(response => {
-              console.log(response)
-              console.log(response.data)
               this.status = response.data
               alert(status)
               this.$emit("clicked", 'patients');

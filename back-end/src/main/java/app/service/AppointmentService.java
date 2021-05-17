@@ -47,7 +47,6 @@ public class AppointmentService {
         Dermatologist d = da.getDermatologist();
         Pharmacy ph = da.getPharmacy();
         Double price = da.getPrice();
-        System.out.println(patient.getEmail());
         List<Appointment> appointmentList = appointmentRepository.findActiveAppointmentsByPatientId(patient.getEmail());
         boolean check = false;
         if(appointmentList != null) {
