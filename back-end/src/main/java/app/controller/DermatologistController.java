@@ -1,15 +1,13 @@
 package app.controller;
 
 import app.domain.*;
-import app.dto.AppointmentDTO;
-import app.dto.DetailedDermatologistDTO;
-import app.dto.FreeAppointmentDTO;
-import app.dto.SimpleDermatologistDTO;
+import app.dto.*;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -146,9 +144,55 @@ public class DermatologistController {
         Patient p = patientService.findOneByEmail(email);
         boolean check=appointmentService.createNewAppointment(da,p);
         if(!check)
-            return new ResponseEntity<>("Patient has appointment in that time", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Patient has appointment in that time", HttpStatus.OK);
         dermatologistAppointmentService.delete(da);
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/scheduleNewAppointmentByTime",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentPatientDTO newAppointment){
+        Dermatologist dermatologist = dermatologistService.findDermatologist(newAppointment.getDermatologistEmail());
+        Set<DermatologistWorkHour> dwh = dermatologist.getWorkingHours();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime appointmentBeginLDT = LocalDateTime.parse(newAppointment.getBegin().trim(), formatter);
+
+        LocalTime appointmentDuration = LocalTime.parse(newAppointment.getDuration());
+        LocalTime appointmentBegin = appointmentBeginLDT.toLocalTime();
+
+        int appointmentDurationInMinutes = appointmentDuration.getHour()*60 + appointmentDuration.getMinute();
+        LocalTime appointmentEnd = appointmentBegin.plusMinutes(appointmentDurationInMinutes);
+        LocalDateTime appointmentEndLDT = appointmentBeginLDT.plusMinutes(appointmentDurationInMinutes);
+
+        for (DermatologistWorkHour wh : dwh) {
+            if (!wh.getPharmacy().getRegNo().equals(newAppointment.getPharmacyRegNo()))
+                continue;   /* No need to check other pharmacy work hours */
+            if (wh.getBegginingHour().isAfter(appointmentBegin) || wh.getEndingHour().isBefore(appointmentEnd)) {
+                return new ResponseEntity<>("Dermatologist isn't in office at that hour", HttpStatus.OK);
+            }
+        }
+
+        List<Appointment> appointmentList = appointmentService.getAllAppointments(newAppointment.getDermatologistEmail());
+        for(Appointment a: appointmentList){
+            if((appointmentBeginLDT.isAfter(a.getStartTime()) && appointmentBeginLDT.isBefore(a.getEndTime())) ||
+                    (appointmentEndLDT.isAfter(a.getStartTime()) && appointmentEndLDT.isBefore(a.getEndTime()))){
+                return new ResponseEntity<>("Dermatologist already has a scheduled appointment", HttpStatus.OK);
+            }
+        }
+
+        appointmentList = appointmentService.getAllAppointmentsByPatientId(newAppointment.getPatientEmail());
+        for(Appointment a: appointmentList){
+            if((appointmentBeginLDT.isAfter(a.getStartTime()) && appointmentBeginLDT.isBefore(a.getEndTime())) ||
+                    (appointmentEndLDT.isAfter(a.getStartTime()) && appointmentEndLDT.isBefore(a.getEndTime()))){
+                return new ResponseEntity<>("Patient already has a scheduled appointment", HttpStatus.OK);
+            }
+        }
+        Pharmacy ph = pharmacyService.getPharmacy(newAppointment.getPharmacyRegNo());
+        Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),dermatologist,
+                ph, newAppointment.getPrice(), false);
+        appointmentService.save(ap);
+        return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
     public ResponseEntity<Set<DetailedDermatologistDTO>>
