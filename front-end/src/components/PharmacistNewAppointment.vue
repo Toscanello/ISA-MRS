@@ -52,7 +52,8 @@ export default {
               pharmacyRegNo: 'abc',
               dermatologistEmail: "farm@gmail.com",
               price: this.price,
-              patientEmail:'mika95455@gmail.com'
+              patientEmail:'mika95455@gmail.com',
+              id:0
             }
             console.log(appointment)
             axios

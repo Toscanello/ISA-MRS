@@ -34,6 +34,8 @@ public class DermatologistController {
     DermatologistWorkHourService workHourService;
     @Autowired
     AppointmentService appointmentService;
+    @Autowired
+    PatientService patientService;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<SimpleDermatologistDTO>>
@@ -92,6 +94,7 @@ public class DermatologistController {
         dermatologistAppointmentService.save(da);
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
+
     @GetMapping(path = "/appointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
         List<Appointment> appointments = appointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
@@ -102,6 +105,7 @@ public class DermatologistController {
         }
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
+
     @GetMapping(path = "/dermAppointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FreeAppointmentDTO>> findAllDermAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
         List<DermatologistAppointment> appointments = dermatologistAppointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
@@ -133,6 +137,17 @@ public class DermatologistController {
         if (activeAppointments.size() != 0)
             return new ResponseEntity<>("Dermatologist has active appointments", HttpStatus.BAD_REQUEST);
         pharmacyService.deleteDermatologistEmploymentFromPharmacy(regNo, email);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/scheduleNewAppointment/{id}/{email}")
+    public ResponseEntity<String> scheduleNewAppointment(@PathVariable Long id, @PathVariable String email){
+        DermatologistAppointment da = dermatologistAppointmentService.findById(id);
+        Patient p = patientService.findOneByEmail(email);
+        boolean check=appointmentService.createNewAppointment(da,p);
+        if(!check)
+            return new ResponseEntity<>("Patient has appointment in that time", HttpStatus.BAD_REQUEST);
+        dermatologistAppointmentService.delete(da);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 

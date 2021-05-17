@@ -7,8 +7,8 @@ public class FreeAppointmentPatientDTO extends FreeAppointmentDTO{
         this.patientEmail = patientEmail;
     }
 
-    public FreeAppointmentPatientDTO(String dermatologistEmail, String begin, String duration, String pharmacyRegNo, double price, String patientEmail) {
-        super(dermatologistEmail, begin, duration, pharmacyRegNo, price);
+    public FreeAppointmentPatientDTO(Long id,String dermatologistEmail, String begin, String duration, String pharmacyRegNo, double price, String patientEmail) {
+        super(id,dermatologistEmail, begin, duration, pharmacyRegNo, price);
         this.patientEmail = patientEmail;
     }
 

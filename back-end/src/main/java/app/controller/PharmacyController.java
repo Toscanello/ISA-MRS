@@ -96,8 +96,8 @@ public class PharmacyController {
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
     }
 
-    @GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('PH_ADMIN')")
+    @GetMapping(value = "/admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('PH_ADMIN')")
     public ResponseEntity<SimplePharmacyDTO>
     getPharmacyByAdmin(@PathVariable String email) {
         Pharmacy p = pharmacyService.getPharmacyByAdmin(email);
