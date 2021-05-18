@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.*;
 import app.dto.AppointmentDTO;
+import app.dto.DermatologistAppointmentDTO;
 import app.dto.MedicineOrderDTO;
 import app.dto.PatientDTO;
 import app.service.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -130,4 +132,16 @@ public class PatientController {
         System.out.println(editedPatient);
         return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
+
+    @GetMapping(path = "/appointments/dermatologist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> getDermatologistAppointments(@PathVariable String email){
+        List<Appointment> appointments = appointmentService.findPatientsAppointments(email);
+        List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
+
+        for (Appointment a : appointments) {
+            appointmentDTOs.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
+    }
+
 }

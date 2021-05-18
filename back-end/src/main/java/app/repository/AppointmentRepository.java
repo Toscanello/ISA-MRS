@@ -1,6 +1,7 @@
 package app.repository;
 
 import app.domain.Appointment;
+import app.domain.DermatologistAppointment;
 import app.domain.Patient;
 import app.domain.Pharmacy;
 import org.springframework.data.domain.Page;
@@ -55,4 +56,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     List<Appointment> findActiveAppointmentsByDermatologist(String email, String pharmacy);
 
     public Appointment findOneById(Long id);
+
+    @Query(
+            value = "select * from appointment a where a.patient_id = ?1 and a.medical_worker_id in (select user_id from user_role ur where ur.role_id = 3)",
+            nativeQuery = true
+    )
+    public List<Appointment> findPatientsAppointments(String email);
 }

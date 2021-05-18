@@ -71,4 +71,8 @@ public class AppointmentService {
     public Appointment findOneById(Long id){
         return appointmentRepository.findOneById(id);
     }
+
+    public List<Appointment> findPatientsAppointments(String email){
+        return appointmentRepository.findPatientsAppointments(email);
+    }
 }
