@@ -58,6 +58,7 @@
       <PatientAccount v-if="show_menu==='acoount'"/>
       <MedicineOrder v-if="show_menu==='medicineOrder'"/>
       <MedicineList v-if="show_menu==='MedicineList'"/>
+      <AppointmentsHistory v-if="show_menu==='history'"/>
                
     </v-main>
 
@@ -71,6 +72,7 @@
   import PatientAccount from '@/components/PatientAccount'
   import MedicineOrder from '@/components/patient/MedicineOrder.vue'
   import MedicineList from '@/components/patient/MedicineList.vue'
+  import AppointmentsHistory from '@/components/patient/AppointmentsHistory.vue'
   export default {
     name: "HomePagePatient",
     components: {
@@ -80,6 +82,7 @@
       PatientAccount, 
       MedicineOrder,
       MedicineList,
+      AppointmentsHistory,
     },
     props: {
     expandOnHover: {
@@ -131,6 +134,10 @@
         icon: "mdi-emoticon-angry-outline",
         title: "Complaints",
         to: "medicineOrder",
+      },
+      {
+        title: "History",
+        to: "history",
       },
     ],
   }),
