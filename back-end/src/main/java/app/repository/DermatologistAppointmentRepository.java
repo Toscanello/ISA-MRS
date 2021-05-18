@@ -34,4 +34,6 @@ public interface DermatologistAppointmentRepository extends JpaRepository<Dermat
             nativeQuery = true
     )
     public void deleteDermatologistAppointment(Long id);
+
+    public DermatologistAppointment findOneById(Long id);
 }

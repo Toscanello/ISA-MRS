@@ -75,4 +75,31 @@ public class AppointmentService {
     public List<Appointment> findPatientsAppointments(String email){
         return appointmentRepository.findPatientsAppointments(email);
     }
+
+    public boolean createNewAppointment(DermatologistAppointment da, Patient patient) {
+        LocalDateTime startTime = da.getTime();
+        LocalDateTime endTime = startTime.plusMinutes(da.getDuration().getMinute());
+
+        Dermatologist d = da.getDermatologist();
+        Pharmacy ph = da.getPharmacy();
+        Double price = da.getPrice();
+        System.out.println(patient.getEmail());
+        List<Appointment> appointmentList = appointmentRepository.findActiveAppointmentsByPatientId(patient.getEmail());
+        boolean check = false;
+        if(appointmentList != null) {
+            for (Appointment a : appointmentList) {
+                if ((startTime.isAfter(a.getStartTime()) && startTime.isBefore(a.getEndTime())) || (endTime.isAfter(a.getStartTime()) && endTime.isBefore(a.getEndTime()))) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        Appointment a=null;
+        if(!check) {
+            a = new Appointment(startTime, endTime, patient, d, ph, price, false);
+            appointmentRepository.save(a);
+            return true;
+        }
+        return false;
+    }
 }
