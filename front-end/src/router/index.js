@@ -26,6 +26,7 @@ import PharmacyAdminAccount from '../views/PharmacyAdminAccount.vue'
 import VacationRequestTable from '../views/vacationRequests/VacationRequestTable.vue'
 import VacationResponseForm from '../views/vacationRequests/VacationResponseForm.vue'
 
+import DermatologistAppointment from '../views/patient/DermatologistAppointment.vue'
 import TokenDecoder from '../services/token-decoder'
 
 Vue.use(VueRouter)

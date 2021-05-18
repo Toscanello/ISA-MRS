@@ -32,6 +32,18 @@ public class PharmacyController {
     @Autowired
     private PharmacistService pharmacistService;
 
+    @Autowired
+    private DermatologistAppointmentService dermatologistAppointmentService;
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @Autowired
+    MedicalWorkerRepository medicalWorkerRepository;
+
     @GetMapping(value = "/all")
     public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
         List<Pharmacy> pharmacies = pharmacyService.findAll();
@@ -94,6 +106,32 @@ public class PharmacyController {
         oldPharmacy.getAddress().fromAddress(editedPharmacy.getAddress());  //Using setAddress would put a new Address in DB
         pharmacyService.save(oldPharmacy);  //save changes to database
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pharmacy/appointments/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<DermatologistAppointmentDTO>>
+    getPharmacyAppointmentsByRegNo(@PathVariable String regNo) {
+        List<DermatologistAppointment> dermatologistAppointments = dermatologistAppointmentService.findFreeAppointmentsByPharmacyRegNo(regNo);
+        List<DermatologistAppointmentDTO> dermatologistAppointmentDTOs = new ArrayList<>();
+
+        for (DermatologistAppointment da : dermatologistAppointments) {
+            dermatologistAppointmentDTOs.add(new DermatologistAppointmentDTO(da)); }
+
+        return new ResponseEntity<>(dermatologistAppointmentDTOs, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/new/appointment/{email}",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> reserveAppointment(@PathVariable String email, @RequestBody DermatologistAppointment dermatologistAppointment){
+
+        Appointment a = appointmentService.saveAppointment(dermatologistAppointment, patientService.findOneByEmail(email),
+                                            medicalWorkerRepository.findOneByEmail(dermatologistAppointment.getDermatologist().getEmail()),
+                                            pharmacyService.getPharmacy(dermatologistAppointment.getPharmacy().getRegNo()));
+
+        dermatologistAppointmentService.deleteDermatologistAppointment(dermatologistAppointment.getId());
+        appointmentService.sendEmail(a);
+
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @GetMapping(value = "admin/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
