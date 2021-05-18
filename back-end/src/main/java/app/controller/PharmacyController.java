@@ -1,11 +1,12 @@
 package app.controller;
 
 import app.domain.*;
+import app.dto.DermatologistAppointmentDTO;
 import app.dto.PharmacistDTO;
 import app.dto.SimpleDermatologistDTO;
 import app.dto.SimplePharmacyDTO;
-import app.service.PharmacistService;
-import app.service.PharmacyService;
+import app.repository.MedicalWorkerRepository;
+import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
