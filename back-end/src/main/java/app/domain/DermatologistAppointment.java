@@ -16,11 +16,11 @@ public class DermatologistAppointment {
     @Column(name = "duration")
     private LocalTime duration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="dermatologist_email",referencedColumnName = "email",nullable = false)
     private Dermatologist dermatologist;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no", nullable = false)
     private Pharmacy pharmacy;
 
@@ -84,4 +84,5 @@ public class DermatologistAppointment {
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }
+
 }

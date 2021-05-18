@@ -105,7 +105,7 @@
               <v-btn
                 color="deep-purple lighten-2"
                 text
-               
+               @click="open(pharmacy)"
               >
                 Reserve
               </v-btn>
@@ -132,6 +132,11 @@ export default {
     axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
       this.pharmacies = resp.data;
     });
+  },
+  methods: {
+    open(pharmacy){
+      this.$router.push('/dermatologistAppointment/' + pharmacy.regNo)
+    }
   }
 }
 </script>

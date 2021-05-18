@@ -84,4 +84,5 @@ public class PatientServiceImpl implements PatientService {
             patient.setPassword(passwordEncoder.encode(editedPatient.getPassword()));
         return patientRepository.save(patient);
     }
+
 }

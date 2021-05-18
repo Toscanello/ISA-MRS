@@ -1,15 +1,11 @@
 package app.controller;
 
-import app.domain.Appointment;
-import app.domain.MedicineOrder;
-import app.domain.Patient;
-import app.domain.Pharmacy;
+import app.domain.*;
 import app.dto.AppointmentDTO;
+import app.dto.DermatologistAppointmentDTO;
 import app.dto.MedicineOrderDTO;
 import app.dto.PatientDTO;
-import app.service.AppointmentService;
-import app.service.MedicineOrderService;
-import app.service.PatientService;
+import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,13 +15,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
 @RequestMapping("/patients")
 public class PatientController {
     @Autowired
-    private PatientService service;
+    private PatientService service; //findByEmail
+
+    @Autowired
+    private DermatologistService dermatologistService;
+
+    @Autowired
+    private DermatologistAppointmentService dermatologistAppointmentService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     AppointmentService appointmentService;
@@ -83,9 +89,11 @@ public class PatientController {
 
     @PostMapping(value = "/cancelAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO id){
+    public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO appointment){
 
-        appointmentService.cancelAppointment(id.getId());
+        Appointment appo = appointmentService.findOneById(appointment.getId());
+        appointmentService.cancelAppointment(appointment.getId());
+        dermatologistAppointmentService.saveNewAppointment(appo, dermatologistService.findDermatologist(appo.getMedicalWorker().getEmail()));
         return new ResponseEntity<>("Canceled appointment", HttpStatus.OK);
     }
 
@@ -124,4 +132,16 @@ public class PatientController {
         System.out.println(editedPatient);
         return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
+
+    @GetMapping(path = "/appointments/dermatologist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> getDermatologistAppointments(@PathVariable String email){
+        List<Appointment> appointments = appointmentService.findPatientsAppointments(email);
+        List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
+
+        for (Appointment a : appointments) {
+            appointmentDTOs.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
+    }
+
 }
