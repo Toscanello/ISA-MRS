@@ -48,6 +48,7 @@
         </v-sheet>
         <v-sheet height="600">
           <v-calendar
+            :key="componentKey"
             ref="calendar"
             v-model="focus"
             color="primary"
@@ -83,6 +84,16 @@
                 Price: <ins v-html="selectedEvent.price"></ins> <br /><br />
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
+              <v-card-actions>
+              <v-btn v-if="selectedEvent.schedule"
+                text
+                color="secondary" 
+                @click ="scheduleNewAppointment"
+                @change="updateRange"
+              >
+                Schedule
+              </v-btn>
+            </v-card-actions>
             </v-card>
           </v-menu>
         </v-sheet>
@@ -110,7 +121,8 @@ export default {
     selectedOpen: false,
     events: [],
     appointments: [],
-    dermappointments:[]
+    dermappointments:[],
+    componentKey: 0
   }),
   created() {
     let path =
@@ -130,7 +142,9 @@ export default {
           price: this.appointments[i].price,
           end: second,
           color: "orange",
-          timed: false
+          timed: false,
+          schedule: false,
+          id: this.appointments[i].id
         });
       }
     });
@@ -153,10 +167,13 @@ export default {
           price: this.dermappointments[i].price,
           end: newDateObj.toISOString().substring(0,19),
           color: "yellow",
-          timed: false
+          timed: false,
+          schedule: true,
+          id: this.dermappointments[i].id
         });
       }
     });
+    localStorage.setItem('pacijent',"mika95455@gmail.com");
   },
   mounted() {
     this.$refs.calendar.checkChange();
@@ -199,6 +216,13 @@ export default {
     updateRange() {},
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
+    },
+    scheduleNewAppointment(){
+      this.selectedOpen = false;
+      let email = localStorage.getItem('pacijent');
+      axios
+      .post(`http://localhost:9090/api/dermatologists/scheduleNewAppointment/${this.selectedEvent.id}/${email}`)
+      .then(response=>{alert(response.data);window.location.reload();})
     }
   }
 };

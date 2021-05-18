@@ -42,8 +42,10 @@
     </v-app-bar>
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
+      <MedicalAccount v-if="show_menu==='account'"/>
       <DermatologistCalendar v-if="show_menu==='calendar'"/>
       <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
+      <PharmacistNewAppointment v-if="show_menu==='newapp'" @clicked="onScheduleClick"/>
     </v-main>
   </v-container>
 </template>
@@ -52,13 +54,17 @@
 import PatientList from "@/components/PatientList.vue";
 import Vaccation from '@/components/Vaccation.vue';
 import DermatologistCalendar from '@/components/DermatologistCalendar.vue';
+import PharmacistNewAppointment from '@/components/PharmacistNewAppointment.vue';
+import MedicalAccount from '@/components/MedicalAccount.vue'
 
 export default {
   name: "HomePageDermatologist",
   components: {
     PatientList,
+    MedicalAccount,
     Vaccation,
-    DermatologistCalendar
+    DermatologistCalendar,
+    PharmacistNewAppointment
   },
   props: {
     expandOnHover: {
@@ -79,7 +85,7 @@ export default {
       {
         icon: "mdi-account",
         title: "Acoount",
-        to: "patients",
+        to: "account",
       },
       {
         icon: "mdi-pencil",
@@ -99,7 +105,7 @@ export default {
       {
         icon: "mdi-plus",
         title: "New appointment",
-        to: "patients",
+        to: "newapp",
       },
     ],
   }),
@@ -114,7 +120,11 @@ export default {
     onVaccationClick:function(){
       this.show_menu = "patients";
       this.drawer = false;
-    }
+    },
+    onScheduleClick:function(check){
+      this.show_menu=check;
+      this.drawer=false;
+    },
   }
 };
 </script>

@@ -4,8 +4,10 @@ import app.domain.Appointment;
 import app.domain.Dermatologist;
 import app.domain.DermatologistAppointment;
 import app.domain.DermatologistWorkHour;
+import app.dto.MedicalWorkerDTO;
 import app.repository.DermatologistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
 public class DermatologistService {
     @Autowired
     DermatologistRepository dermatologistRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<Dermatologist> findAll() {
         return dermatologistRepository.findAll();
@@ -37,5 +41,15 @@ public class DermatologistService {
 
     public Dermatologist findDermatologist(String email) {
         return dermatologistRepository.findDermatologistByEmail(email);
+    }
+
+    public void edit(Dermatologist dermatologist, MedicalWorkerDTO medicalWorkerDTO) {
+        dermatologist.setName(medicalWorkerDTO.getName());
+        dermatologist.setSurname(medicalWorkerDTO.getSurname());
+        dermatologist.setAddress(medicalWorkerDTO.getAddress());
+        dermatologist.setPhoneNumber(medicalWorkerDTO.getPhoneNumber());
+        if(!dermatologist.getPassword().equals(medicalWorkerDTO.getPassword()))
+            dermatologist.setPassword(passwordEncoder.encode(medicalWorkerDTO.getPassword()));
+        dermatologistRepository.save(dermatologist);
     }
 }

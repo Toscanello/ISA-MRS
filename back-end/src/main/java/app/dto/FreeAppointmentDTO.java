@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class FreeAppointmentDTO {
+    private Long id;
     private String dermatologistEmail;
     private String begin;
     private String duration;
@@ -14,7 +15,8 @@ public class FreeAppointmentDTO {
 
     public FreeAppointmentDTO() {}
 
-    public FreeAppointmentDTO(String dermatologistEmail, String begin, String duration, String pharmacyRegNo, double price) {
+    public FreeAppointmentDTO(Long id,String dermatologistEmail, String begin, String duration, String pharmacyRegNo, double price) {
+        this.id=id;
         this.dermatologistEmail = dermatologistEmail;
         this.begin = begin;
         this.duration = duration;
@@ -22,11 +24,20 @@ public class FreeAppointmentDTO {
         this.price = price;
     }
     public FreeAppointmentDTO(DermatologistAppointment a){
+        this.id=a.getId();
         this.dermatologistEmail = a.getDermatologist().getEmail();
         this.begin = a.getTime().toString();
         this.duration = a.getDuration().toString();
         this.pharmacyRegNo = a.getPharmacy().getRegNo();
         this.price = a.getPrice();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDermatologistEmail() {

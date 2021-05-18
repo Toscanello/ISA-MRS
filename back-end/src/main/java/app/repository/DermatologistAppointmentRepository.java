@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface DermatologistAppointmentRepository extends JpaRepository<DermatologistAppointment, String> {
+public interface DermatologistAppointmentRepository extends JpaRepository<DermatologistAppointment, Long> {
     @Query(
             value = "select * from dermatologist_appointment da where da.dermatologist_email = ?1",
             nativeQuery = true
@@ -18,4 +18,6 @@ public interface DermatologistAppointmentRepository extends JpaRepository<Dermat
             nativeQuery = true
     )
     public List<DermatologistAppointment> findFreeAppointmentsByDermatologistEmailAndPharmacy(String email, String pharmacy);
+
+    public DermatologistAppointment findOneById(Long id);
 }
