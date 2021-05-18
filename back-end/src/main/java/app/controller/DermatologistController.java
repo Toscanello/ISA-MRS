@@ -211,6 +211,23 @@ public class DermatologistController {
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
+    @GetMapping(path = "/derm/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MedicalWorkerDTO> getDermatologistByEmail(@PathVariable String email){
+
+        Dermatologist dermatologist = dermatologistService.findDermatologist(email);
+        MedicalWorkerDTO medicalWorkerDTO = new MedicalWorkerDTO(dermatologist);
+        return new ResponseEntity<>(medicalWorkerDTO,HttpStatus.OK);
+    }
+
+    @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    editPatient(@PathVariable String email, @RequestBody MedicalWorkerDTO medicalWorkerDTO) {
+
+        Dermatologist dermatologist = dermatologistService.findDermatologist(email);
+        dermatologistService.edit(dermatologist, medicalWorkerDTO);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
     public ResponseEntity<Set<DetailedDermatologistDTO>>
     createDetailedDermatologistDTO(List<Dermatologist> dermatologists) {
         Set<DetailedDermatologistDTO> toReturn = new HashSet<>();

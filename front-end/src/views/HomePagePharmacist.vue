@@ -42,6 +42,7 @@
     </v-app-bar>
     <v-main fluid>
       <PatientList v-if="show_menu==='patients'"/>
+      <MedicalAccount v-if="show_menu==='account'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
       <PharmacistNewAppointment v-if="show_menu==='appointment'" @clicked="onScheduleClick"/>
       <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
@@ -54,11 +55,13 @@ import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
 import PharmacistNewAppointment from "@/components/PharmacistNewAppointment.vue";
 import Vaccation from "@/components/Vaccation.vue";
+import MedicalAccount from '@/components/MedicalAccount.vue'
 
 export default {
   name: "HomePagePharmacist",
   components: {
     PatientList,
+    MedicalAccount,
     PharmacistCalendar,
     PharmacistNewAppointment,
     Vaccation
@@ -82,7 +85,7 @@ export default {
       {
         icon: "mdi-account",
         title: "Acoount",
-        to: "patients",
+        to: "account",
       },
       {
         icon: "mdi-pencil",

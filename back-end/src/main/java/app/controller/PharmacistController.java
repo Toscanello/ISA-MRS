@@ -1,13 +1,7 @@
 package app.controller;
 
-import app.domain.Appointment;
-import app.domain.Pharmacist;
-import app.domain.Pharmacy;
-import app.domain.WorkHour;
-import app.dto.AppointmentDTO;
-import app.dto.FreeAppointmentDTO;
-import app.dto.FreeAppointmentPatientDTO;
-import app.dto.PharmacistDTO;
+import app.domain.*;
+import app.dto.*;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -126,6 +120,24 @@ public class PharmacistController {
         pharmacistService.save(toBeFired);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
+
+    @GetMapping(path = "/pharm/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MedicalWorkerDTO> getPharmacistByEmail(@PathVariable String email){
+
+        Pharmacist pharmacist = pharmacistService.findPharmacistByEmail(email);
+        MedicalWorkerDTO medicalWorkerDTO = new MedicalWorkerDTO(pharmacist);
+        return new ResponseEntity<>(medicalWorkerDTO,HttpStatus.OK);
+    }
+
+    @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    editPatient(@PathVariable String email, @RequestBody MedicalWorkerDTO editedPharmacist) {
+
+        Pharmacist pharmacist = pharmacistService.findPharmacistByEmail(email);
+        pharmacistService.edit(pharmacist, editedPharmacist);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
 
     public ResponseEntity<Set<PharmacistDTO>>
     createPharmacistsDTO(List<Pharmacist> pharmacists) {

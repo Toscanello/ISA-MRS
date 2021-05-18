@@ -1,5 +1,6 @@
 package app.dto;
 
+import app.domain.Address;
 import app.domain.MedicalWorker;
 
 public class MedicalWorkerDTO {
@@ -8,6 +9,10 @@ public class MedicalWorkerDTO {
     private String name;
     private String surname;
     private String phoneNumber;
+    private Address address;
+
+    public MedicalWorkerDTO() {
+    }
 
     public MedicalWorkerDTO(MedicalWorker mw) {
         this.email = mw.getEmail();
@@ -15,6 +20,24 @@ public class MedicalWorkerDTO {
         this.name = mw.getName();
         this.surname = mw.getSurname();
         this.phoneNumber = mw.getPhoneNumber();
+        this.address = mw.getAddress();
+    }
+
+    public MedicalWorkerDTO(String email, String password, String name, String surname, String phoneNumber, Address address) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getEmail() {
