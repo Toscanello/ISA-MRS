@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface DermatologistAppointmentRepository extends JpaRepository<DermatologistAppointment, String> {
+public interface DermatologistAppointmentRepository extends JpaRepository<DermatologistAppointment, Long> {
     @Query(
             value = "select * from dermatologist_appointment da where da.dermatologist_email = ?1",
             nativeQuery = true

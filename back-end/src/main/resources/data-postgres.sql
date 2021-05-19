@@ -172,7 +172,8 @@ insert into appointment(patient_id,medical_worker_id,price, start_time, end_time
 values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 18:15:00', '2021-04-06 18:45:00', false,'ccc');
 
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
-values('2021-05-18 09:15:00','00:15:00','derm1@gmail.com','abc',1000);
+values('2021-05-21 09:15:00','00:15:00','derm1@gmail.com','abc',1000);
+
 
 insert into vaccation(medical_worker_id,start_date,end_date,status)
 values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');

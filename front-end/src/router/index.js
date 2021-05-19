@@ -25,6 +25,7 @@ import AllPharmacistList from '../views/pharmacistDisplay/AllPharmacistList.vue'
 import PharmacyAdminAccount from '../views/PharmacyAdminAccount.vue'
 import VacationRequestTable from '../views/vacationRequests/VacationRequestTable.vue'
 import VacationResponseForm from '../views/vacationRequests/VacationResponseForm.vue'
+import DermatologistAppointment from '../views/patient/DermatologistAppointment.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -78,6 +79,11 @@ const routes = [
     path: '/pharmacist-calendar',
     name: 'PharmacistCalendar',
     component: PharmacistCalendar
+  },
+  {
+    path: '/dermatologistAppointment/:regNo',
+    name: 'DermatologistAppointment',
+    component: DermatologistAppointment
   },
   {
     path: '/about',

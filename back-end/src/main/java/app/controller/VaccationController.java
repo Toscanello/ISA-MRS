@@ -8,6 +8,7 @@ import app.service.PharmacistService;
 import app.service.VaccationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.DateFormatter;
@@ -46,4 +47,5 @@ public class VaccationController {
         Vaccation vaccation = new Vaccation(medicalWorker,startDate,endDate,status);
         vaccationService.save(vaccation);
     }
+    
 }
