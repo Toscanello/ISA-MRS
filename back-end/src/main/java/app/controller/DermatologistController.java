@@ -135,8 +135,12 @@ public class DermatologistController {
     public ResponseEntity<String>
     deleteDermatologistFromPharmacy(@PathVariable String regNo, @PathVariable String email) {
         List<Appointment> activeAppointments = appointmentService.findActiveAppointmentsByDermatologist(email, regNo);
-        if (activeAppointments.size() != 0)
-            return new ResponseEntity<>("Dermatologist has active appointments", HttpStatus.BAD_REQUEST);
+        if (activeAppointments.size() != 0) {
+            for (Appointment ap : activeAppointments) {
+                if (ap.getEndTime().isAfter(LocalDateTime.now()))
+                    return new ResponseEntity<>("Dermatologist has active appointments", HttpStatus.BAD_REQUEST);
+            }
+        }
         pharmacyService.deleteDermatologistEmploymentFromPharmacy(regNo, email);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
