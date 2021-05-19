@@ -4,6 +4,7 @@ import app.domain.MedicalWorker;
 import app.domain.Vaccation;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VaccationDTO {
     private String medicalWorkerId;
@@ -19,6 +20,16 @@ public class VaccationDTO {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+    }
+
+    public VaccationDTO(Vaccation v) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = v.getStartDate().format(formatter);
+        String endDate = v.getEndDate().format(formatter);
+        this.medicalWorkerId = v.getMedicalWorker().getEmail();
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = v.getStatus().toString();
     }
 
     public String getMedicalWorkerId() {
