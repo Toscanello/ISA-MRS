@@ -57,7 +57,7 @@
             <v-list-item-title>Narudžbenice za lekove</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="'/allmedicineordertable/' + pharmacy.regNo">
             <v-list-item-title>Nova narudžbenica</v-list-item-title>
           </v-list-item>
 
