@@ -3,12 +3,13 @@ package app.domain.bulk_order;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity(name = "order_response")
 public class OrderResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private BulkOrder order;
 

@@ -19,7 +19,7 @@ public class BulkOrder {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<BulkOrderItem> orderItems = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no")
     private Pharmacy pharmacy;
 

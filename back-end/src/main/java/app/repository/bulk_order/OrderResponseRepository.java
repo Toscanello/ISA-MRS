@@ -8,8 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrderResponseRepository extends JpaRepository<OrderResponse, Long> {
-    List<OrderResponse> getAll();
-
     List<OrderResponse> getAllByOrderId(Long id);
 
 }

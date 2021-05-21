@@ -6,18 +6,20 @@ import app.domain.Pharmacy;
 import app.domain.bulk_order.BulkOrder;
 import app.domain.bulk_order.BulkOrderItem;
 import app.domain.bulk_order.OrderResponse;
-import app.dto.bulk_order.BulkOrderDTO;
-import app.dto.bulk_order.BulkOrderItemDTO;
-import app.dto.bulk_order.NamedOrderDTO;
-import app.dto.bulk_order.NamedOrderItemDTO;
+import app.dto.bulk_order.*;
+import app.repository.MedicineQuantityRepository;
+import app.service.MedicineQuantityService;
 import app.service.MedicineService;
 import app.service.PharmacyService;
 import app.service.bulk_order.BulkOrderService;
 import app.service.bulk_order.OrderResponseService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -34,6 +36,8 @@ public class BulkOrderController {
     private OrderResponseService orderResponseService;
     @Autowired
     private MedicineService medicineService;
+    @Autowired
+    private MedicineQuantityService medicineQuantityService;
     @Autowired
     private PharmacyService pharmacyService;
 
@@ -65,6 +69,16 @@ public class BulkOrderController {
         return new ResponseEntity<>(pharmacyOrdersDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/offers/{orderId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<OrderResponseDTO>> allOffers(@PathVariable Long orderId) {
+        List<OrderResponse> allResponses = orderResponseService.getAllByOrderId(orderId);
+        Set<OrderResponseDTO> allResponsesDTO = new HashSet<>();
+        for (OrderResponse or : allResponses) {
+            allResponsesDTO.add(new OrderResponseDTO(or));
+        }
+        return new ResponseEntity<>(allResponsesDTO, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/offer/accept/{orderId}/{id}")
     public ResponseEntity<String> acceptOffer(@PathVariable Long orderId, @PathVariable Long id) {
         List<OrderResponse> responses = orderResponseService.getAll();
@@ -81,16 +95,19 @@ public class BulkOrderController {
 
     //TODO: OVDE IMPLEMENTIRATI KONKURENTNO IZVRSAVANJE
     //MOZE SE DESITI DA DVA PHARMACY ADMIN POTVRDE ISTI ORDER
-    private void accept(OrderResponse or) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void accept(OrderResponse or) {
         or.setStatus(OrderResponse.Status.ACCEPTED);
         //SEND EMAIL WOULD BE IMPLEMENTED IF THERE WAS
         //A SUPPLIER USER ROLE
         BulkOrder bo = or.getOrder();
         Pharmacy p = bo.getPharmacy();
+        List<MedicineQuantity> pharmacyMedicine =
+                medicineQuantityService.findMedicineQuantitiesByPharmacyRegNo(p.getRegNo());
         for (BulkOrderItem boi : bo.getOrderItems()) {
             Medicine m = boi.getMedicine();
             boolean containsMedicine = false;
-            for (MedicineQuantity mq : p.getMedicineQuantities()) {
+            for (MedicineQuantity mq : pharmacyMedicine) {
                 if (mq.getMedicine().getCode().equals(m.getCode())) {
                     mq.setQuantity(mq.getQuantity() + boi.getAmount());
                     containsMedicine = true;
@@ -102,9 +119,10 @@ public class BulkOrderController {
                 mq.setQuantity(boi.getAmount());
                 mq.setMedicine(boi.getMedicine());
                 mq.setPharmacy(p);
-                p.getMedicineQuantities().add(mq);
+                pharmacyMedicine.add(mq);
             }
         }
+        p.setMedicineQuantities(new HashSet<>(pharmacyMedicine));
         orderResponseService.save(or);
         pharmacyService.save(p);
     }

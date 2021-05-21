@@ -180,6 +180,7 @@ export default {
                 .catch(error => {
                     alert(error.response.data)
                 })
+                this.$router.push('/pharmacyadmin')
             }
         }
     }

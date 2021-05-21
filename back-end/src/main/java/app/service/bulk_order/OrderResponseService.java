@@ -13,7 +13,7 @@ public class OrderResponseService {
     OrderResponseRepository orderResponseRepository;
 
     public List<OrderResponse> getAll() {
-        return orderResponseRepository.getAll();
+        return orderResponseRepository.findAll();
     }
 
     public List<OrderResponse> getAllByOrderId(Long id) {

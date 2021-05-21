@@ -35,4 +35,8 @@ public class MedicineQuantityService {
     public void updateMedicineQuantityByPharmacyRegNoAndMedicineCode(String regNo, String code, int newQuantity){
         medicineQuantityRepository.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code, newQuantity);
     }
+
+    public MedicineQuantity save(MedicineQuantity mq) {
+        return medicineQuantityRepository.save(mq);
+    }
 }

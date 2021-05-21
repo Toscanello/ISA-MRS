@@ -25,6 +25,10 @@
         <v-list-item-group
           v-model="group"
         >
+          <v-list-item to='/pharmacyadmin'>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+
           <v-list-item :to="'/edit/pharmacy/' + pharmacy.regNo">
             <v-list-item-title>Izmeni apoteku</v-list-item-title>
           </v-list-item>
@@ -53,7 +57,7 @@
             <v-list-item-title>Upiti za lekove</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="'/orders/' + pharmacy.regNo">
             <v-list-item-title>Narudžbenice za lekove</v-list-item-title>
           </v-list-item>
 
