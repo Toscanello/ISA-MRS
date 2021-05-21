@@ -8,18 +8,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BulkOrderDTO {
+public class NamedOrderDTO {
     private Long id;
     private String dueDate;
     private String pharmacyRegNo;
-    private List<BulkOrderItemDTO> bulkOrderItemList = new ArrayList<>();
+    private List<NamedOrderItemDTO> bulkOrderItemList = new ArrayList<>();
 
-    public BulkOrderDTO() { }
+    public NamedOrderDTO() { }
 
-    public BulkOrderDTO(BulkOrder bo) {
+    public NamedOrderDTO(BulkOrder bo) {
         this.id = bo.getId();
         for (BulkOrderItem boi : bo.getOrderItems()) {
-            this.bulkOrderItemList.add(new BulkOrderItemDTO(boi));
+            this.bulkOrderItemList.add(new NamedOrderItemDTO(boi));
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.dueDate = bo.getDueDate().format(formatter);
@@ -49,11 +49,11 @@ public class BulkOrderDTO {
         this.pharmacyRegNo = pharmacyRegNo;
     }
 
-    public List<BulkOrderItemDTO> getBulkOrderItemList() {
+    public List<NamedOrderItemDTO> getBulkOrderItemList() {
         return bulkOrderItemList;
     }
 
-    public void setBulkOrderItemList(List<BulkOrderItemDTO> bulkOrderItemList) {
+    public void setBulkOrderItemList(List<NamedOrderItemDTO> bulkOrderItemList) {
         this.bulkOrderItemList = bulkOrderItemList;
     }
 

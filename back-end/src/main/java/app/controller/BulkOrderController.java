@@ -8,6 +8,8 @@ import app.domain.bulk_order.BulkOrderItem;
 import app.domain.bulk_order.OrderResponse;
 import app.dto.bulk_order.BulkOrderDTO;
 import app.dto.bulk_order.BulkOrderItemDTO;
+import app.dto.bulk_order.NamedOrderDTO;
+import app.dto.bulk_order.NamedOrderItemDTO;
 import app.service.MedicineService;
 import app.service.PharmacyService;
 import app.service.bulk_order.BulkOrderService;
@@ -18,7 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -49,6 +53,16 @@ public class BulkOrderController {
         }
         bulkOrderService.save(order);
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<NamedOrderDTO>> allOrders(@PathVariable String regNo) {
+        List<BulkOrder> pharmacyOrders = bulkOrderService.getAllByPharmacyRegNo(regNo);
+        Set<NamedOrderDTO> pharmacyOrdersDTO = new HashSet<>();
+        for (BulkOrder bo : pharmacyOrders) {
+            pharmacyOrdersDTO.add(new NamedOrderDTO(bo));
+        }
+        return new ResponseEntity<>(pharmacyOrdersDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = "/offer/accept/{orderId}/{id}")
