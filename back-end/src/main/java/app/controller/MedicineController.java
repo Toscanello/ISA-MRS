@@ -79,7 +79,7 @@ public class MedicineController {
     public ResponseEntity<MedicinePricingDTO>
     setNewPricing(@PathVariable String regNo, @PathVariable String code, @RequestBody MedicinePricingDTO newPricingDTO) {
         MedicinePricing currentPricing = medicinePricingService.findActivePricingForMedicineInPharmacy(regNo, code);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         currentPricing.setPricingEnd(LocalDateTime.parse(newPricingDTO.getPricingStart(), formatter));
         medicinePricingService.save(currentPricing);
 
