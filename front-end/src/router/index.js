@@ -26,6 +26,9 @@ import PharmacyAdminAccount from '../views/PharmacyAdminAccount.vue'
 import VacationRequestTable from '../views/vacationRequests/VacationRequestTable.vue'
 import VacationResponseForm from '../views/vacationRequests/VacationResponseForm.vue'
 import DermatologistAppointment from '../views/patient/DermatologistAppointment.vue'
+import AllMedicineTable from '../views/bulkOrder/AllMedicineTable.vue'
+import OrderList from '../views/bulkOrder/OrderList.vue'
+import OffersList from '../views/bulkOrder/OffersList.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -269,6 +272,21 @@ const routes = [
         next()
     },
     component: VacationResponseForm
+  },
+  {
+    path: '/allmedicineordertable/:regNo',
+    name: 'AllMedicineTable',
+    component: AllMedicineTable
+  },
+  {
+    path: '/orders/:regNo',
+    name: 'OrderList',
+    component: OrderList
+  },
+  {
+    path: '/offers/:id',
+    name: 'OffersList',
+    component: OffersList
   }
 ]
 

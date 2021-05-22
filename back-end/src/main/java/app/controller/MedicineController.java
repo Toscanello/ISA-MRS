@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -136,5 +137,15 @@ public class MedicineController {
     getMedicineQuantityByPharmacyRegNoAndMedicineCode(@PathVariable String regNo, @PathVariable String code) {
         int quantity = medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code);
         return new ResponseEntity<>(quantity, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findall", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<SimpleMedicineDTO>> findAll() {
+        List<Medicine> allMedicine = medicineService.getAllMedicines();
+        Set<SimpleMedicineDTO> toRet = new HashSet<>();
+        for (Medicine m : allMedicine) {
+            toRet.add(new SimpleMedicineDTO(m));
+        }
+        return new ResponseEntity<>(toRet, HttpStatus.OK);
     }
 }
