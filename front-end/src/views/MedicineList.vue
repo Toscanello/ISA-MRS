@@ -23,6 +23,7 @@
 
                                     <v-card-actions>
                                         <v-btn @click="viewPricing(med.code)">Pregled cenovnika</v-btn>
+                                        <v-btn outlined rounded small @click="createDiscount(med.code)">Definisi akciju</v-btn>
                                         <v-btn outlined rounded small @click="deleteMed(med.code)">Obrisi iz ponude</v-btn>
                                     </v-card-actions>
                                 </div>
@@ -71,6 +72,9 @@ export default {
                 alert('Ups! Desila se greška na serveru!')
                 console.log(response.data)
             })
+        },
+        createDiscount(code) {
+            this.$router.push('/discount/' + this.$route.params.regNo + '/' + code)
         }
     }
 }

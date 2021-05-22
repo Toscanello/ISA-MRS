@@ -3,6 +3,7 @@ package app.domain;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
