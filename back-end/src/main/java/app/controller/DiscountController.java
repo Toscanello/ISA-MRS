@@ -42,7 +42,7 @@ public class DiscountController {
         }
 
         List<Discount> previousDiscounts
-                = discountService.findAllByMedicineAndPharmacy(pharmacy.getRegNo(), newDiscount.getMedicineCode());
+                = discountService.findAllByMedicineAndPharmacy(newDiscount.getMedicineCode(), pharmacy.getRegNo());
 
         for (Discount previousDiscount : previousDiscounts) {
             if (newDiscount.getStartDateAsDate().isBefore(previousDiscount.getEndDate())

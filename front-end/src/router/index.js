@@ -29,6 +29,7 @@ import DermatologistAppointment from '../views/patient/DermatologistAppointment.
 import AllMedicineTable from '../views/bulkOrder/AllMedicineTable.vue'
 import OrderList from '../views/bulkOrder/OrderList.vue'
 import OffersList from '../views/bulkOrder/OffersList.vue'
+import MedicineDiscount from '../views/MedicineDiscount.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -287,6 +288,11 @@ const routes = [
     path: '/offers/:id',
     name: 'OffersList',
     component: OffersList
+  },
+  {
+    path: '/discount/:regNo/:code',
+    name: 'MedicineDiscount',
+    component: MedicineDiscount
   }
 ]
 
