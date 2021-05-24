@@ -34,27 +34,14 @@
               <v-list-item v-for="(item, i) in items" :key="i">
                 <v-list-item-content>
                   <v-list-item-title
-                    v-text="item.medicineDTO.name"
+                    v-text="item.medicineDTO.name" @dblclick="addmedicine()"
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
           </v-list>
         </v-card>
-        <v-card class="mx-auto" max-width="300" tile>
-          <v-list dense>
-            <v-subheader>Prescribed medicines</v-subheader>
-            <v-list-item-group v-model="selectedItem" color="primary">
-              <v-list-item v-for="(item, i) in prescribed_items" :key="i">
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-text="item.medicineDTO.name"
-                  ></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+        
 
         <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
 
