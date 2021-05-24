@@ -152,7 +152,7 @@ public class DermatologistController {
         boolean check=appointmentService.createNewAppointment(da,p);
         if(!check)
             return new ResponseEntity<>("Patient has appointment in that time", HttpStatus.OK);
-        dermatologistAppointmentService.delete(da);
+        dermatologistAppointmentService.deleteDermatologistAppointment(da.getId());
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
         message.setTo(email);

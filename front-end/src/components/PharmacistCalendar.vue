@@ -85,6 +85,14 @@
                 Address: <ins v-html="selectedEvent.address"></ins>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
+              <v-dialog v-model="dialog" persistent max-width="600px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                    Open Dialog
+                  </v-btn>
+                </template>
+                <AppointmentForm @clicked="dialog=false;selectedOpen=false;"/>
+              </v-dialog>
             </v-card>
           </v-menu>
         </v-sheet>
@@ -96,11 +104,14 @@
 
 <script>
 import axios from "axios";
+import AppointmentForm from '@/components/AppointmentForm.vue';
 export default {
+  components: { AppointmentForm },
   name: "PharmacistCalendar",
   data: () => ({
     focus: "",
     type: "month",
+    dialog: false,
     typeToLabel: {
       month: "Month",
       week: "Week",
@@ -194,7 +205,10 @@ export default {
     updateRange() {},
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
-    }
-  }
+    },
+    start(id) {
+      console.log(id);
+    },
+  },
 };
 </script>

@@ -50,8 +50,4 @@ public class DermatologistAppointmentService {
     public DermatologistAppointment findById(Long id){
         return dermatologistAppointmentRepository.findOneById(id);
     }
-
-    public void delete(DermatologistAppointment da) {
-        dermatologistAppointmentRepository.delete(da);
-    }
 }
