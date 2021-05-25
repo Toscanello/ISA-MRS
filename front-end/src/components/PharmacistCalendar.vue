@@ -85,10 +85,10 @@
                 Address: <ins v-html="selectedEvent.address"></ins>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
-              <v-dialog v-model="dialog" persistent max-width="600px">
+              <v-dialog v-model="dialog" persistent max-width="700px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                    Open Dialog
+                  <v-btn color="orange" style="margin: 10px;" dark v-bind="attrs" v-on="on" @click="onDialogClick(selectedEvent.id)">
+                    Start Appointment
                   </v-btn>
                 </template>
                 <AppointmentForm @clicked="dialog=false;selectedOpen=false;"/>
@@ -209,6 +209,14 @@ export default {
     start(id) {
       console.log(id);
     },
+    onDialogClick(id){
+      for(var i =0;i<this.appointments.length;i++){
+        if(this.appointments[i].id==id){
+          localStorage.setItem('patient',this.appointments[i].patient.email);
+          break;
+        }
+      }
+    }
   },
 };
 </script>

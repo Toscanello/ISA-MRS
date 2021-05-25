@@ -78,14 +78,14 @@
             />
           </div>
         </v-row>
-          <v-btn color="primary" @click="e1 = 3" :disabled='!isComplete'> Continue </v-btn>
+          <v-btn color="primary" @click="e1=3" :disabled='!isComplete'> Continue </v-btn>
           <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
 
-      <v-stepper-content step="3">
-        <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+      <v-stepper-content id="step3" step="3" style='width:700px'>
+        <PharmacistNewAppointment style="margin-bottom:5px"/>
 
-        <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
+        <v-btn color="primary" @click="onFinish"> Finish </v-btn>
 
         <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
@@ -95,9 +95,11 @@
 
 <script>
 import TokenDecoder from "@/services/token-decoder";
+import PharmacistNewAppointment from "@/components/PharmacistNewAppointment"
 import axios from "axios";
 export default {
   name: "AppointmentForm",
+  components:{PharmacistNewAppointment},
   data() {
     return {
       e1: 1,
@@ -166,6 +168,19 @@ export default {
         }
       }
     },
+    onFinish(){
+      this.$emit("clicked");
+      this.report = "";
+      this.prescribed_items = [];
+      this.e1 = 1;
+      this.days=1;
+    }
   },
 };
 </script>
+
+<style scoped>
+#step3{
+  padding: 1px;
+}
+</style>

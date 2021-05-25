@@ -44,7 +44,6 @@
       <PatientList v-if="show_menu==='patients'"/>
       <MedicalAccount v-if="show_menu==='account'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
-      <PharmacistNewAppointment v-if="show_menu==='appointment'" @clicked="onScheduleClick"/>
       <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
     </v-main>
   </v-container>
@@ -53,7 +52,6 @@
 <script>
 import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
-import PharmacistNewAppointment from "@/components/PharmacistNewAppointment.vue";
 import Vaccation from "@/components/Vaccation.vue";
 import MedicalAccount from '@/components/MedicalAccount.vue'
 
@@ -63,7 +61,6 @@ export default {
     PatientList,
     MedicalAccount,
     PharmacistCalendar,
-    PharmacistNewAppointment,
     Vaccation
   },
   props: {
@@ -106,12 +103,7 @@ export default {
         icon: "mdi-airplane-takeoff",
         title: "Vaccation",
         to: "vaccation",
-      },
-      {
-        icon: "mdi-plus",
-        title: "New appointment",
-        to: "appointment",
-      },
+      }
     ],
   }),
   created(){
@@ -121,10 +113,6 @@ export default {
   methods: {
     show(param){
       this.show_menu=param;
-      this.drawer=false;
-    },
-    onScheduleClick:function(check){
-      this.show_menu=check;
       this.drawer=false;
     },
     onVaccationClick:function(){
