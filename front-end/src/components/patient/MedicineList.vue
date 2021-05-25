@@ -25,43 +25,12 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.id"
-                      label="Dessert name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.quantity"
-                      label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.price"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  
                 </v-row>
               </v-container>
             </v-card-text>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialogDelete" max-width="500px" v-if="userRole === 'ROLE_USER'">
           <v-card>
             <v-card-title class="headline">Cofirm order</v-card-title>
             
@@ -149,6 +118,7 @@
         address:{id:1,street:" ",streetNumber:"",place:"",country:"",
         location:{geoWidth:0.0,geoHeight:0.0}},ratings:[0],appointmentPrice:0.0},price:0.0,pricingStart:"",pricingEnd:""           
       },
+      userRole: null,
     }),
 
 
@@ -159,7 +129,9 @@
     },
 
      created () {
-            let path = "http://localhost:9090/api/medicine/all" ;
+       this.userRole = TokenDecoder.getUserRole()
+       console.log(this.userRole)
+            let path = "http://localhost:9090/api/medicine/all";
             axios.get(path).then((response) => {
                 this.orders = response.data;
             })

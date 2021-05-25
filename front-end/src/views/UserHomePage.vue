@@ -53,12 +53,7 @@
 
     <v-main fluid>
       <PharmaciesList v-if="show_menu==='pharmacies'"/>
-      <Calendar v-if="show_menu==='calendar'"/>
-      <AppointmenPharmacist v-if="show_menu==='appointment'"/>
-      <PatientAccount v-if="show_menu==='acoount'"/>
-      <MedicineOrder v-if="show_menu==='medicineOrder'"/>
-      <MedicineList v-if="show_menu==='MedicineList'"/>
-      <AppointmentsHistory v-if="show_menu==='history'"/>
+      <MedicineList v-if="show_menu==='drugs'"/>
                
     </v-main>
 
