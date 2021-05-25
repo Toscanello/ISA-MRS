@@ -21,7 +21,9 @@
           v-model="report"
         ></v-textarea>
 
-        <v-btn color="primary" @click="e1 = 2" :disabled=isComplete> Continue </v-btn>
+        <v-btn color="primary" @click="e1 = 2" :disabled="isComplete">
+          Continue
+        </v-btn>
 
         <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
@@ -78,12 +80,14 @@
             />
           </div>
         </v-row>
-          <v-btn color="primary" @click="e1=3" :disabled='!isComplete'> Continue </v-btn>
-          <v-btn text @click="dialog"> Cancel </v-btn>
+        <v-btn color="primary" @click="e1 = 3" :disabled="!isComplete">
+          Continue
+        </v-btn>
+        <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
 
-      <v-stepper-content id="step3" step="3" style='width:700px'>
-        <PharmacistNewAppointment style="margin-bottom:5px"/>
+      <v-stepper-content id="step3" step="3" style="width: 700px">
+        <PharmacistNewAppointment style="margin-bottom: 5px" />
 
         <v-btn color="primary" @click="onFinish"> Finish </v-btn>
 
@@ -95,18 +99,18 @@
 
 <script>
 import TokenDecoder from "@/services/token-decoder";
-import PharmacistNewAppointment from "@/components/PharmacistNewAppointment"
+import PharmacistNewAppointment from "@/components/PharmacistNewAppointment";
 import axios from "axios";
 export default {
   name: "AppointmentForm",
-  components:{PharmacistNewAppointment},
+  components: { PharmacistNewAppointment },
   data() {
     return {
       e1: 1,
       report: "",
       items: [],
       prescribed_items: [],
-      days: 1
+      days: 1,
     };
   },
   created() {
@@ -116,9 +120,9 @@ export default {
     });
   },
   computed: {
-    isComplete () {
-      return (!this.report) || (this.prescribed_items.length>0);
-    }
+    isComplete() {
+      return !this.report || this.prescribed_items.length > 0;
+    },
   },
   methods: {
     dialog() {
@@ -126,7 +130,7 @@ export default {
       this.report = "";
       this.prescribed_items = [];
       this.e1 = 1;
-      this.days=1;
+      this.days = 1;
     },
     addmedicine(id) {
       let farm = TokenDecoder.getUserEmail();
@@ -157,7 +161,7 @@ export default {
               }
             }
             if (!found) this.prescribed_items.push(response.data[0]);
-          }
+          } else alert("Not enough quantity of medicine");
         });
     },
     removemedicine(id) {
@@ -168,19 +172,37 @@ export default {
         }
       }
     },
-    onFinish(){
-      this.$emit("clicked");
-      this.report = "";
-      this.prescribed_items = [];
-      this.e1 = 1;
-      this.days=1;
-    }
+    onFinish() {
+      var medicines = [];
+      for (var i = 0; i < this.prescribed_items.length; i++) {
+        medicines.push(this.prescribed_items[i].medicineDTO.code);
+      }
+      let path = "http://localhost:9090/api/medicine/prescribe/abc";
+      axios
+        .post(path, medicines)
+        .then((response) => console.log(response.data));
+
+      axios
+        .post("http://localhost:9090/api/report/add", {
+          report: this.report,
+          days: this.days,
+          patient_id: localStorage.getItem("patient"),
+        })
+        .then((response) => {
+          console.log(response)
+          this.$emit("clicked");
+          this.report = "";
+          this.prescribed_items = [];
+          this.e1 = 1;
+          this.days = 1;
+        });
+    },
   },
 };
 </script>
 
 <style scoped>
-#step3{
+#step3 {
   padding: 1px;
 }
 </style>

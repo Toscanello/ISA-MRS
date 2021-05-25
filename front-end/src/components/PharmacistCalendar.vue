@@ -93,6 +93,9 @@
                 </template>
                 <AppointmentForm @clicked="dialog=false;selectedOpen=false;"/>
               </v-dialog>
+              <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(selectedEvent.id)">
+                Didn't come
+              </v-btn>
             </v-card>
           </v-menu>
         </v-sheet>
@@ -216,6 +219,11 @@ export default {
           break;
         }
       }
+    },
+    didntCome(id){
+      //treba odraditi penale
+      alert("Penal"+id);
+      window.location.reload();
     }
   },
 };

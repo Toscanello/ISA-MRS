@@ -34,9 +34,9 @@ values ('abc', 'lek1', 2);
 insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
 values ('abc', 'lek2', 3);
 insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek4', 1);
+values ('abc', 'lek3', 1);
 insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek3', 4);
+values ('aaa', 'lek4', 4);
 insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
 values ('aaa', 'lek2', 4);
 
@@ -163,9 +163,9 @@ values('ika@gmail.com','farm@gmail.com',1000, '2021-04-29 09:15:00', '2021-04-29
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc');
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-05-19 09:15:00', '2021-05-19 09:45:00', false,'abc');
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-05-26 11:45:00', '2021-05-26 12:15:00', false,'abc');
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-27 10:15:00', '2021-04-27 10:45:00', false,'abc');
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-28 10:15:00', '2021-04-28 10:45:00', false,'abc');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no)
 values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00', false,'abc');
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no)

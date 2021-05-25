@@ -175,10 +175,27 @@ public class MedicineController {
         }else{
             pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
         }
-        if(allMedicine.isEmpty())
-            return new ResponseEntity<>(pricingDTOS,HttpStatus.OK);
-        for (MedicinePricing mp : allMedicine)
+        if(allMedicine.isEmpty()) {
+            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1)
+                pricingDTOS.clear();
+            return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
+        }
+        for (MedicinePricing mp : allMedicine) {
+            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1)
+                continue;
             pricingDTOS.add(new MedicinePricingDTO(mp));
+        }
         return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
     }
+
+    @PostMapping(value = "prescribe/{regno}",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> prescribeMedicine(@PathVariable String regno,@RequestBody List<String> ids){
+        for (String id: ids) {
+            MedicineQuantity mp = medicineQuantityService.findMedicineQuantityByPharmacyRegNo(regno,id);
+            medicineQuantityService.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(regno,id,mp.getQuantity()-1);
+        }
+        return new ResponseEntity<>("Ok",HttpStatus.OK);
+    }
+
 }
