@@ -42,4 +42,12 @@ public class MedicinePricingService {
     public Set<String> findMedicineIDByMedicinePricingID(long medicinePricingId){
         return medicinePricingRepository.findMedicineIDByMedicinePricingID(medicinePricingId);
     }
+
+    public List<MedicinePricing> findAllActivePricingInPharmacy(String regNo) {
+        return medicinePricingRepository.findMedicinePricingsByPharmacyRegNo(regNo);
+    }
+
+    public MedicinePricing findMedicinePricingID(long medicinePricingId){
+        return medicinePricingRepository.findById(medicinePricingId).orElse(null);
+    }
 }

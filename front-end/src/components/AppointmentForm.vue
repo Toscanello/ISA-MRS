@@ -21,31 +21,65 @@
           v-model="report"
         ></v-textarea>
 
-        <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
+        <v-btn color="primary" @click="e1 = 2" :disabled=isComplete> Continue </v-btn>
 
         <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <v-card class="mx-auto" max-width="300" tile>
-          <v-list dense>
-            <v-subheader>Medicines</v-subheader>
-            <v-list-item-group v-model="selectedItem" color="primary">
-              <v-list-item v-for="(item, i) in items" :key="i">
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-text="item.medicineDTO.name" @dblclick="addmedicine()"
-                  ></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
-        
-
-        <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
-
-        <v-btn text> Cancel </v-btn>
+        <v-row>
+          <v-col>
+            <v-card class="mx-auto" max-width="300" tile>
+              <v-list dense>
+                <v-subheader>Medicines</v-subheader>
+                <v-list-item-group v-model="selectedItem" color="primary">
+                  <v-list-item v-for="(item, i) in items" :key="i">
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="item.medicineDTO.name"
+                        @dblclick="addmedicine(item.id)"
+                      ></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card class="mx-auto" max-width="300" tile>
+              <v-list dense>
+                <v-subheader>Prescribed medicines</v-subheader>
+                <v-list-item-group v-model="selectedItem" color="primary">
+                  <v-list-item v-for="(item, i) in prescribed_items" :key="i">
+                    <v-list-item-content>
+                      <v-list-item-title
+                        v-text="item.medicineDTO.name"
+                        @dblclick="removemedicine(item.id)"
+                      ></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <label for="example-number-input" class="col-2 col-form-label"
+            >Days</label
+          >
+          <div class="col-10">
+            <input
+              class="form-control"
+              type="number"
+              value="1"
+              min="1"
+              id="example-number-input"
+              v-model="days"
+            />
+          </div>
+        </v-row>
+          <v-btn color="primary" @click="e1 = 3" :disabled='!isComplete'> Continue </v-btn>
+          <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
@@ -53,13 +87,14 @@
 
         <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
 
-        <v-btn text> Cancel </v-btn>
+        <v-btn text @click="dialog"> Cancel </v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
 
 <script>
+import TokenDecoder from "@/services/token-decoder";
 import axios from "axios";
 export default {
   name: "AppointmentForm",
@@ -68,7 +103,8 @@ export default {
       e1: 1,
       report: "",
       items: [],
-      prescribed_items: []
+      prescribed_items: [],
+      days: 1
     };
   },
   created() {
@@ -77,9 +113,58 @@ export default {
       this.items = response.data;
     });
   },
+  computed: {
+    isComplete () {
+      return (!this.report) || (this.prescribed_items.length>0);
+    }
+  },
   methods: {
     dialog() {
       this.$emit("clicked");
+      this.report = "";
+      this.prescribed_items = [];
+      this.e1 = 1;
+      this.days=1;
+    },
+    addmedicine(id) {
+      let farm = TokenDecoder.getUserEmail();
+      let i;
+      this.items.forEach((element) => {
+        if (element.id == id) i = element;
+      });
+      let spec =
+        "Name: " +
+        i.medicineDTO.name +
+        "\nType: " +
+        i.medicineDTO.type +
+        "\nManufacturer: " +
+        i.medicineDTO.manufacturer +
+        "\nDescription: " +
+        i.medicineDTO.description;
+      alert(spec);
+      axios
+        .get(`http://localhost:9090/api/medicine/check/${farm}/${id}`)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.length != 0) {
+            var found = false;
+            for (var x = 0; x < this.prescribed_items.length; x++) {
+              if (this.prescribed_items[x].id == response.data[0].id) {
+                found = true;
+                break;
+              }
+            }
+            if (!found) this.prescribed_items.push(response.data[0]);
+          }
+        });
+    },
+    removemedicine(id) {
+      for (var i = 0; i < this.prescribed_items.length; i++) {
+        if (this.prescribed_items[i].id == id) {
+          this.prescribed_items.splice(i, 1);
+          break;
+        }
+      }
     },
   },
 };

@@ -1,5 +1,8 @@
 package app.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ public class Medicine {
     @JoinTable(name = "alternative_medicine",
     joinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"),
     inverseJoinColumns = @JoinColumn(name = "alternative_code", referencedColumnName = "code"))
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Medicine> alternativeMedicine = new ArrayList<>();
 
     @Column(name = "composition", unique = false, nullable = false)

@@ -45,7 +45,9 @@ values('lek1', 'abc', 300, '2021-04-21 12:00:00');
 insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
 values('lek2', 'abc', 320, '2021-04-21 13:00:00');
 insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
-values('lek4', 'abc', 320, '2021-04-21 13:00:00');
+values('lek3', 'abc', 320, '2021-04-21 13:00:00');
+insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
+values('lek4', 'aaa', 320, '2021-04-21 13:00:00');
 
 --insert into pharmacy_medicine(pharmacy_reg_no, medicine_code)
 --values ('abc', 'lek1');
