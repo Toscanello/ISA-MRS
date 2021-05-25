@@ -13,7 +13,7 @@ import DermatologistAppointmentForm from '../views/DermatologistAppointmentForm.
 import PharmacistNewAppointment from '../components/PharmacistNewAppointment.vue'
 import MedicineOrder from '@/components/patient/MedicineOrder.vue'
 import PharmacyEdit from '../views/PharmacyEdit.vue'
-import Login from '../views/Login.vue'
+
 import Calendar from '../views/CalendarPatient.vue'
 import MedicineList from '../views/MedicineList.vue'
 import MedicinePricing from '../views/MedicinePricing.vue'
@@ -30,6 +30,8 @@ import AllMedicineTable from '../views/bulkOrder/AllMedicineTable.vue'
 import OrderList from '../views/bulkOrder/OrderList.vue'
 import OffersList from '../views/bulkOrder/OffersList.vue'
 import MedicineDiscount from '../views/MedicineDiscount.vue'
+import UserHomePage from '../views/UserHomePage.vue'
+import Login from '../views/Login.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -43,8 +45,8 @@ Vue.use(VueGoogleMaps, {
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: Login
+    name: 'UserHomePage',
+    component: UserHomePage
   },
   {
     path: '/home',
@@ -66,13 +68,18 @@ const routes = [
           next({name: 'HomePagePharmacyAdmin'})
         }
         else 
-          next({name: 'Login'})
+          next({name: 'UserHomePage'})
     }
   },
   {
     path: '/calendar',
     name: 'Calendar',
     component: Calendar
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/medicine_order',
@@ -133,7 +140,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'LogUserHomePage'})
       else
         next()
     },
@@ -145,7 +152,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -157,7 +164,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -174,7 +181,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -186,7 +193,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -198,7 +205,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -210,7 +217,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -227,7 +234,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -244,7 +251,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -256,7 +263,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },
@@ -268,7 +275,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       let role = TokenDecoder.getUserRole()
       if (role != 'ROLE_PH_ADMIN')
-        next({name: 'Login'})
+        next({name: 'UserHomePage'})
       else
         next()
     },

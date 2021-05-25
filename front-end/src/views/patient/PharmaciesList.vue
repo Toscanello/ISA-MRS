@@ -101,7 +101,7 @@
               <div>Ovdje moze neki dodatni opis apoteke.</div>
             </v-card-text>
 
-            <v-card-actions>
+            <v-card-actions v-if="userRole == 'ROLE_USER'">
               <v-btn
                 color="deep-purple lighten-2"
                 text
@@ -120,6 +120,7 @@
 
 
 <script>
+import TokenDecoder from '../../services/token-decoder'
 import axios from 'axios'
 export default {
     name: 'PharmacyList',
@@ -127,8 +128,11 @@ export default {
     drawer: false,
     group: null,
     pharmacies: [],
+    userRole: null,
   }),
   created() {
+    this.userRole = TokenDecoder.getUserRole()
+    console.log(this.userRole)
     axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
       this.pharmacies = resp.data;
     });
