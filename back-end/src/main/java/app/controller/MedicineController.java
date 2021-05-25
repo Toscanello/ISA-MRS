@@ -198,4 +198,17 @@ public class MedicineController {
         return new ResponseEntity<>("Ok",HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getOrders/{regno}")
+    public ResponseEntity<List<MedicineOrderDTO>> getOrdersForPharmacy(@PathVariable String regno){
+        return new ResponseEntity<>(medicineOrderService.findOrdersByPharmacy(regno),HttpStatus.OK);
+    }
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<String> updateOrder(@PathVariable Long id){
+        MedicineOrder mo=medicineOrderService.findOrderById(id);
+        if(mo==null)
+            return new ResponseEntity<>("No",HttpStatus.OK);
+        mo.setStatus(false);
+        medicineOrderService.update(mo);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
 }

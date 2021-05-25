@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, String> {
+public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, Long> {
 
     @Query(value = "select * from medicine_order mo where mo.patient_id = ?1",
             nativeQuery = true)
@@ -25,4 +25,18 @@ public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, St
     )
     public void insertNewOrder(Long medicinePricingId, int quantity,
                                double price, String patientEmail, LocalDateTime start, LocalDateTime end);
+
+    @Query(value = "select * from medicine_order mo where mo.medicine in (select mp.id from medicine_pricing mp where mp.pharmacy_reg_no = ?1) and mo.status =false",
+            nativeQuery = true)
+    public List<MedicineOrder> findAllByPharmacyRegNo(String regno);
+
+    @Modifying
+    @Transactional
+    @Query(
+            value="update medicine_order set status = true where id = ?1",
+            nativeQuery = true
+    )
+    public void update(Long id);
+
+
 }

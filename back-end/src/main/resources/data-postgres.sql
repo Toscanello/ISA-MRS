@@ -180,12 +180,12 @@ values('2021-05-21 09:15:00','00:15:00','derm1@gmail.com','abc',1000);
 insert into vaccation(medical_worker_id,start_date,end_date,status)
 values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');
 
-insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 2, 600,
-                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-21 12:00:00');
-insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (1, 3, 900,
-                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-16 12:00:00');
-insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time) values (2, 3, 960,
-                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-29 12:00:00');
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time,status) values (1, 2, 600,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-21 12:00:00',false);
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time,status) values (1, 3, 900,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-16 12:00:00',false);
+insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time,status) values (2, 3, 960,
+                                            'ika@gmail.com', '2021-04-21 12:00:00', '2021-05-29 12:00:00',false);
 
 
 insert into bulk_order(due_date, pharmacy_reg_no)

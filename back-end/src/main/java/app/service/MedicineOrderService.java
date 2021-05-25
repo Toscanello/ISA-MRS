@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +42,22 @@ public class MedicineOrderService {
         message.setText("Narucen je lijek " + Long.toString(medicinePricingId));
         emailSender.send(message);
         medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
+    }
+
+    public List<MedicineOrderDTO> findOrdersByPharmacy(String regno) {
+        List<MedicineOrder> medicineOrders = medicineOrderRepository.findAllByPharmacyRegNo(regno);
+        List<MedicineOrderDTO> medicineOrderDTOS = new ArrayList<MedicineOrderDTO>();
+        for (MedicineOrder mo: medicineOrders) {
+            medicineOrderDTOS.add(new MedicineOrderDTO(mo));
+        }
+        return medicineOrderDTOS;
+    }
+
+    public MedicineOrder findOrderById(Long id) {
+        return medicineOrderRepository.findById(id).orElse(null);
+    }
+
+    public void update(MedicineOrder mo) {
+        medicineOrderRepository.update(mo.getId());
     }
 }

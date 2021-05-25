@@ -38,17 +38,21 @@ public class MedicineOrder {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
+    @Column(name = "status",nullable = false)
+    private boolean status;
+
     public MedicineOrder() {
     }
 
     public MedicineOrder(MedicinePricing medicine, Integer quantity, Double price, Patient patient,
-                         LocalDateTime startTime, LocalDateTime endTime) {
+                         LocalDateTime startTime, LocalDateTime endTime,boolean status) {
         this.medicine = medicine;
         this.quantity = quantity;
         this.price = price;
         this.patient = patient;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.status = status;
     }
 
     public Long getId() {
@@ -101,5 +105,13 @@ public class MedicineOrder {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

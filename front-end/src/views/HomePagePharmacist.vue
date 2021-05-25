@@ -45,6 +45,7 @@
       <MedicalAccount v-if="show_menu==='account'"/>
       <PharmacistCalendar v-if="show_menu==='calendar'"/>
       <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
+      <DispensingDrugs v-if="show_menu==='drugs'"/>
     </v-main>
   </v-container>
 </template>
@@ -54,6 +55,7 @@ import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
 import Vaccation from "@/components/Vaccation.vue";
 import MedicalAccount from '@/components/MedicalAccount.vue'
+import DispensingDrugs from '@/components/DispensingDrugs.vue'
 
 export default {
   name: "HomePagePharmacist",
@@ -61,7 +63,8 @@ export default {
     PatientList,
     MedicalAccount,
     PharmacistCalendar,
-    Vaccation
+    Vaccation,
+    DispensingDrugs
   },
   props: {
     expandOnHover: {
@@ -97,7 +100,7 @@ export default {
       {
         icon: "mdi-minus",
         title: "Dispensing drugs",
-        to: "patients",
+        to: "drugs",
       },
       {
         icon: "mdi-airplane-takeoff",
