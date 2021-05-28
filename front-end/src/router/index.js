@@ -30,6 +30,10 @@ import AllMedicineTable from '../views/bulkOrder/AllMedicineTable.vue'
 import OrderList from '../views/bulkOrder/OrderList.vue'
 import OffersList from '../views/bulkOrder/OffersList.vue'
 import MedicineDiscount from '../views/MedicineDiscount.vue'
+import EmployDermatologist from '../views/addEmployement/EmployDermatologist.vue'
+import EmployDermatologistForm from '../views/addEmployement/EmployDermatologistForm.vue'
+import EmployPharmacist from '../views/addEmployement/EmployPharmacist.vue'
+import EmployPharmacistForm from '../views/addEmployement/EmployPharmacistForm'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -293,7 +297,27 @@ const routes = [
     path: '/discount/:regNo/:code',
     name: 'MedicineDiscount',
     component: MedicineDiscount
-  }
+  },
+  {
+    path: '/employ/list/dermatologists/:regNo',
+    name: 'EmployDermatologist',
+    component: EmployDermatologist
+  },
+  {
+    path: '/employ/dermatologist/:regNo/:email',
+    name: 'EmployDermatologistForm',
+    component: EmployDermatologistForm
+  },
+  {
+    path: '/employ/list/pharmacists/:regNo',
+    name: 'EmployPharmacist',
+    component: EmployPharmacist
+  },
+  {
+    path: '/employ/pharmacist/:regNo/:email',
+    name: 'EmployPharmacistForm',
+    component: EmployPharmacistForm
+  },
 ]
 
 const router = new VueRouter({

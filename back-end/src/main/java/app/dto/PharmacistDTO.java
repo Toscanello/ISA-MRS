@@ -18,8 +18,8 @@ public class PharmacistDTO {
         this.name = p.getName();
         this.surname = p.getSurname();
         this.phoneNumber = p.getPhoneNumber();
-        this.pharmacyRegNo = p.getPharmacy().getRegNo();
-        this.pharmacyName = p.getPharmacy().getName();
+        this.pharmacyRegNo = p.getPharmacy() == null ? null : p.getPharmacy().getRegNo();
+        this.pharmacyName = p.getPharmacy() == null ? null: p.getPharmacy().getName();
     }
 
     public String getEmail() {

@@ -49,8 +49,16 @@
             <v-list-item-title>Dermatolozi</v-list-item-title>
           </v-list-item>
 
-          <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Lekovi</v-list-item-title>
+          <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
+            <v-list-item-title>Farmaceuti</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item :to="'/employ/list/dermatologists/' + pharmacy.regNo">
+            <v-list-item-title>Employ dermatologists</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item :to="'/employ/list/pharmacists/' + pharmacy.regNo">
+            <v-list-item-title>Employ pharmacists</v-list-item-title>
           </v-list-item>
 
           <v-list-item>

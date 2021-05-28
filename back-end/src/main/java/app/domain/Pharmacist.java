@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "pharmacist")
 public class Pharmacist extends MedicalWorker{
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "work_hour",referencedColumnName = "id")
     @JsonIgnore
     private WorkHour workHour;

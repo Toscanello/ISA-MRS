@@ -29,4 +29,7 @@ public interface PharmacistRepository extends JpaRepository<Pharmacist, String> 
     public List<String> findPharmacist(LocalTime start, LocalTime end, LocalDateTime startDate, String pharmacyRegNo);
 
     public List<Pharmacist> findPharmacistsByPharmacyRegNo(String regNo);
+
+    @Query(value = "select p from Pharmacist p where p.pharmacy is NULL")
+    public List<Pharmacist> getUnemployed();
 }

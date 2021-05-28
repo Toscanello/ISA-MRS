@@ -145,6 +145,32 @@ public class DermatologistController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PostMapping(value = "/employ", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> employ(@RequestBody WorkHourDTO workHourDTO) {
+        Dermatologist dermatologist = dermatologistService.findDermatologist(workHourDTO.getWorkerEmail());
+        Pharmacy pharmacy = pharmacyService.getPharmacy(workHourDTO.getPharmacyRegNo());
+        List<DermatologistWorkHour> workHours
+                = workHourService.getDermatologistWorkHours(workHourDTO.getWorkerEmail());
+        LocalTime startTime = workHourDTO.getStartTimeAsTime();
+        LocalTime endTime = workHourDTO.getEndTimeAsTime();
+        for (DermatologistWorkHour workHour : workHours) {
+            if (workHour.getBegginingHour().isBefore(endTime)
+                && workHour.getEndingHour().isAfter(startTime))
+                return new ResponseEntity<>("Dermatologist already works somewhere at that hour",
+                        HttpStatus.BAD_REQUEST);
+
+        }
+        DermatologistWorkHour dwh = new DermatologistWorkHour();
+        dwh.setDermatologist(dermatologist);
+        dwh.setPharmacy(pharmacy);
+        dwh.setBegginingHour(startTime);
+        dwh.setEndingHour(endTime);
+        dermatologist.getWorkingHours().add(dwh);
+        dermatologistService.save(dermatologist);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
     @PostMapping(value = "/scheduleNewAppointment/{id}/{email}")
     public ResponseEntity<String> scheduleNewAppointment(@PathVariable Long id, @PathVariable String email){
         DermatologistAppointment da = dermatologistAppointmentService.findById(id);

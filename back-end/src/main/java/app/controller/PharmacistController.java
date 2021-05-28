@@ -108,6 +108,12 @@ public class PharmacistController {
         return createPharmacistsDTO(pharmacyPharmacists);
     }
 
+    @GetMapping(path = "/list/unemployed", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<PharmacistDTO>> findUnemployedPharmacists() {
+        List<Pharmacist> pharmacyPharmacists = pharmacistService.getUnemployed();
+        return createPharmacistsDTO(pharmacyPharmacists);
+    }
+
     @DeleteMapping(value = "/delete/employment/{email}")
     public ResponseEntity<String>
     deleteDermatologistFromPharmacy(@PathVariable String email) {
@@ -133,12 +139,29 @@ public class PharmacistController {
         return new ResponseEntity<>(medicalWorkerDTO,HttpStatus.OK);
     }
 
-    @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     editPatient(@PathVariable String email, @RequestBody MedicalWorkerDTO editedPharmacist) {
 
         Pharmacist pharmacist = pharmacistService.findPharmacistByEmail(email);
         pharmacistService.edit(pharmacist, editedPharmacist);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/employ", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addEmployment(@RequestBody WorkHourDTO workHourDTO) {
+        Pharmacy ph = pharmacyService.getPharmacy(workHourDTO.getPharmacyRegNo());
+
+        WorkHour wh = new WorkHour();
+        wh.setPharmacy(ph);
+        wh.setStart(workHourDTO.getStartTimeAsTime());
+        wh.setEnd(workHourDTO.getEndTimeAsTime());
+
+        Pharmacist newEmployee = pharmacistService.findPharmacistByEmail(workHourDTO.getWorkerEmail());
+        newEmployee.setWorkHour(wh);
+        newEmployee.setPharmacy(ph);
+        pharmacistService.save(newEmployee);
+
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
