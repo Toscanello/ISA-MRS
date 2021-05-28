@@ -87,7 +87,11 @@ values('farm@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqc
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');;
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farmC@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','proba','probic prvi','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farmD@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','proba','probic drugi','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('phadmin@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
@@ -124,6 +128,8 @@ insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 insert into medical_workers(email)values('farmA@gmail.com');
 insert into medical_workers(email)values('farmB@gmail.com');
+insert into medical_workers(email)values('farmC@gmail.com');
+insert into medical_workers(email)values('farmD@gmail.com');
 
 insert into pharmacy_admin(email, pharmacy_reg_no)
 values ('phadmin@gmail.com', 'abc');
@@ -140,6 +146,10 @@ insert into pharmacist(email,work_hour,pharmacy)
 values('farmA@gmail.com',2,'bbb');
 insert into pharmacist(email,work_hour,pharmacy)
 values('farmB@gmail.com',3,'ccc');
+insert into pharmacist(email,work_hour,pharmacy)
+values('farmC@gmail.com', null, null);
+insert into pharmacist(email,work_hour,pharmacy)
+values('farmD@gmail.com', null, null);
 
 insert into dermatologist(email)values('derm1@gmail.com');
 insert into dermatologist(email)values('derm2@gmail.com');

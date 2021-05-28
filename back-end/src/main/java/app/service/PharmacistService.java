@@ -50,4 +50,6 @@ public class PharmacistService {
             pharmacist.setPassword(passwordEncoder.encode(medicalWorkerDTO.getPassword()));
         pharmacistRepository.save(pharmacist);
     }
+
+    public List<Pharmacist> getUnemployed() { return pharmacistRepository.getUnemployed(); }
 }

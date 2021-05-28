@@ -95,7 +95,6 @@ public class BulkOrderController {
 
     //TODO: OVDE IMPLEMENTIRATI KONKURENTNO IZVRSAVANJE
     //MOZE SE DESITI DA DVA PHARMACY ADMIN POTVRDE ISTI ORDER
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void accept(OrderResponse or) {
         or.setStatus(OrderResponse.Status.ACCEPTED);
         //SEND EMAIL WOULD BE IMPLEMENTED IF THERE WAS

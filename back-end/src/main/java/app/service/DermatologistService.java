@@ -52,4 +52,8 @@ public class DermatologistService {
             dermatologist.setPassword(passwordEncoder.encode(medicalWorkerDTO.getPassword()));
         dermatologistRepository.save(dermatologist);
     }
+
+    public Dermatologist save(Dermatologist dermatologist) {
+        return dermatologistRepository.save(dermatologist);
+    }
 }
