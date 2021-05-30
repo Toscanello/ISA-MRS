@@ -19,4 +19,8 @@ public class DiscountService {
     public List<Discount> findAllByMedicineAndPharmacy(String code, String regNo) {
         return discountRepository.getAllByMedicineCodeAndPharmacyRegNo(code, regNo);
     }
+
+    public Discount getCurrentDiscount(String code, String regNo) {
+        return discountRepository.getActiveDiscountByMedicineCodeAndPharmacyRegNo(code, regNo);
+    }
 }

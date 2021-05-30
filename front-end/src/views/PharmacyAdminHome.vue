@@ -37,7 +37,7 @@
             <v-list-item-title>Novi termin (dermatolog)</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item :to="'/reports/' + pharmacy.regNo">
             <v-list-item-title>Izveštaji</v-list-item-title>
           </v-list-item>
 

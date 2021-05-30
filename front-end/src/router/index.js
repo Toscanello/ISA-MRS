@@ -35,6 +35,7 @@ import EmployDermatologist from '../views/addEmployement/EmployDermatologist.vue
 import EmployDermatologistForm from '../views/addEmployement/EmployDermatologistForm.vue'
 import EmployPharmacist from '../views/addEmployement/EmployPharmacist.vue'
 import EmployPharmacistForm from '../views/addEmployement/EmployPharmacistForm'
+import IncomeReport from '../views/reports/incomeReports/IncomeReport.vue'
 
 import TokenDecoder from '../services/token-decoder'
 
@@ -324,6 +325,11 @@ const routes = [
     name: 'EmployPharmacistForm',
     component: EmployPharmacistForm
   },
+  {
+    path: '/reports/:regNo',
+    name: 'IncomeReport',
+    component: IncomeReport
+  }
 ]
 
 const router = new VueRouter({

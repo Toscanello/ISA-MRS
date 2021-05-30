@@ -5,7 +5,7 @@
         <br />
         <h1>Administracija apoteke</h1>
         <h1>{{pharmacy.name}}</h1>
-        <br />
+        <h1>Ocena: {{pharmacyGrade}}</h1>
         <br />
         <br />
         <br />
@@ -44,6 +44,18 @@ export default {
       return {
           pharmacy: { }
       }
+  },
+  computed: {
+    pharmacyGrade() {
+      let sum = 0, count = 0
+      for (let grade of this.pharmacy.ratings) {
+        sum += grade
+        count += 1
+      }
+      if (count == 0)
+        return 0
+      return sum / count
+    }
   },
   mounted () {
       let adminEmail = TokenDecoder.getUserEmail()
