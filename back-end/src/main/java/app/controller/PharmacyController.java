@@ -142,4 +142,15 @@ public class PharmacyController {
         return new ResponseEntity<>(new SimplePharmacyDTO(p), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getAll/{email}")
+    public ResponseEntity<List<SimplePharmacyDTO>>
+    getPharmaciesForDermatologist(@PathVariable String email){
+        List<Pharmacy> pharmacies=pharmacyService.getPharmaciesByDermatologist(email);
+        List<SimplePharmacyDTO> simplePharmacyDTOS = new ArrayList<>();
+        for(Pharmacy p: pharmacies){
+            simplePharmacyDTOS.add(new SimplePharmacyDTO(p));
+        }
+        return new ResponseEntity<>(simplePharmacyDTOS,HttpStatus.OK);
+    }
+
 }

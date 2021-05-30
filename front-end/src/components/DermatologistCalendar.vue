@@ -1,5 +1,23 @@
 <template>
   <div>
+    <v-row class="d-flex justify-end"
+      >
+      <v-col>
+        <v-menu bottom right>
+          <template  v-slot:activator="{ on, attrs }">
+            <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
+              <span>{{ selected.name }}</span>
+              <v-icon right> mdi-menu-down </v-icon>
+            </v-btn>
+          </template>
+          <v-list v-for="item in items" :key="item.regNo">
+            <v-list-item @click="onChange(item)">
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-col>
+    </v-row>
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
@@ -85,15 +103,16 @@
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
               <v-card-actions>
-              <v-btn v-if="selectedEvent.schedule"
-                text
-                color="secondary" 
-                @click ="scheduleNewAppointment"
-                @change="updateRange"
-              >
-                Schedule
-              </v-btn>
-            </v-card-actions>
+                <v-btn
+                  v-if="selectedEvent.schedule"
+                  text
+                  color="secondary"
+                  @click="scheduleNewAppointment"
+                  @change="updateRange"
+                >
+                  Schedule
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-menu>
         </v-sheet>
@@ -104,10 +123,13 @@
 
 
 <script>
+import TokenDecoder from "@/services/token-decoder";
 import axios from "axios";
 export default {
   name: "DermatologistCalendar",
   data: () => ({
+    items: [],
+    selected: "",
     focus: "",
     type: "month",
     typeToLabel: {
@@ -121,59 +143,64 @@ export default {
     selectedOpen: false,
     events: [],
     appointments: [],
-    dermappointments:[],
-    componentKey: 0
+    dermappointments: [],
+    componentKey: 0,
   }),
   created() {
-    let path =
-      "http://localhost:9090/api/dermatologists/appointments/derm1@gmail.com/abc";
-    let path2 = 
-        "http://localhost:9090/api/dermatologists/dermAppointments/derm1@gmail.com/abc";
+    let user = TokenDecoder.getUserEmail();
+    axios
+      .get(`http://localhost:9090/api/pharmacy/getAll/${user}`)
+      .then((response) => {
+        this.items = response.data;
+        this.selected = this.items[0];
+        let path =
+          "http://localhost:9090/api/dermatologists/appointments/derm1@gmail.com/abc";
+        let path2 =
+          "http://localhost:9090/api/dermatologists/dermAppointments/derm1@gmail.com/abc";
 
-    axios.get(path).then((response) => {
-      this.appointments = response.data;
+        axios.get(path).then((response) => {
+          this.appointments = response.data;
 
-      for (let i = 0; i < this.appointments.length; i++) {
-        const first = this.appointments[i].startTime;
-        const second = this.appointments[i].endTime;
-        this.events.push({
-          name: "Appointment",
-          start: first,
-          price: this.appointments[i].price,
-          end: second,
-          color: "orange",
-          timed: false,
-          schedule: false,
-          id: this.appointments[i].id
+          for (let i = 0; i < this.appointments.length; i++) {
+            const first = this.appointments[i].startTime;
+            const second = this.appointments[i].endTime;
+            this.events.push({
+              name: "Appointment",
+              start: first,
+              price: this.appointments[i].price,
+              end: second,
+              color: "orange",
+              timed: false,
+              schedule: false,
+              id: this.appointments[i].id,
+            });
+          }
         });
-      }
-    });
-    axios.get(path2).then((response) => {
-      
-      this.dermappointments = response.data;
+        axios.get(path2).then((response) => {
+          this.dermappointments = response.data;
 
-      for (let i = 0; i < this.dermappointments.length; i++) {
-        var first = new Date(this.dermappointments[i].begin);
-        first.setTime(first.getTime()+2*60*60*1000);
-        var diff = this.dermappointments[i].duration.substring(3,5);
-        if(this.dermappointments[i].duration[1]=='1')
-          diff = "60";
-        var newDateObj = new Date(first.getTime() + parseInt(diff)*60000);
-        
+          for (let i = 0; i < this.dermappointments.length; i++) {
+            var first = new Date(this.dermappointments[i].begin);
+            first.setTime(first.getTime() + 2 * 60 * 60 * 1000);
+            var diff = this.dermappointments[i].duration.substring(3, 5);
+            if (this.dermappointments[i].duration[1] == "1") diff = "60";
+            var newDateObj = new Date(first.getTime() + parseInt(diff) * 60000);
 
-        this.events.push({
-          name: "FreeAppointment",
-          start: first.toISOString().substring(0,19),
-          price: this.dermappointments[i].price,
-          end: newDateObj.toISOString().substring(0,19),
-          color: "yellow",
-          timed: false,
-          schedule: true,
-          id: this.dermappointments[i].id
+            this.events.push({
+              name: "FreeAppointment",
+              start: first.toISOString().substring(0, 19),
+              price: this.dermappointments[i].price,
+              end: newDateObj.toISOString().substring(0, 19),
+              color: "yellow",
+              timed: false,
+              schedule: true,
+              id: this.dermappointments[i].id,
+            });
+          }
         });
-      }
-    });
-    localStorage.setItem('pacijent',"mika95455@gmail.com");
+      });
+
+    localStorage.setItem("pacijent", "mika95455@gmail.com");
   },
   mounted() {
     this.$refs.calendar.checkChange();
@@ -217,13 +244,67 @@ export default {
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
-    scheduleNewAppointment(){
+    scheduleNewAppointment() {
       this.selectedOpen = false;
-      let email = localStorage.getItem('pacijent');
+      let email = localStorage.getItem("pacijent");
       axios
-      .post(`http://localhost:9090/api/dermatologists/scheduleNewAppointment/${this.selectedEvent.id}/${email}`)
-      .then(response=>{alert(response.data);window.location.reload();})
-    }
-  }
+        .post(
+          `http://localhost:9090/api/dermatologists/scheduleNewAppointment/${this.selectedEvent.id}/${email}`
+        )
+        .then((response) => {
+          alert(response.data);
+          window.location.reload();
+        });
+    },
+    onChange(item) {
+      this.selected = item;
+      let path = `http://localhost:9090/api/dermatologists/appointments/${TokenDecoder.getUserEmail()}/${item.regNo}`;
+      let path2 = `http://localhost:9090/api/dermatologists/dermAppointments/${TokenDecoder.getUserEmail()}/${item.regNo}`;
+      this.selectedEvent = {};
+      this.selectedElement = null;
+      this.selectedOpen = false;
+      this.events = [];
+      axios.get(path).then((response) => {
+        this.appointments = response.data;
+
+        for (let i = 0; i < this.appointments.length; i++) {
+          const first = this.appointments[i].startTime;
+          const second = this.appointments[i].endTime;
+          this.events.push({
+            name: "Appointment",
+            start: first,
+            price: this.appointments[i].price,
+            end: second,
+            color: "orange",
+            timed: false,
+            schedule: false,
+            id: this.appointments[i].id,
+          });
+        }
+      });
+      axios.get(path2).then((response) => {
+        this.dermappointments = response.data;
+
+        for (let i = 0; i < this.dermappointments.length; i++) {
+          var first = new Date(this.dermappointments[i].begin);
+          first.setTime(first.getTime() + 2 * 60 * 60 * 1000);
+          var diff = this.dermappointments[i].duration.substring(3, 5);
+          if (this.dermappointments[i].duration[1] == "1") diff = "60";
+          var newDateObj = new Date(first.getTime() + parseInt(diff) * 60000);
+
+          this.events.push({
+            name: "FreeAppointment",
+            start: first.toISOString().substring(0, 19),
+            price: this.dermappointments[i].price,
+            end: newDateObj.toISOString().substring(0, 19),
+            color: "yellow",
+            timed: false,
+            schedule: true,
+            id: this.dermappointments[i].id,
+          });
+        }
+      });
+    },
+  },
 };
 </script>
