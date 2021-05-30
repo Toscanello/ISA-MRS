@@ -102,4 +102,8 @@ public class AppointmentService {
         }
         return false;
     }
+
+    public List<Appointment> findActiveAppointmentsByPharmacy(String regNo) {
+        return appointmentRepository.findActiveAppointmentsByPharmacy(regNo);
+    }
 }

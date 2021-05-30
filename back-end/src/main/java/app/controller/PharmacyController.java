@@ -6,6 +6,7 @@ import app.dto.PharmacistDTO;
 import app.dto.SimpleDermatologistDTO;
 import app.dto.SimplePharmacyDTO;
 import app.repository.MedicalWorkerRepository;
+import app.repository.MedicineOrderRepository;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -44,6 +44,9 @@ public class PharmacyController {
 
     @Autowired
     MedicalWorkerRepository medicalWorkerRepository;
+
+    @Autowired
+    MedicineOrderRepository medicineOrderRepository;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<SimplePharmacyDTO>> getAllStudents() {
@@ -153,4 +156,251 @@ public class PharmacyController {
         return new ResponseEntity<>(simplePharmacyDTOS,HttpStatus.OK);
     }
 
+    @GetMapping(value = "/report/appointments/{regNo}/{interval}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Integer>>
+    getAppointmentReport(@PathVariable String regNo, @PathVariable String interval) {
+        List<Appointment> allAppointments = appointmentService.findActiveAppointmentsByPharmacy(regNo);
+        HashMap<String, Integer> appointmentsMap = new HashMap<>();
+        for (Appointment ap : allAppointments) {
+            if (interval.equals("quartal")) {
+                appointmentsMap.putIfAbsent("1st Quartal", 0);
+                appointmentsMap.putIfAbsent("2nd Quartal", 0);
+                appointmentsMap.putIfAbsent("3rd Quartal", 0);
+                appointmentsMap.putIfAbsent("4th Quartal", 0);
+
+                int month = ap.getStartTime().getMonth().getValue();
+                if (month <= 3) {
+                    if (appointmentsMap.containsKey("1st Quartal")) {
+                        int quartalCount = appointmentsMap.get("1st Quartal");
+                        appointmentsMap.put("1st Quartal", ++quartalCount);
+                    }
+                    else
+                        appointmentsMap.put("1st Quartal", 1);
+                }
+                else if (month <= 6) {
+                    if (appointmentsMap.containsKey("2nd Quartal")) {
+                        int quartalCount = appointmentsMap.get("2nd Quartal");
+                        appointmentsMap.put("2nd Quartal", ++quartalCount);
+                    }
+                    else
+                        appointmentsMap.put("2nd Quartal", 1);
+                }
+                else if (month <= 9) {
+                    if (appointmentsMap.containsKey("3rd Quartal")) {
+                        int quartalCount = appointmentsMap.get("3rd Quartal");
+                        appointmentsMap.put("3rd Quartal", ++quartalCount);
+                    }
+                    else
+                        appointmentsMap.put("3rd Quartal", 1);
+                }
+                else {
+                    if (appointmentsMap.containsKey("4th Quartal")) {
+                        int quartalCount = appointmentsMap.get("4th Quartal");
+                        appointmentsMap.put("4th Quartal", ++quartalCount);
+                    }
+                    else
+                        appointmentsMap.put("4th Quartal", 1);
+                }
+            }
+            else if (interval.equals("annual")) {
+                for (Month monthVal : Month.values()) {
+                    appointmentsMap.putIfAbsent(stringifyMonth(monthVal), 0);
+                }
+                String month = stringifyMonth(ap.getStartTime().getMonth());
+                if (appointmentsMap.containsKey(month)) {
+                    int monthCount = appointmentsMap.get(month);
+                    appointmentsMap.put(month, ++monthCount);
+                }
+                else
+                    appointmentsMap.put(month, 1);
+            }
+            else if (interval.equals("monthly")) {
+                if (ap.getEndTime().getMonth().getValue() != LocalDate.now().getMonth().getValue())
+                    continue;
+                for (int i = 1; i < 6; i++) {
+                    appointmentsMap.putIfAbsent(Integer.toString(i), 0);
+                }
+                int week_no = ap.getEndTime().getDayOfMonth() / 7 + 1;
+                String week = Integer.toString(week_no);
+                if (appointmentsMap.containsKey(week)) {
+                    int monthCount = appointmentsMap.get(week);
+                    appointmentsMap.put(week, ++monthCount);
+                }
+                else
+                    appointmentsMap.put(week, 1);
+            }
+        }
+        return new ResponseEntity<>(appointmentsMap, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/report/income/{regNo}/{interval}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Double>>
+    getIncomeReport(@PathVariable String regNo, @PathVariable String interval) {
+        List<MedicineOrder> allOrders = medicineOrderRepository.findAllByPharmacyRegNo(regNo);
+        List<Appointment> allAppointments = appointmentService.findActiveAppointmentsByPharmacy(regNo);
+        HashMap<String, Double> incomeMap = new HashMap<>();
+
+        for (MedicineOrder order : allOrders) {
+            if (interval.equals("quartal")) {
+                int month = order.getEndTime().getMonth().getValue();
+
+                incomeMap.putIfAbsent("1st Quartal", 0.);
+                incomeMap.putIfAbsent("2nd Quartal", 0.);
+                incomeMap.putIfAbsent("3rd Quartal", 0.);
+                incomeMap.putIfAbsent("4th Quartal", 0.);
+
+                if (month <= 3) {
+                    Double totalPrice = incomeMap.getOrDefault("1st Quartal", 0.);
+                    totalPrice += order.getPrice();
+                    incomeMap.put("1st Quartal", totalPrice);
+                }
+                else if (month <= 6) {
+                    Double totalPrice = incomeMap.getOrDefault("2nd Quartal", 0.);
+                    totalPrice += order.getPrice();
+                    incomeMap.put("2nd Quartal", totalPrice);
+                }
+                else if (month <= 9) {
+                    Double totalPrice = incomeMap.getOrDefault("3rd Quartal", 0.);
+                    totalPrice += order.getPrice();
+                    incomeMap.put("3rd Quartal", totalPrice);
+                }
+                else {
+                    Double totalPrice = incomeMap.getOrDefault("4th Quartal", 0.);
+                    totalPrice += order.getPrice();
+                    incomeMap.put("4th Quartal", totalPrice);
+                }
+            }
+            else if (interval.equals("annual")) {
+                for (Month monthVal : Month.values()) {
+                    incomeMap.putIfAbsent(stringifyMonth(monthVal), 0.);
+                }
+                String month = stringifyMonth(order.getEndTime().getMonth());
+                Double totalPrice = incomeMap.getOrDefault(month, 0.);
+                totalPrice += order.getPrice();
+                incomeMap.put(month, totalPrice);
+            }
+            else if (interval.equals("monthly")) {
+                if (order.getEndTime().getMonth().getValue() != LocalDate.now().getMonth().getValue())
+                    continue;
+                for (int i = 1; i < 6; i++) {
+                    incomeMap.putIfAbsent(Integer.toString(i), 0.);
+                }
+                int weekNo = order.getEndTime().getDayOfMonth() / 7 + 1;
+                String week = Integer.toString(weekNo);
+                Double totalPrice = incomeMap.getOrDefault(week, 0.);
+                totalPrice += order.getPrice();
+                incomeMap.put(week, totalPrice);
+            }
+        }
+
+        for (Appointment appointment : allAppointments) {
+            if (interval.equals("quartal")) {
+                incomeMap.putIfAbsent("1st Quartal", 0.);
+                incomeMap.putIfAbsent("2nd Quartal", 0.);
+                incomeMap.putIfAbsent("3rd Quartal", 0.);
+                incomeMap.putIfAbsent("4th Quartal", 0.);
+
+                int month = appointment.getEndTime().getMonth().getValue();
+                if (month <= 3) {
+                    Double totalPrice = incomeMap.getOrDefault("1st Quartal", 0.);
+                    totalPrice += appointment.getPrice();
+                    incomeMap.put("1st Quartal", totalPrice);
+                } else if (month <= 6) {
+                    Double totalPrice = incomeMap.getOrDefault("2nd Quartal", 0.);
+                    totalPrice += appointment.getPrice();
+                    incomeMap.put("2nd Quartal", totalPrice);
+                } else if (month <= 9) {
+                    Double totalPrice = incomeMap.getOrDefault("3rd Quartal", 0.);
+                    totalPrice += appointment.getPrice();
+                    incomeMap.put("3rd Quartal", totalPrice);
+                } else {
+                    Double totalPrice = incomeMap.getOrDefault("4th Quartal", 0.);
+                    totalPrice += appointment.getPrice();
+                    incomeMap.put("4th Quartal", totalPrice);
+                }
+            }
+            else if (interval.equals("annual")) {
+                for (Month monthVal : Month.values()) {
+                    incomeMap.putIfAbsent(stringifyMonth(monthVal), 0.);
+                }
+                String month = stringifyMonth(appointment.getEndTime().getMonth());
+                Double totalPrice = incomeMap.getOrDefault(month, 0.);
+                totalPrice += appointment.getPrice();
+                incomeMap.put(month, totalPrice);
+            }
+            else if (interval.equals("monthly")) {
+                if (appointment.getEndTime().getMonth().getValue() != LocalDate.now().getMonth().getValue())
+                    continue;
+                for (int i = 1; i < 6; i++) {
+                    incomeMap.putIfAbsent(Integer.toString(i), 0.);
+                }
+                int weekNo = appointment.getEndTime().getDayOfMonth() / 7 + 1;
+                String week = Integer.toString(weekNo);
+                Double totalPrice = incomeMap.getOrDefault(week, 0.);
+                totalPrice += appointment.getPrice();
+                incomeMap.put(week, totalPrice);
+            }
+        }
+        return new ResponseEntity<>(incomeMap, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/report/medicine/{regNo}/{interval}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Integer>>
+    getMedicineReport(@PathVariable String regNo, @PathVariable String interval) {
+        List<MedicineOrder> allOrders = medicineOrderRepository.findAllByPharmacyRegNo(regNo);
+        HashMap<String, Integer> ordersMap = new HashMap<>();
+        for (MedicineOrder order : allOrders) {
+            if (interval.equals("quartal")) {
+                ordersMap.putIfAbsent("1st Quartal", 0);
+                ordersMap.putIfAbsent("2nd Quartal", 0);
+                ordersMap.putIfAbsent("3rd Quartal", 0);
+                ordersMap.putIfAbsent("4th Quartal", 0);
+
+                int month = order.getEndTime().getMonth().getValue();
+                if (month <= 3) {
+                    int quartalCount = ordersMap.getOrDefault("1st Quartal", 0);
+                    ordersMap.put("1st Quartal", ++quartalCount);
+                }
+                else if (month <= 6) {
+                    int quartalCount = ordersMap.getOrDefault("2nd Quartal", 0);
+                    ordersMap.put("2nd Quartal", ++quartalCount);
+                }
+                else if (month <= 9) {
+                    int quartalCount = ordersMap.getOrDefault("3rd Quartal", 0);
+                    ordersMap.put("3rd Quartal", ++quartalCount);
+                }
+                else {
+                    int quartalCount = ordersMap.getOrDefault("4th Quartal", 0);
+                    ordersMap.put("4th Quartal", ++quartalCount);
+                }
+            }
+            else if (interval.equals("annual")) {
+                for (Month monthVal : Month.values()) {
+                    ordersMap.putIfAbsent(stringifyMonth(monthVal), 0);
+                }
+                String month = stringifyMonth(order.getEndTime().getMonth());
+                int monthlyCount = ordersMap.getOrDefault(month, 0);
+                ordersMap.put(month, ++monthlyCount);
+            }
+            else if (interval.equals("monthly")) {
+                if (order.getEndTime().getMonth().getValue() != LocalDate.now().getMonth().getValue())
+                    continue;
+                for (int i = 1; i < 6; i++) {
+                    ordersMap.putIfAbsent(Integer.toString(i), 0);
+                }
+                int weekNo = order.getEndTime().getDayOfMonth() / 7 + 1;
+                String week = Integer.toString(weekNo);
+                int weeklyCount = ordersMap.getOrDefault(week, 0);
+                ordersMap.put(week, ++weeklyCount);
+            }
+        }
+
+        return new ResponseEntity<>(ordersMap, HttpStatus.OK);
+    }
+
+    public String stringifyMonth(Month month) {
+        int monthOrdinal = month.getValue();
+        String monthString = String.format("%d. %s", monthOrdinal, month.toString());
+        return monthOrdinal >= 10 ? monthString : "0" + monthString;
+    }
 }
