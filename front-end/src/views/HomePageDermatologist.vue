@@ -95,11 +95,6 @@ export default {
         to: "account",
       },
       {
-        icon: "mdi-pencil",
-        title: "Start appointment",
-        to: "patients",
-      },
-      {
         icon: "mdi-calendar",
         title: "Calendar",
         to: "calendar",

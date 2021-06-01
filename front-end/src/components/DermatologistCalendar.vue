@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-row class="d-flex justify-end"
-      >
+    <v-row class="d-flex justify-end">
       <v-col>
         <v-menu bottom right>
-          <template  v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on, attrs }">
             <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
               <span>{{ selected.name }}</span>
               <v-icon right> mdi-menu-down </v-icon>
@@ -99,14 +98,46 @@
                 </v-btn>
               </v-toolbar>
               <v-card-text>
-                <h1>Price: <ins v-html="selectedEvent.price"></ins> <br /><br /></h1>
-                <h1 v-if="selectedEvent.patient!=''">Patient: <ins v-html="selectedEvent.patient"></ins> <br /><br /></h1>
-                <h1 v-if="selectedEvent.address!=''">Address: <ins v-html="selectedEvent.address"></ins></h1>
+                <h3>
+                  Price: <ins v-html="selectedEvent.price"></ins> <br /><br />
+                </h3>
+                <h3 v-if="selectedEvent.patient != ''">
+                  Patient: <ins v-html="selectedEvent.patient"></ins>
+                  <br /><br />
+                </h3>
+                <h3 v-if="selectedEvent.address != ''">
+                  Address: <ins v-html="selectedEvent.address"></ins>
+                </h3>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
+              <v-dialog
+                v-if="checkApp(selectedEvent.start) && !selectedOpen.selected"
+                v-model="dialog"
+                persistent
+                max-width="700px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="orange"
+                    style="margin: 10px"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="onDialogClick(selectedEvent.id)"
+                  >
+                    Start Appointment
+                  </v-btn>
+                </template>
+                <AppointmentForm
+                  @clicked="
+                    dialog = false;
+                    selectedOpen = false;
+                  "
+                />
+              </v-dialog>
               <v-card-actions>
                 <v-btn
-                  v-if="selectedEvent.schedule"
+                  v-if="selectedEvent.schedule && checkPatient()"
                   text
                   color="secondary"
                   @click="scheduleNewAppointment"
@@ -126,14 +157,17 @@
 
 <script>
 import TokenDecoder from "@/services/token-decoder";
+import AppointmentForm from "@/components/AppointmentForm.vue";
 import axios from "axios";
 export default {
+  components: { AppointmentForm },
   name: "DermatologistCalendar",
   data: () => ({
     items: [],
     selected: "",
     focus: "",
     type: "month",
+    dialog: false,
     typeToLabel: {
       month: "Month",
       week: "Week",
@@ -155,6 +189,7 @@ export default {
       .then((response) => {
         this.items = response.data;
         this.selected = this.items[0];
+        localStorage.setItem("selectedPh", this.selected.regNo);
         let path =
           "http://localhost:9090/api/dermatologists/appointments/derm1@gmail.com/abc";
         let path2 =
@@ -171,15 +206,15 @@ export default {
               start: first,
               price: this.appointments[i].price,
               patient:
-            this.appointments[i].patient.name +
-            " " +
-            this.appointments[i].patient.surname,
-          address:
-            this.appointments[i].address.street +
-            " " +
-            this.appointments[i].address.streetNumber +
-            ", " +
-            this.appointments[i].address.place,
+                this.appointments[i].patient.name +
+                " " +
+                this.appointments[i].patient.surname,
+              address:
+                this.appointments[i].address.street +
+                " " +
+                this.appointments[i].address.streetNumber +
+                ", " +
+                this.appointments[i].address.place,
               end: second,
               color: "orange",
               timed: false,
@@ -202,8 +237,8 @@ export default {
               name: "FreeAppointment",
               start: first.toISOString().substring(0, 19),
               price: this.dermappointments[i].price,
-              patient: '',
-              address: '',
+              patient: "",
+              address: "",
               end: newDateObj.toISOString().substring(0, 19),
               color: "yellow",
               timed: false,
@@ -214,7 +249,7 @@ export default {
         });
       });
 
-    localStorage.setItem("pacijent", "mika95455@gmail.com");
+    localStorage.setItem("pacijent", "");
   },
   mounted() {
     this.$refs.calendar.checkChange();
@@ -267,13 +302,19 @@ export default {
         )
         .then((response) => {
           alert(response.data);
+          localStorage.setItem("pacijent", "");
           window.location.reload();
         });
     },
     onChange(item) {
       this.selected = item;
-      let path = `http://localhost:9090/api/dermatologists/appointments/${TokenDecoder.getUserEmail()}/${item.regNo}`;
-      let path2 = `http://localhost:9090/api/dermatologists/dermAppointments/${TokenDecoder.getUserEmail()}/${item.regNo}`;
+      localStorage.setItem("selectedPh", item.regNo);
+      let path = `http://localhost:9090/api/dermatologists/appointments/${TokenDecoder.getUserEmail()}/${
+        item.regNo
+      }`;
+      let path2 = `http://localhost:9090/api/dermatologists/dermAppointments/${TokenDecoder.getUserEmail()}/${
+        item.regNo
+      }`;
       this.selectedEvent = {};
       this.selectedElement = null;
       this.selectedOpen = false;
@@ -288,6 +329,16 @@ export default {
             name: "Appointment",
             start: first,
             price: this.appointments[i].price,
+            patient:
+              this.appointments[i].patient.name +
+              " " +
+              this.appointments[i].patient.surname,
+            address:
+              this.appointments[i].address.street +
+              " " +
+              this.appointments[i].address.streetNumber +
+              ", " +
+              this.appointments[i].address.place,
             end: second,
             color: "orange",
             timed: false,
@@ -310,6 +361,8 @@ export default {
             name: "FreeAppointment",
             start: first.toISOString().substring(0, 19),
             price: this.dermappointments[i].price,
+            patient: "",
+            address: "",
             end: newDateObj.toISOString().substring(0, 19),
             color: "yellow",
             timed: false,
@@ -318,6 +371,27 @@ export default {
           });
         }
       });
+    },
+    onDialogClick(id) {
+      for (var i = 0; i < this.appointments.length; i++) {
+        if (this.appointments[i].id == id) {
+          localStorage.setItem("patient", this.appointments[i].patient.email);
+          break;
+        }
+      }
+    },
+    checkApp(time) {
+      var a = new Date(time);
+      var b = new Date();
+      const diffTime = Math.abs(a - b);
+      const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+      if (diffMinutes <= 15) {
+        return true;
+      }
+      return false;
+    },
+    checkPatient() {
+      return localStorage.getItem("pacijent") != "";
     },
   },
 };

@@ -148,8 +148,13 @@ export default {
         "\nDescription: " +
         i.medicineDTO.description;
       alert(spec);
+      let path;
+      if(TokenDecoder.getUserRole()=="ROLE_PHARMACIST")
+        path = `http://localhost:9090/api/medicine/check/${farm}/${id}`;
+      else
+        path = `http://localhost:9090/api/medicine/check/derm/${localStorage.getItem('selectedPh')}/${id}`
       axios
-        .get(`http://localhost:9090/api/medicine/check/${farm}/${id}`)
+        .get(path)
         .then((response) => {
           console.log(response.data);
           if (response.data.length != 0) {
@@ -195,6 +200,7 @@ export default {
           this.prescribed_items = [];
           this.e1 = 1;
           this.days = 1;
+          localStorage.setItem('pacijent',localStorage.getItem('patient'));
         });
     },
   },
