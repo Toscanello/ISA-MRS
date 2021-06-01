@@ -403,4 +403,16 @@ public class PharmacyController {
         String monthString = String.format("%d. %s", monthOrdinal, month.toString());
         return monthOrdinal >= 10 ? monthString : "0" + monthString;
     }
+
+    @GetMapping(value = "/search/{searchParam}")
+    public ResponseEntity<List<SimplePharmacyDTO>> searchPharmacies(@PathVariable String searchParam) {
+        List<Pharmacy> pharmacies = pharmacyService.searchPharmacies(searchParam);
+        List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
+
+        for (Pharmacy p : pharmacies)
+        {
+            pharmaciesDTO.add(new SimplePharmacyDTO(p));
+        }
+        return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
+    }
 }

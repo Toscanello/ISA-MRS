@@ -17,28 +17,14 @@
             
           ></v-text-field>
           
-          <v-select
-              v-model="sortBy"
-              flat
-              solo-inverted
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              label="Sort by"
-            ></v-select>
             
             <v-btn
                 large
                 depressed
                 :value="false"
+                v-on:click="searchFun"
               >
                 <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn
-                large
-                depressed
-                :value="true"
-              >
-                <v-icon>mdi-arrow-down</v-icon>
               </v-btn>
           </v-toolbar>
           <v-row class= "row">
@@ -129,6 +115,7 @@ export default {
     group: null,
     pharmacies: [],
     userRole: null,
+    search: "nlk",
   }),
   created() {
     this.userRole = TokenDecoder.getUserRole()
@@ -140,6 +127,9 @@ export default {
   methods: {
     open(pharmacy){
       this.$router.push('/dermatologistAppointment/' + pharmacy.regNo)
+    },
+    searchFun(){
+      console.log(this.search)
     }
   }
 }

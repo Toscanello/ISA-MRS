@@ -44,4 +44,8 @@ public class PharmacyService {
     public void deleteDermatologistEmploymentFromPharmacy(String regNo, String email) {
         pharmacyRepository.deleteDermatologistEmploymentFromPharmacy(regNo, email);
     }
+
+    public List<Pharmacy> searchPharmacies(String searchParam) {
+        return pharmacyRepository.searchPharmacies(searchParam);
+    }
 }
