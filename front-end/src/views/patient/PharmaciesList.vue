@@ -24,7 +24,7 @@
                 :value="false"
                 v-on:click="searchFun"
               >
-                <v-icon>mdi-arrow-up</v-icon>
+                <v-icon>mdi-text-search</v-icon>
               </v-btn>
           </v-toolbar>
           <v-row class= "row">
@@ -106,7 +106,7 @@
 
 
 <script>
-import TokenDecoder from '../../services/token-decoder'
+//import TokenDecoder from '../../services/token-decoder'
 import axios from 'axios'
 export default {
     name: 'PharmacyList',
@@ -115,11 +115,9 @@ export default {
     group: null,
     pharmacies: [],
     userRole: null,
-    search: "nlk",
+    search: "",
   }),
   created() {
-    this.userRole = TokenDecoder.getUserRole()
-    console.log(this.userRole)
     axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
       this.pharmacies = resp.data;
     });
@@ -128,8 +126,11 @@ export default {
     open(pharmacy){
       this.$router.push('/dermatologistAppointment/' + pharmacy.regNo)
     },
-    searchFun(){
-      console.log(this.search)
+    searchFun(){ 
+      let path = "http://localhost:9090/api/pharmacy/search/" + this.search; 
+      axios.get(path).then((resp) => {
+      this.pharmacies = resp.data;
+    });
     }
   }
 }
