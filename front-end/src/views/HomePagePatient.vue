@@ -59,6 +59,7 @@
       <MedicineOrder v-if="show_menu==='medicineOrder'"/>
       <MedicineList v-if="show_menu==='MedicineList'"/>
       <AppointmentsHistory v-if="show_menu==='history'"/>
+      <Advertising v-if="show_menu==='advertising'"/>
                
     </v-main>
 
@@ -73,6 +74,7 @@
   import MedicineOrder from '@/components/patient/MedicineOrder.vue'
   import MedicineList from '@/components/patient/MedicineList.vue'
   import AppointmentsHistory from '@/components/patient/AppointmentsHistory.vue'
+  import Advertising from '@/components/patient/Advertising.vue'
   export default {
     name: "HomePagePatient",
     components: {
@@ -83,6 +85,7 @@
       MedicineOrder,
       MedicineList,
       AppointmentsHistory,
+      Advertising
     },
     props: {
     expandOnHover: {
@@ -138,6 +141,10 @@
       {
         title: "History",
         to: "history",
+      },
+      {
+        title: "Advertising",
+        to: "advertising",
       },
     ],
   }),
