@@ -39,13 +39,17 @@
         <v-icon> mdi-dots-vertical </v-icon>
       </v-btn>
       <v-toolbar-title>Pharmacist</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text @click="logout()">
+        <span>Sign out</span>
+      </v-btn>
     </v-app-bar>
     <v-main fluid>
-      <PatientList v-if="show_menu==='patients'"/>
-      <MedicalAccount v-if="show_menu==='account'"/>
-      <PharmacistCalendar v-if="show_menu==='calendar'"/>
-      <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
-      <DispensingDrugs v-if="show_menu==='drugs'"/>
+      <PatientList v-if="show_menu === 'patients'" />
+      <MedicalAccount v-if="show_menu === 'account'" />
+      <PharmacistCalendar v-if="show_menu === 'calendar'" />
+      <Vaccation v-if="show_menu === 'vaccation'" @clicked="onVaccationClick" />
+      <DispensingDrugs v-if="show_menu === 'drugs'" />
     </v-main>
   </v-container>
 </template>
@@ -54,8 +58,8 @@
 import PatientList from "@/components/PatientList.vue";
 import PharmacistCalendar from "@/components/PharmacistCalendar.vue";
 import Vaccation from "@/components/Vaccation.vue";
-import MedicalAccount from '@/components/MedicalAccount.vue'
-import DispensingDrugs from '@/components/DispensingDrugs.vue'
+import MedicalAccount from "@/components/MedicalAccount.vue";
+import DispensingDrugs from "@/components/DispensingDrugs.vue";
 
 export default {
   name: "HomePagePharmacist",
@@ -64,7 +68,7 @@ export default {
     MedicalAccount,
     PharmacistCalendar,
     Vaccation,
-    DispensingDrugs
+    DispensingDrugs,
   },
   props: {
     expandOnHover: {
@@ -75,7 +79,7 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    show_menu:"patients",
+    show_menu: "patients",
     items: [
       {
         icon: "mdi-home",
@@ -106,23 +110,26 @@ export default {
         icon: "mdi-airplane-takeoff",
         title: "Vaccation",
         to: "vaccation",
-      }
+      },
     ],
   }),
-  created(){
-    localStorage.setItem('korisnik','farm');
-  }
-  ,
+  created() {
+    localStorage.setItem("korisnik", "farm");
+  },
   methods: {
-    show(param){
-      this.show_menu=param;
-      this.drawer=false;
+    show(param) {
+      this.show_menu = param;
+      this.drawer = false;
     },
-    onVaccationClick:function(){
+    onVaccationClick: function () {
       this.show_menu = "patients";
       this.drawer = false;
+    },
+    logout() {
+      localStorage.removeItem("user");
+      this.$router.push("/");
     }
-  }
+  },
 };
 </script>
 

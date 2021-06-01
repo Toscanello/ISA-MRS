@@ -14,7 +14,7 @@
               <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
-              <v-list-item-title >{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
           </template>
         </v-list-item-group>
@@ -39,23 +39,30 @@
         <v-icon> mdi-dots-vertical </v-icon>
       </v-btn>
       <v-toolbar-title>Dermatologist</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text @click="logout()">
+        <span>Sign out</span>
+      </v-btn>
     </v-app-bar>
     <v-main fluid>
-      <PatientList v-if="show_menu==='patients'"/>
-      <MedicalAccount v-if="show_menu==='account'"/>
-      <DermatologistCalendar v-if="show_menu==='calendar'"/>
-      <Vaccation v-if="show_menu==='vaccation'" @clicked="onVaccationClick"/>
-      <PharmacistNewAppointment v-if="show_menu==='newapp'" @clicked="onScheduleClick"/>
+      <PatientList v-if="show_menu === 'patients'" />
+      <MedicalAccount v-if="show_menu === 'account'" />
+      <DermatologistCalendar v-if="show_menu === 'calendar'" />
+      <Vaccation v-if="show_menu === 'vaccation'" @clicked="onVaccationClick" />
+      <PharmacistNewAppointment
+        v-if="show_menu === 'newapp'"
+        @clicked="onScheduleClick"
+      />
     </v-main>
   </v-container>
 </template>
 
 <script>
 import PatientList from "@/components/PatientList.vue";
-import Vaccation from '@/components/Vaccation.vue';
-import DermatologistCalendar from '@/components/DermatologistCalendar.vue';
-import PharmacistNewAppointment from '@/components/PharmacistNewAppointment.vue';
-import MedicalAccount from '@/components/MedicalAccount.vue'
+import Vaccation from "@/components/Vaccation.vue";
+import DermatologistCalendar from "@/components/DermatologistCalendar.vue";
+import PharmacistNewAppointment from "@/components/PharmacistNewAppointment.vue";
+import MedicalAccount from "@/components/MedicalAccount.vue";
 
 export default {
   name: "HomePageDermatologist",
@@ -64,7 +71,7 @@ export default {
     MedicalAccount,
     Vaccation,
     DermatologistCalendar,
-    PharmacistNewAppointment
+    PharmacistNewAppointment,
   },
   props: {
     expandOnHover: {
@@ -110,22 +117,26 @@ export default {
     ],
   }),
   created() {
-    localStorage.setItem('korisnik','derm1');
+    localStorage.setItem("korisnik", "derm1");
   },
   methods: {
-    show(param){
-      this.show_menu=param;
-      this.drawer=false;
+    show(param) {
+      this.show_menu = param;
+      this.drawer = false;
     },
-    onVaccationClick:function(){
+    onVaccationClick: function () {
       this.show_menu = "patients";
       this.drawer = false;
     },
-    onScheduleClick:function(check){
-      this.show_menu=check;
-      this.drawer=false;
+    onScheduleClick: function (check) {
+      this.show_menu = check;
+      this.drawer = false;
     },
-  }
+    logout() {
+      localStorage.removeItem("user");
+      this.$router.push("/");
+    }
+  },
 };
 </script>
 

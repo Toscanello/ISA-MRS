@@ -34,7 +34,7 @@
             <v-card class="mx-auto" max-width="300" tile>
               <v-list dense>
                 <v-subheader>Medicines</v-subheader>
-                <v-list-item-group v-model="selectedItem" color="primary">
+                <v-list-item-group color="primary">
                   <v-list-item v-for="(item, i) in items" :key="i">
                     <v-list-item-content>
                       <v-list-item-title
@@ -51,7 +51,7 @@
             <v-card class="mx-auto" max-width="300" tile>
               <v-list dense>
                 <v-subheader>Prescribed medicines</v-subheader>
-                <v-list-item-group v-model="selectedItem" color="primary">
+                <v-list-item-group color="primary">
                   <v-list-item v-for="(item, i) in prescribed_items" :key="i">
                     <v-list-item-content>
                       <v-list-item-title

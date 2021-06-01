@@ -99,7 +99,9 @@
                 </v-btn>
               </v-toolbar>
               <v-card-text>
-                Price: <ins v-html="selectedEvent.price"></ins> <br /><br />
+                <h1>Price: <ins v-html="selectedEvent.price"></ins> <br /><br /></h1>
+                <h1 v-if="selectedEvent.patient!=''">Patient: <ins v-html="selectedEvent.patient"></ins> <br /><br /></h1>
+                <h1 v-if="selectedEvent.address!=''">Address: <ins v-html="selectedEvent.address"></ins></h1>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
               <v-card-actions>
@@ -168,6 +170,16 @@ export default {
               name: "Appointment",
               start: first,
               price: this.appointments[i].price,
+              patient:
+            this.appointments[i].patient.name +
+            " " +
+            this.appointments[i].patient.surname,
+          address:
+            this.appointments[i].address.street +
+            " " +
+            this.appointments[i].address.streetNumber +
+            ", " +
+            this.appointments[i].address.place,
               end: second,
               color: "orange",
               timed: false,
@@ -190,6 +202,8 @@ export default {
               name: "FreeAppointment",
               start: first.toISOString().substring(0, 19),
               price: this.dermappointments[i].price,
+              patient: '',
+              address: '',
               end: newDateObj.toISOString().substring(0, 19),
               color: "yellow",
               timed: false,

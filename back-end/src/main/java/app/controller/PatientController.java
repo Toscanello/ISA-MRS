@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +73,19 @@ public class PatientController {
         List<PatientDTO> patientDTOS = new ArrayList<>();
 
         for (Patient p : patients) {
-            patientDTOS.add(new PatientDTO(p));
+            PatientDTO patient=new PatientDTO(p);
+            List<Appointment> appointmentList=appointmentService.findActiveAppointmentsByPatientId(p.getEmail());
+            LocalDateTime now = LocalDateTime.now();
+            for(Appointment a :appointmentList) {
+                if(!a.getMedicalWorker().getEmail().equals(email))
+                    continue;
+                long diff = Math.abs(ChronoUnit.MINUTES.between(a.getStartTime(),now));
+                if (diff <= 15) {
+                    patient.setCheck(true);
+                    break;
+                }
+            }
+            patientDTOS.add(patient);
         }
         return new ResponseEntity<>(patientDTOS,HttpStatus.OK);
     }

@@ -51,10 +51,13 @@ public class VaccationController {
             startDate = endDate;
             endDate = LocalDate.parse(vaccationDTO.getStartDate());
         }
-        Vaccation.Status status = Vaccation.Status.valueOf(vaccationDTO.getStatus());
+        Vaccation vaccationCheck = vaccationService.findVacationByMedicalWorkerEmail(medicalWorker.getEmail());
+        if(vaccationCheck==null) {
+            Vaccation.Status status = Vaccation.Status.valueOf(vaccationDTO.getStatus());
 
-        Vaccation vaccation = new Vaccation(medicalWorker,startDate,endDate,status);
-        vaccationService.save(vaccation);
+            Vaccation vaccation = new Vaccation(medicalWorker, startDate, endDate, status);
+            vaccationService.save(vaccation);
+        }
     }
 
     @GetMapping(value = "/pharmacist/requests/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)

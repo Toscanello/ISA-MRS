@@ -85,7 +85,7 @@
                 Address: <ins v-html="selectedEvent.address"></ins>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
-              <v-dialog v-model="dialog" persistent max-width="700px">
+              <v-dialog v-if="checkApp(selectedEvent.start)" v-model="dialog" persistent max-width="700px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="orange" style="margin: 10px;" dark v-bind="attrs" v-on="on" @click="onDialogClick(selectedEvent.id)">
                     Start Appointment
@@ -224,6 +224,16 @@ export default {
       //treba odraditi penale
       alert("Penal"+id);
       window.location.reload();
+    },
+    checkApp(time){
+      var a = new Date(time);
+      var b = new Date()
+      const diffTime = Math.abs(a - b);
+      const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+      if(diffMinutes<=15){
+        return true;
+      }
+      return false;
     }
   },
 };
