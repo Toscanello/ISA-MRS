@@ -40,6 +40,11 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Long> {
     )
     public List<Pharmacy> findPharmacyByDermatologist(String email);
 
+    @Query(
+            value = "select * from pharmacy ph where ph.reg_no in (select pp.pharmacy_reg_no from patient_pharmacies pp where pp.patient_email = ?1)"
+            , nativeQuery = true)
+    public List<Pharmacy> getPharmacyAdvertising(String email);
+
     @Transactional
     @Modifying
     @Query(value = "delete from pharmacy_dermatologists pd " +
