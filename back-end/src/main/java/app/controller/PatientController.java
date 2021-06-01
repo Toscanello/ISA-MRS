@@ -1,10 +1,7 @@
 package app.controller;
 
 import app.domain.*;
-import app.dto.AppointmentDTO;
-import app.dto.DermatologistAppointmentDTO;
-import app.dto.MedicineOrderDTO;
-import app.dto.PatientDTO;
+import app.dto.*;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +37,10 @@ public class PatientController {
 
     @Autowired
     private MedicineOrderService medicineOrderService;
+
+    @Autowired
+    private PharmacyService pharmacyService;
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getPatients() {
@@ -156,6 +157,19 @@ public class PatientController {
             appointmentDTOs.add(new AppointmentDTO(a));
         }
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/advertising/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SimplePharmacyDTO>> getPatientsPharmacies(@PathVariable String email){
+
+        List<Pharmacy> pharmacies = pharmacyService.getPharmacyAdvertising(email);
+
+        List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
+        for (Pharmacy p : pharmacies)
+        {
+            pharmaciesDTO.add(new SimplePharmacyDTO(p));
+        }
+        return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
 }
