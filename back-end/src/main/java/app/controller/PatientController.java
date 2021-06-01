@@ -1,7 +1,10 @@
 package app.controller;
 
 import app.domain.*;
-import app.dto.*;
+import app.dto.AppointmentDTO;
+import app.dto.DermatologistAppointmentDTO;
+import app.dto.MedicineOrderDTO;
+import app.dto.PatientDTO;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +40,6 @@ public class PatientController {
 
     @Autowired
     private MedicineOrderService medicineOrderService;
-
-    @Autowired
-    private PharmacyService pharmacyService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getPatients() {
@@ -74,7 +73,19 @@ public class PatientController {
         List<PatientDTO> patientDTOS = new ArrayList<>();
 
         for (Patient p : patients) {
-            patientDTOS.add(new PatientDTO(p));
+            PatientDTO patient=new PatientDTO(p);
+            List<Appointment> appointmentList=appointmentService.findActiveAppointmentsByPatientId(p.getEmail());
+            LocalDateTime now = LocalDateTime.now();
+            for(Appointment a :appointmentList) {
+                if(!a.getMedicalWorker().getEmail().equals(email))
+                    continue;
+                long diff = Math.abs(ChronoUnit.MINUTES.between(a.getStartTime(),now));
+                if (diff <= 15) {
+                    patient.setCheck(true);
+                    break;
+                }
+            }
+            patientDTOS.add(patient);
         }
         return new ResponseEntity<>(patientDTOS,HttpStatus.OK);
     }
@@ -145,19 +156,6 @@ public class PatientController {
             appointmentDTOs.add(new AppointmentDTO(a));
         }
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/advertising/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SimplePharmacyDTO>> getPatientsPharmacies(@PathVariable String email){
-
-        List<Pharmacy> pharmacies = pharmacyService.getPharmacyAdvertising(email);
-
-        List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
-        for (Pharmacy p : pharmacies)
-        {
-            pharmaciesDTO.add(new SimplePharmacyDTO(p));
-        }
-        return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
 }

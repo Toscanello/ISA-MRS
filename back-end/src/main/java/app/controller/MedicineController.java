@@ -40,6 +40,8 @@ public class MedicineController {
 
     @Autowired
     PharmacistService pharmacistService;
+    @Autowired
+    DermatologistService dermatologistService;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimpleMedicineDTO>> getMedicineByPharmacy(@PathVariable String regNo) {
@@ -210,5 +212,43 @@ public class MedicineController {
         mo.setStatus(false);
         medicineOrderService.update(mo);
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+    @GetMapping(value = "/check/derm/{pharm}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicinePricingDTO>> checkDerm(@PathVariable String pharm,@PathVariable Long id) {
+        Medicine medicine = medicinePricingService.findMedicinePricingID(id).getMedicine();
+        Pharmacy pharmacy = pharmacyService.getPharmacy(pharm);
+        List<MedicinePricing> allMedicine = new ArrayList<MedicinePricing>();
+
+        List<Medicine> medicines= null;
+        try {
+            medicines = medicine.getAlternativeMedicine();
+        }catch (Exception e){
+            System.out.println("jea");
+        }
+        //alergije treba uraditi
+        List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
+        if (medicinePricingService.findActivePricingForMedicineInPharmacy(pharmacy.getRegNo(), medicine.getCode()) == null){
+            if(medicines != null) {
+                for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(pharmacy.getRegNo())) {
+                    for (Medicine m : medicines) {
+                        if (mp.getMedicine().getCode().equals(m.getCode()))
+                            allMedicine.add(mp);
+                    }
+                }
+            }
+        }else{
+            pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
+        }
+        if(allMedicine.isEmpty()) {
+            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1)
+                pricingDTOS.clear();
+            return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
+        }
+        for (MedicinePricing mp : allMedicine) {
+            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1)
+                continue;
+            pricingDTOS.add(new MedicinePricingDTO(mp));
+        }
+        return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
     }
 }

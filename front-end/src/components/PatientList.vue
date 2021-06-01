@@ -1,62 +1,93 @@
 <template>
-    <v-container>
-        <v-toolbar style="margin-bottom: 10px;">
-        <PatientSearch id="search" @clicked="onSearchClick" />
-        <PatientSort id="search" @clicked="onSortClick" />
-      </v-toolbar>
-        <v-row class="l-5">
-          <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
-            <v-card shaped>
-              <v-list dense>
-                <v-list-item>
-                  <v-list-item-content>Email:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ i.email }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Name:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ i.name }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Surname:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ i.surname }}
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+  <v-container>
+    <v-toolbar style="margin-bottom: 10px">
+      <PatientSearch id="search" @clicked="onSearchClick" />
+      <PatientSort id="search" @clicked="onSortClick" />
+    </v-toolbar>
+    <v-row class="l-5">
+      <v-col v-for="i in patients" :key="i.email" sm="6" lg="3">
+        <v-card shaped>
+          <v-list dense>
+            <v-list-item>
+              <v-list-item-content>Email:</v-list-item-content>
+              <v-list-item-content class="align-end">
+                {{ i.email }}
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>Name:</v-list-item-content>
+              <v-list-item-content class="align-end">
+                {{ i.name }}
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>Surname:</v-list-item-content>
+              <v-list-item-content class="align-end">
+                {{ i.surname }}
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-dialog
+            v-if="check[i.email]"
+            v-model="dialog"
+            persistent
+            max-width="700px"
+            :retain-focus="false"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="orange"
+                style="margin: 10px"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                @click="onClick(i.email)"
+              >
+                Start Appointment
+              </v-btn>
+            </template>
+            <AppointmentForm @clicked="dialog = false" />
+          </v-dialog>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import PatientSearch from "@/components/PatientSearch.vue";
 import PatientSort from "@/components/PatientSort.vue";
+import AppointmentForm from "@/components/AppointmentForm.vue";
 export default {
   name: "PatientList",
-  components:{
+  components: {
     PatientSearch,
-    PatientSort
+    PatientSort,
+    AppointmentForm,
   },
   data: () => ({
-    patients:[]
+    patients: [],
+    dialog: false,
+    check: {},
   }),
   created() {
-    let kor = localStorage.getItem('korisnik');
+    let kor = localStorage.getItem("korisnik");
     console.log(kor);
-    axios.get(`http://localhost:9090/patients/${kor}@gmail.com`).then((resp) => {
-      this.patients = resp.data;
-    });
+    axios
+      .get(`http://localhost:9090/patients/${kor}@gmail.com`)
+      .then((resp) => {
+        this.patients = resp.data;
+        for(var i =0;i<this.patients.length;i++){
+          this.check[this.patients[i].email]=this.patients[i].check;
+        }
+        console.log(this.check);
+      });
   },
-  methods:{
-      onSearchClick: function (search) {
+  methods: {
+    onSearchClick: function (search) {
       console.log(search);
-      let kor = localStorage.getItem('korisnik');
+      let kor = localStorage.getItem("korisnik");
       axios
         .get("http://localhost:9090/patients/search", {
           params: {
@@ -111,6 +142,10 @@ export default {
         });
       }
     },
-  }
+    onClick(email) {
+      localStorage.setItem("patient", email);
+    },
+  },
 };
+
 </script>

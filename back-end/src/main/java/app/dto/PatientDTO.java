@@ -10,6 +10,7 @@ public class PatientDTO {
     private String surname;
     private Address address;
     private String phoneNumber;
+    private boolean check;
     public PatientDTO() {
     }
 
@@ -24,6 +25,15 @@ public class PatientDTO {
         this.address = address;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.check = false;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 
     public String getPhoneNumber() {
