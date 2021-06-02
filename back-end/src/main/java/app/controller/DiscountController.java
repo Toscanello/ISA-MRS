@@ -1,14 +1,8 @@
 package app.controller;
 
-import app.domain.Discount;
-import app.domain.Medicine;
-import app.domain.MedicineQuantity;
-import app.domain.Pharmacy;
+import app.domain.*;
 import app.dto.DiscountDTO;
-import app.service.DiscountService;
-import app.service.MedicineQuantityService;
-import app.service.MedicineService;
-import app.service.PharmacyService;
+import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +23,8 @@ public class DiscountController {
     MedicineQuantityService medicineQuantityService;
     @Autowired
     PharmacyService pharmacyService;
+    @Autowired
+    PatientService patientService;
 
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,6 +54,9 @@ public class DiscountController {
         d.setStartDate(newDiscount.getStartDateAsDate());
         d.setEndDate(newDiscount.getEndDateAsDate());
         discountService.save(d);
+        List<Patient> subscribedPatients = patientService.getAllSubscribedToPharmacy(pharmacy.getRegNo());
+        for (Patient p : subscribedPatients)
+            System.out.println(p.getEmail());
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

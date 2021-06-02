@@ -85,4 +85,8 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.save(patient);
     }
 
+    @Override
+    public List<Patient> getAllSubscribedToPharmacy(String regNo) {
+        return patientRepository.findAllSubscribedToPharmacy(regNo);
+    }
 }
