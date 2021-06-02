@@ -5,7 +5,9 @@ import app.domain.Dermatologist;
 import app.domain.DermatologistAppointment;
 import app.domain.DermatologistWorkHour;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +39,15 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, St
             nativeQuery = true
     )
     public List<Appointment> findAllAppointmentsByDermatologistEmail(String email);
+
+    @Transactional
+    @Modifying
+    @Query(
+            value = "insert into pharmacy_dermatologists(pharmacy_reg_no, dermatologist_email) " +
+                    "values(?2, ?1)",
+            nativeQuery = true
+    )
+    public void addEmployement(String email, String regNo);
 
     public Dermatologist findDermatologistByEmail(String email);
 

@@ -15,4 +15,8 @@ public class DermatologistWorkHourService {
     public List<DermatologistWorkHour> getDermatologistWorkHours(String email) {
         return workHourRepository.findWorkHoursByDermatologistEmail(email);
     }
+
+    public void removeWorkHour(DermatologistWorkHour wh) {
+        workHourRepository.delete(wh);
+    }
 }

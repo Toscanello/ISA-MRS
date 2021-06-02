@@ -54,7 +54,10 @@
           <v-card-text>
             <table class="links">
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Zaposleni</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Farmaceuti</a></td>
+                </tr>
+                <tr>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Dermatolozi</a></td>
                 </tr>
                 <tr>
                     <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Pretraga lekova</a></td>
