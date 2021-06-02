@@ -26,4 +26,9 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
     public List<Patient> searchPatients(String email, String name, String surname);
 
     public Patient findOneByEmail(String email);
+
+    @Query(value = "select * from users p " +
+            "where p.email in (select s.patient_email from patient_pharmacies s where pharmacy_reg_no = ?1)",
+            nativeQuery = true)
+    public List<Patient> findAllSubscribedToPharmacy(String regNo);
 }

@@ -56,4 +56,8 @@ public class DermatologistService {
     public Dermatologist save(Dermatologist dermatologist) {
         return dermatologistRepository.save(dermatologist);
     }
+
+    public void addEmployement(String email, String regNo) {
+        dermatologistRepository.addEmployement(email, regNo);
+    }
 }
