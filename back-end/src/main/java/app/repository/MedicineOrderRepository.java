@@ -19,8 +19,8 @@ public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, Lo
     @Modifying
     @Query(
             value = "insert into medicine_order(medicine, quantity, price," +
-                    "patient_id, start_time, end_time) " +
-                    "values (?1, ?2, ?3, ?4, ?5, ?6)",
+                    "patient_id, start_time, end_time, status) " +
+                    "values (?1, ?2, ?3, ?4, ?5, ?6,true)",
             nativeQuery = true
     )
     public void insertNewOrder(Long medicinePricingId, int quantity,

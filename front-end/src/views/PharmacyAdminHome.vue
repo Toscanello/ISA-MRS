@@ -41,8 +41,8 @@
             <v-list-item-title>Izveštaji</v-list-item-title>
           </v-list-item>
 
-          <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Farmaceuti</v-list-item-title>
+          <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
+            <v-list-item-title>Cenovnik</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/dermatologists/list/pharmacy/' + pharmacy.regNo">
@@ -54,11 +54,11 @@
           </v-list-item>
 
           <v-list-item :to="'/employ/list/dermatologists/' + pharmacy.regNo">
-            <v-list-item-title>Employ dermatologists</v-list-item-title>
+            <v-list-item-title>Zaposli dermatologa</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/employ/list/pharmacists/' + pharmacy.regNo">
-            <v-list-item-title>Employ pharmacists</v-list-item-title>
+            <v-list-item-title>Zaposli farmaceuta</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
@@ -71,10 +71,6 @@
 
           <v-list-item :to="'/allmedicineordertable/' + pharmacy.regNo">
             <v-list-item-title>Nova narudžbenica</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Akcije/Promocije</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/vacation/requests/' + pharmacy.regNo">

@@ -38,7 +38,7 @@ public class MedicineOrder {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @Column(name = "status",nullable = false)
+    @Column(name = "status",nullable = true)
     private boolean status;
 
     public MedicineOrder() {

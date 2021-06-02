@@ -240,13 +240,17 @@ public class MedicineController {
             pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
         }
         if(allMedicine.isEmpty()) {
-            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1)
+            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1) {
+                //posalji mail za lek
                 pricingDTOS.clear();
+            }
             return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
         }
         for (MedicinePricing mp : allMedicine) {
-            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1)
+            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1) {
+                //posalji mail za zamenske lekove
                 continue;
+            }
             pricingDTOS.add(new MedicinePricingDTO(mp));
         }
         return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
