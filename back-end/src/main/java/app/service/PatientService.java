@@ -16,4 +16,5 @@ public interface PatientService {
     List<Patient> findAllPatientsByMedicalEmail(String email);
     Patient findOneByEmail(String email);
     Patient save(Patient patient, PatientDTO editedPatient);
+    List<Patient> getAllSubscribedToPharmacy(String regNo);
 }

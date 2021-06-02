@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.*;
 import app.dto.*;
 import app.service.*;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -141,6 +142,11 @@ public class DermatologistController {
                     return new ResponseEntity<>("Dermatologist has active appointments", HttpStatus.BAD_REQUEST);
             }
         }
+        List<DermatologistWorkHour> workHours = workHourService.getDermatologistWorkHours(email);
+        for (DermatologistWorkHour wh : workHours) {
+            if (wh.getPharmacy().getRegNo().equals(regNo))
+                workHourService.removeWorkHour(wh);
+        }
         pharmacyService.deleteDermatologistEmploymentFromPharmacy(regNo, email);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
@@ -166,6 +172,7 @@ public class DermatologistController {
         dwh.setBegginingHour(startTime);
         dwh.setEndingHour(endTime);
         dermatologist.getWorkingHours().add(dwh);
+        dermatologistService.addEmployement(dermatologist.getEmail(), pharmacy.getRegNo());
         dermatologistService.save(dermatologist);
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
