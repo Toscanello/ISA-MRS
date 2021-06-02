@@ -5,6 +5,10 @@
     sort-by="calories"
     class="elevation-1"
   >
+    <template v-slot:item.time="{ item }">
+
+        {{ item.time.split("T")[0]}} {{ item.time.split("T")[1]}}
+    </template>
     <template v-slot:top>
       <v-toolbar
         flat
@@ -105,7 +109,9 @@
           value: 'dermatologist.name',
         },
         { text: 'Dermatologist surname', value: 'dermatologist.surname' },
-        { text: 'Dermatologist email', value: 'dermatologist.name' },
+        { text: 'Dermatologist email', value: 'dermatologist.email' },
+        { text: 'Start', value: 'time' },
+        { text: 'Duration', value: 'duration' },
         { text: 'Price', value: 'price' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],

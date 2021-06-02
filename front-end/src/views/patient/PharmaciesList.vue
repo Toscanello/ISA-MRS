@@ -14,10 +14,7 @@
             prepend-inner-icon="mdi-magnify"
             label="Search"
             style="padding-right: 20px;"
-            
           ></v-text-field>
-          
-            
             <v-btn
                 large
                 depressed
@@ -29,76 +26,45 @@
           </v-toolbar>
           <v-row class= "row">
             <v-col v-for="pharmacy in pharmacies" :key="pharmacy.regNo" cols="12" sm="6" md="4" lg="3">
-          
-           <v-card
-            :loading="loading"
-            
-            
-            style="margin-top: 5px;"
-          >
-            <template slot="progress">
-              <v-progress-linear
-                color="deep-purple"
-                height="10"
-                indeterminate
-              ></v-progress-linear>
-            </template>
-
-            <GmapMap
-                :center="{
-                  lat: pharmacy.address.location.geoHeight,
-                  lng: pharmacy.address.location.geoWidth
-                  }"
-                :zoom="9"
-                style="width:100%; height: 250px">
-                <GmapMarker
-                  :position="{
-                  lat: pharmacy.address.location.geoHeight,
-                  lng: pharmacy.address.location.geoWidth
-                  }"></GmapMarker>
-              </GmapMap>
- 
-
-            <v-card-title>{{pharmacy.name}}</v-card-title>
-
-            <v-card-text>
-              <v-row
-                align="center"
-                class="mx-0"
+              <v-card
+                dark
+                style = "background-color:#424242;"
               >
-                <v-rating
-                  :value="4.5"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
+                <div class="d-flex flex-no-wrap justify-space-between">
+                  <div>
+                    <v-card-title
+                      class="text-h5"
+                    >{{pharmacy.name}}</v-card-title>
 
-                <div class="grey--text ml-4">
-                  4.5 (413)
+                    <v-card-subtitle>{{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}
+                    </v-card-subtitle>
+
+                    <v-card-actions v-if="userRole == 'ROLE_USER'">
+                      <v-btn 
+                      @click="open(pharmacy)"
+                      text
+                      >
+                        Reserve
+                      </v-btn>
+                      <v-spacer></v-spacer>
+                      <span class="grey--text text--lighten-2 text-caption mr-2">
+                        
+                         <v-rating
+                        v-model="rating"
+                        background-color="white"
+                        color="yellow accent-4"
+                        dense
+                        half-increments
+                        hover
+                        size="18"
+                      ></v-rating>  
+                      </span>
+                      ({{ rating }})
+                     
+                    </v-card-actions>
+                  </div>
                 </div>
-              </v-row>
-
-              <div class="my-4 subtitle-1">
-                {{pharmacy.address.street}} {{pharmacy.address.streetNumber}}, {{pharmacy.address.place}}, {{pharmacy.address.country}}
-              </div>
-
-              <div>Ovdje moze neki dodatni opis apoteke.</div>
-            </v-card-text>
-
-            <v-card-actions v-if="userRole == 'ROLE_USER'">
-              <v-btn
-                color="deep-purple lighten-2"
-                text
-               @click="open(pharmacy)"
-              >
-                Reserve
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-
-
+              </v-card>
       </v-col>
     </v-row>
   </div>
@@ -106,7 +72,7 @@
 
 
 <script>
-//import TokenDecoder from '../../services/token-decoder'
+import TokenDecoder from '../../services/token-decoder'
 import axios from 'axios'
 export default {
     name: 'PharmacyList',
@@ -116,8 +82,10 @@ export default {
     pharmacies: [],
     userRole: null,
     search: "",
+    rating: 4.5,
   }),
   created() {
+    this.userRole = TokenDecoder.getUserRole()
     axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
       this.pharmacies = resp.data;
     });

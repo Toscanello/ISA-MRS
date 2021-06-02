@@ -3,15 +3,19 @@
 insert into location (width, height) values (19.85, 45.26);
 insert into location (width, height) values (25.85, 45.26);
 insert into address (street, street_number, place, country,location_id) values ('Dimitrija Tucovica', '7', 'Uzice', 'Srbija',1);
-insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi sad', 'Srbija',2);
+insert into address (street, street_number, place, country,location_id) values ('Bulevar Jase Tomica', '29', 'Novi Sad', 'Srbija',2);
+insert into address (street, street_number, place, country,location_id) values ('Bulevar Despota Stefana', '7', 'Novi Sad', 'Srbija',1);
+insert into address (street, street_number, place, country,location_id) values ('Bulevar Evrope', '3', 'Novi Sad', 'Srbija',2);
+insert into address (street, street_number, place, country,location_id) values ('Brace Ribnikar', '7', 'Novi Sad', 'Srbija',1);
+
 insert into pharmacy (reg_no, name, address_id, appointment_price) values ('abc', 'Apoteka Jankovic', 1, 1000.00);
 insert into pharmacy (reg_no, name, address_id, appointment_price) values ('aaa', 'Apoteka Betty', 2, 2000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('bbb', 'Apoteka B', 1, 3000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ccc', 'Apoteka C', 2, 4000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ddd', 'Apoteka D', 1, 5000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('eee', 'Apoteka E', 2, 6000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('fff', 'Apoteka F', 1, 7000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ggg', 'Apoteka G', 2, 8000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('bbb', 'Apoteka B', 3, 3000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ccc', 'Apoteka C', 4, 4000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ddd', 'Apoteka D', 5, 5000.00);
+--insert into pharmacy (reg_no, name, address_id, appointment_price) values ('eee', 'Apoteka E', 2, 6000.00);
+--insert into pharmacy (reg_no, name, address_id, appointment_price) values ('fff', 'Apoteka F', 1, 7000.00);
+--insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ggg', 'Apoteka G', 2, 8000.00);
 --insert into pharmacy_address(address_id, pharmacy_reg_no) values (1, 'abc');
 
 insert into medicine(name, code, type, manufacturer, drug_form, composition, description, category)
@@ -178,7 +182,13 @@ insert into appointment(patient_id,medical_worker_id, price, start_time, end_tim
 values('mika95455@gmail.com','derm1@gmail.com',1000, '2021-06-01 19:15:00', '2021-06-01 19:30:00', false,'ccc');
 
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
-values('2021-06-02 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+values('2021-06-07 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
+values('2021-06-08 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
+values('2021-06-09 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
+values('2021-06-10 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 
 
 insert into vaccation(medical_worker_id,start_date,end_date,status)
