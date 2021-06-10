@@ -1,5 +1,6 @@
 package testing.service;
 
+import app.Main;
 import app.domain.Discount;
 import app.repository.DiscountRepository;
 import app.service.DiscountService;
@@ -18,12 +19,11 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = Main.class)
 public class DiscountServiceClass {
 
     @Mock
@@ -51,7 +51,7 @@ public class DiscountServiceClass {
         assertEquals((long) disco.getId(), 1L);
 
         verify(discountRepositoryMock, times(1))
-                .getActiveDiscountByMedicineCodeAndPharmacyRegNo("lek", "abc");
+                .getActiveDiscountByMedicineCodeAndPharmacyRegNo("lek1", "abc");
 
     }
 
@@ -60,6 +60,7 @@ public class DiscountServiceClass {
     @Rollback(true)
     public void testDiscountSave() {
         LocalDate now = LocalDate.now();
+
         Discount disc = new Discount();
         disc.setId(1L);
         disc.setStartDate(now.minusDays(5));
@@ -82,7 +83,7 @@ public class DiscountServiceClass {
         when(discountRepositoryMock.findAll())
                 .thenReturn(Arrays.asList(temp, disc));
 
-        assertThat(savedDiscount, isNotNull());
+        assertNotNull(savedDiscount);
 
         List<Discount> discounts = discountService.findAll();
         assertThat(discounts, hasSize(dbSizeBeforeSave+1));

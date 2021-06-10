@@ -1,5 +1,6 @@
 package testing.controller;
 
+import app.Main;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = Main.class)
 public class MatijaUnitTest {
     /* Konstante za upotrebu */
     private static final String URL_PREFIX = "/api";
@@ -59,7 +60,7 @@ public class MatijaUnitTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$.[*].medicineDTO.code").value("lek1"));
+                .andExpect(jsonPath("$.[*].medicineDTO.code").value(hasItem("lek1")));
     }
 
     /*  Test funkcije DeletePharmacistEmployement u PharmacistController
@@ -70,7 +71,7 @@ public class MatijaUnitTest {
     @Rollback(true)
     public void testDeletePharmacistEmployment() throws Exception {
         mockMvc
-                .perform(delete(URL_PREFIX + "/pharmacist/delete/employement/farm@gmail.com"))
+                .perform(delete(URL_PREFIX + "/pharmacist/delete/employment/farm@gmail.com"))
                 .andExpect(status().isOk());
     }
 
@@ -84,6 +85,6 @@ public class MatijaUnitTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$.[*].medicalWorkerId").value("farm@gmail.com"));
+                .andExpect(jsonPath("$.[*].medicalWorkerId").value(hasItem("farm@gmail.com")));
     }
 }

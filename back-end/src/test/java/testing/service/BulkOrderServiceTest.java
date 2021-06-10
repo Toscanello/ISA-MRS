@@ -1,5 +1,6 @@
 package testing.service;
 
+import app.Main;
 import app.domain.bulk_order.BulkOrder;
 import app.repository.bulk_order.BulkOrderRepository;
 import app.service.bulk_order.BulkOrderService;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = Main.class)
 public class BulkOrderServiceTest {
 
     @Mock
