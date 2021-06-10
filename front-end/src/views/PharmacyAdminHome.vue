@@ -49,6 +49,10 @@
             <v-list-item-title>Dermatolozi</v-list-item-title>
           </v-list-item>
 
+          <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
+            <v-list-item-title>Farmaceuti</v-list-item-title>
+          </v-list-item>
+
           <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
             <v-list-item-title>Medicine pricing</v-list-item-title>
           </v-list-item>
