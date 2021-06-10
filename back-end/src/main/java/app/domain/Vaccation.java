@@ -11,7 +11,7 @@ public class Vaccation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="medical_worker_id",referencedColumnName = "email",nullable = false)
     private MedicalWorker medicalWorker;
 

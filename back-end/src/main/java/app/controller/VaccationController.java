@@ -65,11 +65,9 @@ public class VaccationController {
         List<Pharmacist> pharmacists = pharmacistService.findPharmacistsByPharmacy(regNo);
         Set<VaccationDTO> vacationDTOs = new HashSet<>();
         for (Pharmacist ph : pharmacists) {
-            List<Vaccation> pharmacistVacations = vaccationService.findVacationsByMedicalWorkerEmail(ph.getEmail());
-            for (Vaccation v : pharmacistVacations) {
-                if (v.getStatus() == Vaccation.Status.STANDBY)
-                    vacationDTOs.add(new VaccationDTO(v));
-            }
+            Vaccation pharmacistVacation = vaccationService.findVacationByMedicalWorkerEmail(ph.getEmail());
+            if (pharmacistVacation != null)
+                vacationDTOs.add(new VaccationDTO(pharmacistVacation));
         }
         return new ResponseEntity<>(vacationDTOs, HttpStatus.OK);
     }

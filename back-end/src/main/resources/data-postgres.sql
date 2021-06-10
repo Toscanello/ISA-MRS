@@ -92,6 +92,8 @@ insert into users(email,password,name,surname,phone_number,address_id, enabled, 
 values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
+values('farmC@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','temp','farm','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
 
 insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
 values('phadmin@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
@@ -128,6 +130,7 @@ insert into medical_workers(email)values('derm2@gmail.com');
 insert into medical_workers(email)values('farm@gmail.com');
 insert into medical_workers(email)values('farmA@gmail.com');
 insert into medical_workers(email)values('farmB@gmail.com');
+insert into medical_workers(email)values('farmC@gmail.com');
 
 insert into pharmacy_admin(email, pharmacy_reg_no)
 values ('phadmin@gmail.com', 'abc');
@@ -138,12 +141,17 @@ insert into work_hour(start_time,end_time,pharmacy)
 values('09:00','17:00','bbb');
 insert into work_hour(start_time,end_time,pharmacy)
 values('09:00','17:00','ccc');
+insert into work_hour(start_time,end_time,pharmacy)
+values('09:00','17:00','abc');
+
 insert into pharmacist(email,work_hour,pharmacy)
 values('farm@gmail.com',1,'abc');
 insert into pharmacist(email,work_hour,pharmacy)
 values('farmA@gmail.com',2,'bbb');
 insert into pharmacist(email,work_hour,pharmacy)
 values('farmB@gmail.com',3,'ccc');
+insert into pharmacist(email,work_hour,pharmacy)
+values('farmC@gmail.com',4,'abc');
 
 insert into dermatologist(email)values('derm1@gmail.com');
 insert into dermatologist(email)values('derm2@gmail.com');
@@ -191,8 +199,25 @@ insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy
 values('2021-06-10 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 
 
+
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farm@gmail.com','2021-04-09','2021-04-18','ACCEPT');
 insert into vaccation(medical_worker_id,start_date,end_date,status)
 values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farm@gmail.com','2021-03-09','2021-03-18','DECLINE');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmC@gmail.com','2021-04-09','2021-04-18','ACCEPT');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmC@gmail.com','2021-05-09','2021-05-18','STANDBY');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmC@gmail.com','2021-03-09','2021-03-18','DECLINE');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmB@gmail.com','2021-04-09','2021-04-18','ACCEPT');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmB@gmail.com','2021-05-09','2021-05-18','STANDBY');
+insert into vaccation(medical_worker_id,start_date,end_date,status)
+values('farmB@gmail.com','2021-03-09','2021-03-18','DECLINE');
 
 insert into medicine_order(medicine, quantity, price, patient_id, start_time, end_time,status) values (1, 2, 600,
                                             'ika@gmail.com', '2021-04-21 12:00:00', '2021-04-21 12:00:00',false);
