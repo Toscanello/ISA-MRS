@@ -246,16 +246,16 @@ values('lek3', 2, 3);
 insert into bulk_order_item(medicine_code, order_id, amount)
 values('lek4', 2, 3);
 
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2500, 'Klisura', '2021-06-10', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2600, 'Simuna', '2021-06-11', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2300, 'Zbrda Zdola', '2021-06-12', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(2, 2000, 'Skonca i skonopca', '2021-06-10', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(2, 1500, 'Ovo Ono', '2021-06-14', 'PENDING');
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2500, 'Klisura', '2021-06-10', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2600, 'Simuna', '2021-06-11', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2300, 'Zbrda Zdola', '2021-06-12', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(2, 2000, 'Skonca i skonopca', '2021-06-10', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(2, 1500, 'Ovo Ono', '2021-06-14', 'PENDING', 0);
 
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('ika@gmail.com', 'abc');
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('mika95455@gmail.com', 'abc');
