@@ -40,6 +40,9 @@ public class Pharmacy {
     @Column(name = "appointment_price", unique = false, nullable = false)
     private Double appointmentPrice;
 
+    @Version
+    private Long version;
+
     public Pharmacy() { }
 
     public Pharmacy(String regNo, String name, Address address, Double appointmentPrice) {
@@ -121,5 +124,13 @@ public class Pharmacy {
 
     public void setAppointmentPrice(Double appointmentPrice) {
         this.appointmentPrice = appointmentPrice;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

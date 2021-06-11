@@ -28,6 +28,9 @@ public class OrderResponse {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Version
+    private Long version;
+
     public OrderResponse() {
     }
 
@@ -77,5 +80,13 @@ public class OrderResponse {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

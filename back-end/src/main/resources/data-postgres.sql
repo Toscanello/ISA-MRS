@@ -8,11 +8,11 @@ insert into address (street, street_number, place, country,location_id) values (
 insert into address (street, street_number, place, country,location_id) values ('Bulevar Evrope', '3', 'Novi Sad', 'Srbija',2);
 insert into address (street, street_number, place, country,location_id) values ('Brace Ribnikar', '7', 'Novi Sad', 'Srbija',1);
 
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('abc', 'Apoteka Jankovic', 1, 1000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('aaa', 'Apoteka Betty', 2, 2000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('bbb', 'Apoteka B', 3, 3000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ccc', 'Apoteka C', 4, 4000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ddd', 'Apoteka D', 5, 5000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('abc', 'Apoteka Jankovic', 1, 1000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('aaa', 'Apoteka Betty', 2, 2000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('bbb', 'Apoteka B', 3, 3000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('ccc', 'Apoteka C', 4, 4000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('ddd', 'Apoteka D', 5, 5000.00, 0);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('eee', 'Apoteka E', 2, 6000.00);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('fff', 'Apoteka F', 1, 7000.00);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ggg', 'Apoteka G', 2, 8000.00);
@@ -33,16 +33,16 @@ insert into rating(pharmacy_reg_no, rating) values ('aaa', 4);
 insert into rating(pharmacy_reg_no, rating) values ('bbb', 5);
 insert into rating(pharmacy_reg_no, rating) values ('ccc', 2);
 
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek1', 2);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek2', 3);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek3', 1);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek4', 4);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek2', 4);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek1', 2, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek2', 3, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek3', 1, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('aaa', 'lek4', 4, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('aaa', 'lek2', 4, 0);
 
 insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
 values('lek1', 'abc', 300, '2021-04-21 12:00:00');
@@ -246,16 +246,16 @@ values('lek3', 2, 3);
 insert into bulk_order_item(medicine_code, order_id, amount)
 values('lek4', 2, 3);
 
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2500, 'Klisura', '2021-06-10', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2600, 'Simuna', '2021-06-11', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(1, 2300, 'Zbrda Zdola', '2021-06-12', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(2, 2000, 'Skonca i skonopca', '2021-06-10', 'PENDING');
-insert into order_response(order_id, price, supplier, available_date, status)
-values(2, 1500, 'Ovo Ono', '2021-06-14', 'PENDING');
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2500, 'Klisura', '2021-06-10', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2600, 'Simuna', '2021-06-11', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(1, 2300, 'Zbrda Zdola', '2021-06-12', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(2, 2000, 'Skonca i skonopca', '2021-06-10', 'PENDING', 0);
+insert into order_response(order_id, price, supplier, available_date, status, version)
+values(2, 1500, 'Ovo Ono', '2021-06-14', 'PENDING', 0);
 
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('ika@gmail.com', 'abc');
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('mika95455@gmail.com', 'abc');
