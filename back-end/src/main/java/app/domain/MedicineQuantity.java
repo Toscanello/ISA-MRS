@@ -23,6 +23,9 @@ public class MedicineQuantity {
     @Column(name = "quantity", nullable = false)
     private  int quantity;
 
+    @Version
+    private Long version;
+
     public MedicineQuantity() { }
 
     public long getId() {
@@ -55,5 +58,13 @@ public class MedicineQuantity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

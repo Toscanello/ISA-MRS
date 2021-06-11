@@ -33,16 +33,16 @@ insert into rating(pharmacy_reg_no, rating) values ('aaa', 4);
 insert into rating(pharmacy_reg_no, rating) values ('bbb', 5);
 insert into rating(pharmacy_reg_no, rating) values ('ccc', 2);
 
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek1', 2);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek2', 3);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('abc', 'lek3', 1);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek4', 4);
-insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity)
-values ('aaa', 'lek2', 4);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek1', 2, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek2', 3, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('abc', 'lek3', 1, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('aaa', 'lek4', 4, 0);
+insert into medicine_quantity(pharmacy_reg_no, medicine_code, quantity, version)
+values ('aaa', 'lek2', 4, 0);
 
 insert into medicine_pricing(medicine_code, pharmacy_reg_no, price, pricing_start)
 values('lek1', 'abc', 300, '2021-04-21 12:00:00');
