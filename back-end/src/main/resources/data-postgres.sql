@@ -8,11 +8,11 @@ insert into address (street, street_number, place, country,location_id) values (
 insert into address (street, street_number, place, country,location_id) values ('Bulevar Evrope', '3', 'Novi Sad', 'Srbija',2);
 insert into address (street, street_number, place, country,location_id) values ('Brace Ribnikar', '7', 'Novi Sad', 'Srbija',1);
 
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('abc', 'Apoteka Jankovic', 1, 1000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('aaa', 'Apoteka Betty', 2, 2000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('bbb', 'Apoteka B', 3, 3000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ccc', 'Apoteka C', 4, 4000.00);
-insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ddd', 'Apoteka D', 5, 5000.00);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('abc', 'Apoteka Jankovic', 1, 1000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('aaa', 'Apoteka Betty', 2, 2000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('bbb', 'Apoteka B', 3, 3000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('ccc', 'Apoteka C', 4, 4000.00, 0);
+insert into pharmacy (reg_no, name, address_id, appointment_price, version) values ('ddd', 'Apoteka D', 5, 5000.00, 0);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('eee', 'Apoteka E', 2, 6000.00);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('fff', 'Apoteka F', 1, 7000.00);
 --insert into pharmacy (reg_no, name, address_id, appointment_price) values ('ggg', 'Apoteka G', 2, 8000.00);
