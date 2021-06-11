@@ -94,43 +94,4 @@ public class BulkOrderController {
         }
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
-
-    //TODO: OVDE IMPLEMENTIRATI KONKURENTNO IZVRSAVANJE
-    //MOZE SE DESITI DA DVA PHARMACY ADMIN POTVRDE ISTI ORDER
-//    public void accept(OrderResponse or) {
-//        or.setStatus(OrderResponse.Status.ACCEPTED);
-//        //SEND EMAIL WOULD BE IMPLEMENTED IF THERE WAS
-//        //A SUPPLIER USER ROLE
-//        BulkOrder bo = or.getOrder();
-//        Pharmacy p = bo.getPharmacy();
-//        List<MedicineQuantity> pharmacyMedicine =
-//                medicineQuantityService.findMedicineQuantitiesByPharmacyRegNo(p.getRegNo());
-//        for (BulkOrderItem boi : bo.getOrderItems()) {
-//            Medicine m = boi.getMedicine();
-//            boolean containsMedicine = false;
-//            for (MedicineQuantity mq : pharmacyMedicine) {
-//                if (mq.getMedicine().getCode().equals(m.getCode())) {
-//                    mq.setQuantity(mq.getQuantity() + boi.getAmount());
-//                    containsMedicine = true;
-//                    break;
-//                }
-//            }
-//            if (!containsMedicine) {
-//                MedicineQuantity mq = new MedicineQuantity();
-//                mq.setQuantity(boi.getAmount());
-//                mq.setMedicine(boi.getMedicine());
-//                mq.setPharmacy(p);
-//                pharmacyMedicine.add(mq);
-//            }
-//        }
-//        p.setMedicineQuantities(new HashSet<>(pharmacyMedicine));
-//        orderResponseService.save(or);
-//        pharmacyService.save(p);
-//    }
-
-    //TODO: IMPLEMENTIRATI KONKURENTNO IZVRSAVANJE, POVEZATI SA PRETHODNOM FUNKCIJOM
-//    private void decline(OrderResponse or) {
-//        or.setStatus(OrderResponse.Status.DECLINED);
-//        orderResponseService.save(or);
-//    }
 }
