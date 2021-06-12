@@ -89,4 +89,10 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getAllSubscribedToPharmacy(String regNo) {
         return patientRepository.findAllSubscribedToPharmacy(regNo);
     }
+
+    @Override
+    public void insertAllergy(String patient_email, String medicine_code){
+        if(patientRepository.findAllergy(patient_email, medicine_code) == null)
+            patientRepository.insertAllergy(patient_email, medicine_code);
+    }
 }

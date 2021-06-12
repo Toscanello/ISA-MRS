@@ -22,6 +22,12 @@ public class Patient extends User {
             inverseJoinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"))
     private Set<Pharmacy> promotions = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "patient_allergies",
+            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "email"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"))
+    private Set<Medicine> allergies = new HashSet<>();
+
     public Patient() {
     }
 
@@ -43,6 +49,14 @@ public class Patient extends User {
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Set<Medicine> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(Set<Medicine> allergies) {
+        this.allergies = allergies;
     }
 
     public Set<MedicineOrder> getOrders() {

@@ -111,7 +111,7 @@
       {
         icon: "mdi-account",
         title: "Acoount",
-        to: "DermatologistAppointment/:regNo",
+        to: "acoount", //DermatologistAppointment/:regNo
       },
       {
         icon: "mdi-calendar",

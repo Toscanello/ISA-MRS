@@ -188,4 +188,9 @@ public class PatientController {
         }
     }
 
+    @PostMapping(path = "/allergy/{email}/{code}")
+    public ResponseEntity<String> addAllergy(@PathVariable String email, @PathVariable String code){
+        service.insertAllergy(email, code);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
 }

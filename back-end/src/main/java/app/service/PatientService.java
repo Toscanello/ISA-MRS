@@ -17,4 +17,5 @@ public interface PatientService {
     Patient findOneByEmail(String email);
     Patient save(Patient patient, PatientDTO editedPatient);
     List<Patient> getAllSubscribedToPharmacy(String regNo);
+    void insertAllergy(String patient_email, String medicine_code);
 }

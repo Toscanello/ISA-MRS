@@ -42,7 +42,7 @@ public class OrderResponseService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void accept(OrderResponse or) {
         or.setStatus(OrderResponse.Status.ACCEPTED);
         //SEND EMAIL WOULD BE IMPLEMENTED IF THERE WAS
@@ -74,7 +74,7 @@ public class OrderResponseService {
         pharmacyService.save(p);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void decline(OrderResponse or) {
         or.setStatus(OrderResponse.Status.DECLINED);
         orderResponseRepository.save(or);
