@@ -22,11 +22,15 @@ public class Patient extends User {
             inverseJoinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"))
     private Set<Pharmacy> promotions = new HashSet<>();
 
+    @Column(name = "penalty",nullable = false)
+    private Integer penalty;
+
     public Patient() {
     }
 
-    public Patient(String email, String password, String name, String surname, String phoneNumber, Address address) {
+    public Patient(String email, String password, String name, String surname, String phoneNumber, Address address,Integer penalty) {
         super(email, password, name, surname, phoneNumber, address);
+        this.penalty = penalty;
     }
 
     public Set<Pharmacy> getPromotions() {
@@ -51,5 +55,13 @@ public class Patient extends User {
 
     public void setOrders(Set<MedicineOrder> orders) {
         this.orders = orders;
+    }
+
+    public Integer getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Integer penalty) {
+        this.penalty = penalty;
     }
 }

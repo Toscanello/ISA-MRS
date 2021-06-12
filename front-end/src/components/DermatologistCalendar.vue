@@ -346,6 +346,7 @@ export default {
             color: "orange",
             timed: false,
             schedule: false,
+            finished: this.appointments[i].finished,
             id: this.appointments[i].id,
           });
         }
@@ -370,6 +371,7 @@ export default {
             color: "yellow",
             timed: false,
             schedule: true,
+            finished: true,
             id: this.dermappointments[i].id,
           });
         }
@@ -407,6 +409,7 @@ export default {
     didntCome(id){
       //treba odraditi penale
       alert("Penal"+id);
+      axios.put(`http://localhost:9090/patients/penalty/${id}`);
       axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
       window.location.reload();
     }

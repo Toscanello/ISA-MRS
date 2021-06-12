@@ -164,6 +164,7 @@ export default {
       //treba odraditi penale
       var user = tokenDecoder.getUserEmail();
       alert("Penal"+id);
+      axios.put(`http://localhost:9090/patients/penalty/user/${id}`);
       axios.post(`http://localhost:9090/patients/finished/${id}/${user}`);
       window.location.reload();
     }

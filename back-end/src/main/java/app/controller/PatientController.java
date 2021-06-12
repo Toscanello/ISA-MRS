@@ -41,11 +41,6 @@ public class PatientController {
     @Autowired
     private PharmacyService pharmacyService;
 
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Patient>> getPatients() {
-        return new ResponseEntity<List<Patient>>(service.getAll(), HttpStatus.OK);
-    }
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
         System.out.println(search);
@@ -186,6 +181,14 @@ public class PatientController {
                 break;
             }
         }
+    }
+    @PutMapping(path = "/penalty/{id}")
+    public void penalty(@PathVariable Long id){
+        service.addPenalty(appointmentService.findOneById(id).getPatient());
+    }
+    @PutMapping(path = "/penalty/user/{email}")
+    public void penaltyUser(@PathVariable String email){
+        service.addPenalty(service.findOneByEmail(email));
     }
 
 }

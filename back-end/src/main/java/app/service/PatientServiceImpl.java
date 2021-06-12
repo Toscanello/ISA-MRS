@@ -18,20 +18,6 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final List<Patient> patients = new ArrayList<Patient>() {
-        {
-            add(new Patient("pera@gmail.com", "pass", "pera", "peric", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-            add(new Patient("mika@gmail.com", "pass", "mika", "mikic", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-            add(new Patient("zika@gmail.com", "pass", "zika", "zikic", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-        }
-    };
-
     private final Collection<Pharmacy> pharmacies = new ArrayList<>();
 
     @Autowired
@@ -42,11 +28,6 @@ public class PatientServiceImpl implements PatientService {
         Address addr = new Address("Omladinska", "2a", "Uzice", "Serbia", loc);
         Pharmacy p = new Pharmacy("abc", "Krsenkovic", addr, 1000.00);
         pharmacies.add(p);
-    }
-
-    @Override
-    public List<Patient> getAll() {
-        return this.patients;
     }
 
     @Override
@@ -88,5 +69,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> getAllSubscribedToPharmacy(String regNo) {
         return patientRepository.findAllSubscribedToPharmacy(regNo);
+    }
+
+    @Override
+    public void addPenalty(Patient patient) {
+        patientRepository.addPenalty(patient.getEmail(),patient.getPenalty()+1);
     }
 }

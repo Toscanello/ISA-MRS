@@ -85,15 +85,16 @@
                 Address: <ins v-html="selectedEvent.address"></ins>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
-              <v-dialog v-if="checkApp(selectedEvent.start)" v-model="dialog" persistent max-width="700px">
+              <v-dialog v-if="checkApp(selectedEvent.start) && !selectedOpen.selected && !selectedEvent.finished" v-model="dialog" persistent max-width="700px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="orange" style="margin: 10px;" dark v-bind="attrs" v-on="on" @click="onDialogClick(selectedEvent.id)">
                     Start Appointment
                   </v-btn>
                 </template>
-                <AppointmentForm @clicked="dialog=false;selectedOpen=false;"/>
+                <AppointmentForm @clicked="onFinish(selectedEvent.id)"/>
               </v-dialog>
-              <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(selectedEvent.id)">
+              <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(selectedEvent.id)"
+              v-if="checkApp(selectedEvent.start) && !selectedOpen.selected && !selectedEvent.finished">
                 Didn't come
               </v-btn>
             </v-card>
@@ -163,6 +164,7 @@ export default {
           color: "orange",
           timed: false,
           cancel: cancel,
+          finished: this.appointments[i].finished,
           id: this.appointments[i].id,
         });
       }
@@ -223,9 +225,19 @@ export default {
         }
       }
     },
+    onFinish(id){
+      this.dialog = false;
+      this.selectedOpen = false;
+      let check  = localStorage.getItem('check_finished');
+      if(check){
+        axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
+      }
+    },
     didntCome(id){
       //treba odraditi penale
       alert("Penal"+id);
+      axios.put(`http://localhost:9090/patients/penalty/${id}`);
+      axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
       window.location.reload();
     },
     checkApp(time){

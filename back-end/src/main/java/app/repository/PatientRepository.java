@@ -13,12 +13,13 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
 
     public Page<Patient> findAll(Pageable pageable);
 
-    @Query(value = "select * from users p" +
-            " where p.email IN (select a.patient_id from appointment a where a.medical_worker_id = ?1)",
+    @Query(value = "select * from users u " +
+            "full outer join patients p on u.email = p.email" +
+            " where u.email IN (select a.patient_id from appointment a where a.medical_worker_id = ?1)",
             nativeQuery = true)
     public List<Patient> findAllStudentsByMedicalEmail(String email);
 
-    @Query(value = "select * from users p" +
+    @Query(value = "select * from users p full outer join patients pat on p.email = pat.email" +
             " where p.email IN (select a.patient_id from appointment a where a.medical_worker_id = :email)" +
             "and (p.name is null or :name ='null'  or :name = '' or p.name = :name)" +
             "and (p.surname = 'null' or :surname = 'null'  or :surname = '' or p.surname = :surname)",
@@ -27,8 +28,11 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
 
     public Patient findOneByEmail(String email);
 
-    @Query(value = "select * from users p " +
+    @Query(value = "select * from users p full outer join patients pat on p.email = pat.email" +
             "where p.email in (select s.patient_email from patient_pharmacies s where pharmacy_reg_no = ?1)",
             nativeQuery = true)
     public List<Patient> findAllSubscribedToPharmacy(String regNo);
+
+    @Query(value = "update patients set penalty = ?2 where email = ?1",nativeQuery = true)
+    void addPenalty(String email,Integer num);
 }

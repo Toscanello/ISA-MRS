@@ -120,13 +120,13 @@ INSERT INTO USER_ROLE (user_id, role_id) VALUES ('farm@gmail.com', 2);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('phadmin@gmail.com', 4);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('phadmin1@gmail.com', 4);
 
-insert into patients(email)values('ika@gmail.com');
-insert into patients(email)values('pera@gmail.com');
-insert into patients(email)values('mika95455@gmail.com');
-insert into patients(email)values('a@gmail.com');
-insert into patients(email)values('b@gmail.com');
-insert into patients(email)values('c@gmail.com');
-insert into patients(email)values('d@gmail.com');
+insert into patients(email,penalty)values('ika@gmail.com',0);
+insert into patients(email,penalty)values('pera@gmail.com',0);
+insert into patients(email,penalty)values('mika95455@gmail.com',0);
+insert into patients(email,penalty)values('a@gmail.com',0);
+insert into patients(email,penalty)values('b@gmail.com',0);
+insert into patients(email,penalty)values('c@gmail.com',0);
+insert into patients(email,penalty)values('d@gmail.com',0);
 
 insert into medical_workers(email)values('derm1@gmail.com');
 insert into medical_workers(email)values('derm2@gmail.com');
@@ -178,7 +178,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-06-12 16:30:00', '2021-06-12 16:45:00', false,'abc',false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('ika@gmail.com','farm@gmail.com',1000, '2021-06-02 11:35:00', '2021-06-02 10:50:00', false,'abc',false);
+values('ika@gmail.com','farm@gmail.com',1000, '2021-06-12 17:30:00', '2021-06-12 17:45:00', false,'abc',false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc',true);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)

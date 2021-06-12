@@ -10,15 +10,16 @@ public class PatientDTO {
     private String surname;
     private Address address;
     private String phoneNumber;
+    private Integer penalty;
     private boolean check;
     public PatientDTO() {
     }
 
     public PatientDTO(Patient patient){
-        this(patient.getEmail(),patient.getName(),patient.getSurname(), patient.getAddress(), patient.getPassword(), patient.getPhoneNumber());
+        this(patient.getEmail(),patient.getName(),patient.getSurname(), patient.getAddress(), patient.getPassword(), patient.getPhoneNumber(), patient.getPenalty());
     }
 
-    public PatientDTO(String email, String name, String surname, Address address, String password, String phoneNumber) {
+    public PatientDTO(String email, String name, String surname, Address address, String password, String phoneNumber, Integer penalty) {
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -26,6 +27,7 @@ public class PatientDTO {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.check = false;
+        this.penalty = penalty;
     }
 
     public boolean isCheck() {
@@ -82,5 +84,13 @@ public class PatientDTO {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Integer getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Integer penalty) {
+        this.penalty = penalty;
     }
 }

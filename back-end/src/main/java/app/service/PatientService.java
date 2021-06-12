@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface PatientService {
-    List<Patient> getAll();
     List<Patient> searchPatients(Map<String,String> search);
     Pharmacy getPharmacy(String regNo);
     List<Patient> findAllPatientsByMedicalEmail(String email);
     Patient findOneByEmail(String email);
     Patient save(Patient patient, PatientDTO editedPatient);
     List<Patient> getAllSubscribedToPharmacy(String regNo);
+    void addPenalty(Patient patient);
 }
