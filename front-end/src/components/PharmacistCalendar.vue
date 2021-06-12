@@ -108,6 +108,7 @@
 <script>
 import axios from "axios";
 import AppointmentForm from '@/components/AppointmentForm.vue';
+import TokenDecoder from '../services/token-decoder';
 export default {
   components: { AppointmentForm },
   name: "PharmacistCalendar",
@@ -128,8 +129,9 @@ export default {
     appointments: [],
   }),
   created() {
+    var user = TokenDecoder.getUserEmail();
     let path =
-      "http://localhost:9090/api/pharmacist/appointments/farm@gmail.com";
+      `http://localhost:9090/api/pharmacist/appointments/${user}`;
 
     axios.get(path).then((response) => {
       this.appointments = response.data;
@@ -166,6 +168,7 @@ export default {
       }
       this.events = events;
     });
+    axios.get(`http://localhost:9090/api/pharmacist/getPharmacy/${user}`).then(response=>localStorage.setItem('selectedPh',response.data));
   },
   mounted() {
     this.$refs.calendar.checkChange();

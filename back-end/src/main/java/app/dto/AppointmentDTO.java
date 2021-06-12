@@ -17,6 +17,7 @@ public class AppointmentDTO {
     private MedicalWorkerDTO medicalWorker;
     private Double price;
     private Address address;
+    private boolean finished;
 
     public AppointmentDTO() {
     }
@@ -33,6 +34,7 @@ public class AppointmentDTO {
         this.medicalWorker = new MedicalWorkerDTO(a.getMedicalWorker());
         this.price = a.getPrice();
         this.address = a.getMedicalWorker().getAddress();
+        this.finished = a.isFinished();
 
     }
 
@@ -84,5 +86,13 @@ public class AppointmentDTO {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }

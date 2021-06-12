@@ -115,6 +115,7 @@ export default {
   }),
   created() {
     localStorage.setItem("korisnik", "farm");
+    //dodati apoteku
   },
   methods: {
     show(param) {

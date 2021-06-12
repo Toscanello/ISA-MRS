@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "pharmacy_admin")
 public class PharmacyAdmin extends User {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pharmacy_reg_no")
     private Pharmacy pharmacy;
 

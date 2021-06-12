@@ -127,6 +127,7 @@ export default {
   methods: {
     dialog() {
       this.$emit("clicked");
+      this.localStorage.setItem('check_finished',false);
       this.report = "";
       this.prescribed_items = [];
       this.e1 = 1;
@@ -182,7 +183,8 @@ export default {
       for (var i = 0; i < this.prescribed_items.length; i++) {
         medicines.push(this.prescribed_items[i].medicineDTO.code);
       }
-      let path = "http://localhost:9090/api/medicine/prescribe/abc";
+      var ph = localStorage.getItem('selectedPh');
+      let path = `http://localhost:9090/api/medicine/prescribe/${ph}`;
       axios
         .post(path, medicines)
         .then((response) => console.log(response.data));
@@ -195,7 +197,8 @@ export default {
         })
         .then((response) => {
           console.log(response)
-          this.$emit("clicked");
+          this.$emit("clicked",true);
+          localStorage.setItem('check_finished',true);
           this.report = "";
           this.prescribed_items = [];
           this.e1 = 1;

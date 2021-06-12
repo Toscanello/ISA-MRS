@@ -96,7 +96,7 @@ public class AppointmentService {
         }
         Appointment a=null;
         if(!check) {
-            a = new Appointment(startTime, endTime, patient, d, ph, price, false);
+            a = new Appointment(startTime, endTime, patient, d, ph, price, false,false);
             appointmentRepository.save(a);
             return true;
         }
@@ -105,5 +105,9 @@ public class AppointmentService {
 
     public List<Appointment> findActiveAppointmentsByPharmacy(String regNo) {
         return appointmentRepository.findActiveAppointmentsByPharmacy(regNo);
+    }
+
+    public void update(Long id) {
+        appointmentRepository.update(id);
     }
 }

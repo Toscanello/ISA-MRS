@@ -72,7 +72,7 @@ public class PharmacistController {
         }
 
         Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist,
-                pharmacist.getPharmacy(), newAppointment.getPrice(), false);
+                pharmacist.getPharmacy(), newAppointment.getPrice(), false,false);
         appointmentService.save(ap);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
@@ -172,6 +172,12 @@ public class PharmacistController {
         for (Pharmacist p : pharmacists)
             toRet.add(new PharmacistDTO(p));
         return new ResponseEntity<>(toRet, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/getPharmacy/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getPharmacy(@PathVariable String email){
+        Pharmacist pharmacist = pharmacistService.findPharmacistByEmail(email);
+        return new ResponseEntity<String>(pharmacist.getPharmacy().getRegNo(),HttpStatus.OK);
     }
 
 }

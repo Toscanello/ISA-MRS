@@ -33,12 +33,15 @@ public class Appointment {
     @Column(name = "canceled", nullable = false)
     private boolean isCanceled;
 
+    @Column(name="finished",nullable = false)
+    private boolean finished;
+
     public Appointment() {
     }
 
     public Appointment(LocalDateTime startTime, LocalDateTime endTime,
                        Patient patient, MedicalWorker medicalWorker, Pharmacy pharmacy,
-                       Double price, boolean isCanceled) {
+                       Double price, boolean isCanceled,boolean finished) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.patient = patient;
@@ -46,6 +49,7 @@ public class Appointment {
         this.pharmacy = pharmacy;
         this.price = price;
         this.isCanceled = isCanceled;
+        this.finished=finished;
     }
 
     public Long getId() { return id; }
@@ -101,4 +105,12 @@ public class Appointment {
     public boolean isCanceled() { return isCanceled; }
 
     public void setCanceled(boolean canceled) { isCanceled = canceled; }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 }

@@ -68,4 +68,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             value = "select a from Appointment a where a.pharmacy.regNo = ?1 and a.isCanceled = false"
     )
     public List<Appointment> findActiveAppointmentsByPharmacy(String regNo);
+
+    @Modifying
+    @Transactional
+    @Query(
+            value = "update Appointment set finished = true where id = ?1",
+            nativeQuery = true
+    )
+    public void update(Long id);
 }

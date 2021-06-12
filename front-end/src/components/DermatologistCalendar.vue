@@ -111,7 +111,7 @@
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
               <v-dialog
-                v-if="checkApp(selectedEvent.start) && !selectedOpen.selected"
+                v-if="checkApp(selectedEvent.start) && !selectedOpen.selected && !selectedEvent.finished"
                 v-model="dialog"
                 persistent
                 max-width="700px"
@@ -129,10 +129,7 @@
                   </v-btn>
                 </template>
                 <AppointmentForm
-                  @clicked="
-                    dialog = false;
-                    selectedOpen = false;
-                  "
+                  @clicked="onFinish(selectedEvent.id)"
                 />
               </v-dialog>
               <v-card-actions>
@@ -191,9 +188,9 @@ export default {
         this.selected = this.items[0];
         localStorage.setItem("selectedPh", this.selected.regNo);
         let path =
-          "http://localhost:9090/api/dermatologists/appointments/derm1@gmail.com/abc";
+          `http://localhost:9090/api/dermatologists/appointments/${user}/${this.selected.regNo}`;
         let path2 =
-          "http://localhost:9090/api/dermatologists/dermAppointments/derm1@gmail.com/abc";
+          `http://localhost:9090/api/dermatologists/dermAppointments/${user}/${this.selected.regNo}`;
 
         axios.get(path).then((response) => {
           this.appointments = response.data;
@@ -219,6 +216,7 @@ export default {
               color: "orange",
               timed: false,
               schedule: false,
+              finished: this.appointments[i].finished,
               id: this.appointments[i].id,
             });
           }
@@ -243,6 +241,7 @@ export default {
               color: "yellow",
               timed: false,
               schedule: true,
+              finished: true,
               id: this.dermappointments[i].id,
             });
           }
@@ -393,6 +392,14 @@ export default {
     checkPatient() {
       return localStorage.getItem("pacijent") != "";
     },
+    onFinish(id){
+      this.dialog = false;
+      this.selectedOpen = false;
+      let check  = localStorage.getItem('check_finished');
+      if(check){
+        axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
+      }
+    }
   },
 };
 </script>

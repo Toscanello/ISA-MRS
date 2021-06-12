@@ -81,7 +81,6 @@ export default {
         for(var i =0;i<this.patients.length;i++){
           this.check[this.patients[i].email]=this.patients[i].check;
         }
-        console.log(this.check);
       });
   },
   methods: {

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -42,6 +44,12 @@ public class MedicineController {
     PharmacistService pharmacistService;
     @Autowired
     DermatologistService dermatologistService;
+
+    @Autowired
+    PharmacyAdminService pharmacyAdminService;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimpleMedicineDTO>> getMedicineByPharmacy(@PathVariable String regNo) {
@@ -166,7 +174,7 @@ public class MedicineController {
         //alergije treba uraditi
         List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
         if (medicinePricingService.findActivePricingForMedicineInPharmacy(ph.getPharmacy().getRegNo(), medicine.getCode()) == null){
-            if(medicines != null) {
+            if(medicines != null && medicines.size() > 0) {
                 for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(ph.getPharmacy().getRegNo())) {
                     for (Medicine m : medicines) {
                         if (mp.getMedicine().getCode().equals(m.getCode()))
@@ -178,8 +186,16 @@ public class MedicineController {
             pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
         }
         if(allMedicine.isEmpty()) {
-            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1)
-                pricingDTOS.clear();
+            try {
+                List<PharmacyAdmin> pharmacyAdmins;
+                if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(), pricingDTOS.get(0).getMedicineDTO().getCode()) < 1) {
+                    //posalji mail za lek
+                    pricingDTOS.clear();
+                }
+            }
+            catch(Exception e){
+                System.out.println("bravo za mene");
+            }
             return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
         }
         for (MedicinePricing mp : allMedicine) {
@@ -227,8 +243,17 @@ public class MedicineController {
         }
         //alergije treba uraditi
         List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
+        List<PharmacyAdmin> pharmacyAdmins = pharmacyAdminService.findaAllByPharamcy(pharm);
         if (medicinePricingService.findActivePricingForMedicineInPharmacy(pharmacy.getRegNo(), medicine.getCode()) == null){
-            if(medicines != null) {
+            for (PharmacyAdmin pa: pharmacyAdmins) {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom("servis.apoteka@gmail.com");
+                message.setTo("mika95455@gmail.com");
+                message.setSubject("Medicines refill");
+                message.setText("Dear admin,\nMedicine " +medicine.getCode()+"-"+medicine.getName()+" is not available in pharmacy.\nPharmacy service.");
+                emailSender.send(message);
+            }
+            if (medicines != null && medicines.size() > 0) {
                 for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(pharmacy.getRegNo())) {
                     for (Medicine m : medicines) {
                         if (mp.getMedicine().getCode().equals(m.getCode()))
@@ -240,15 +265,34 @@ public class MedicineController {
             pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
         }
         if(allMedicine.isEmpty()) {
-            if(medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(),pricingDTOS.get(0).getMedicineDTO().getCode())<1) {
-                //posalji mail za lek
-                pricingDTOS.clear();
+            try {
+                if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(), pricingDTOS.get(0).getMedicineDTO().getCode()) < 1) {
+                    for (PharmacyAdmin pa: pharmacyAdmins) {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setFrom("servis.apoteka@gmail.com");
+                        message.setTo("mika95455@gmail.com");
+                        message.setSubject("Medicines refill");
+                        message.setText("Dear admin,\nMedicine " +medicine.getCode()+"-"+medicine.getName()+" needs to be refilled.\nPharmacy service.");
+                        emailSender.send(message);
+                    }
+                    pricingDTOS.clear();
+                }
+            }
+            catch(Exception e){
+                System.out.println("bravo za mene");
             }
             return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
         }
         for (MedicinePricing mp : allMedicine) {
             if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1) {
-                //posalji mail za zamenske lekove
+                for (PharmacyAdmin pa: pharmacyAdmins) {
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setFrom("servis.apoteka@gmail.com");
+                    message.setTo("mika95455@gmail.com");
+                    message.setSubject("Medicines refill");
+                    message.setText("Dear admin,\nMedicine " + medicine.getCode() + "-" + medicine.getName() + " needs to be refilled.\nPharmacy service.");
+                    emailSender.send(message);
+                }
                 continue;
             }
             pricingDTOS.add(new MedicinePricingDTO(mp));

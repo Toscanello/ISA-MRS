@@ -81,7 +81,7 @@ public class PatientController {
                 if(!a.getMedicalWorker().getEmail().equals(email))
                     continue;
                 long diff = Math.abs(ChronoUnit.MINUTES.between(a.getStartTime(),now));
-                if (diff <= 15) {
+                if (diff <= 15 && !a.isFinished()) {
                     patient.setCheck(true);
                     break;
                 }
