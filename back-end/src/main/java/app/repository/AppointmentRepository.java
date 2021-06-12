@@ -75,5 +75,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             value = "update Appointment set finished = true where id = ?1",
             nativeQuery = true
     )
-    public void update(Long id);
+    public void updateFinished(Long id);
 }

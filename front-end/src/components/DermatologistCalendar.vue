@@ -132,6 +132,10 @@
                   @clicked="onFinish(selectedEvent.id)"
                 />
               </v-dialog>
+              <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(selectedEvent.id)"
+              v-if="checkApp(selectedEvent.start) && !selectedOpen.selected && !selectedEvent.finished">
+                Didn't come
+              </v-btn>
               <v-card-actions>
                 <v-btn
                   v-if="selectedEvent.schedule && checkPatient()"
@@ -399,6 +403,12 @@ export default {
       if(check){
         axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
       }
+    },
+    didntCome(id){
+      //treba odraditi penale
+      alert("Penal"+id);
+      axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
+      window.location.reload();
     }
   },
 };

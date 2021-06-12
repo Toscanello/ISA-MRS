@@ -46,8 +46,12 @@
                 Start Appointment
               </v-btn>
             </template>
-            <AppointmentForm @clicked="dialog = false" />
+            <AppointmentForm @clicked="onFinish(i.email)" />
           </v-dialog>
+          <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(i.email)"
+              v-if="check[i.email]">
+                Didn't come
+              </v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -59,6 +63,7 @@ import axios from "axios";
 import PatientSearch from "@/components/PatientSearch.vue";
 import PatientSort from "@/components/PatientSort.vue";
 import AppointmentForm from "@/components/AppointmentForm.vue";
+import tokenDecoder from '../services/token-decoder';
 export default {
   name: "PatientList",
   components: {
@@ -144,6 +149,24 @@ export default {
     onClick(email) {
       localStorage.setItem("patient", email);
     },
+    onFinish(id){
+      this.dialog = false;
+      let check  = localStorage.getItem('check_finished');
+      console.log(check);
+      var user = tokenDecoder.getUserEmail();
+      if(check){
+        axios.post(`http://localhost:9090/patients/finished/${id}/${user}`);
+      }
+      window.location.reload();
+    }
+    ,
+    didntCome(id){
+      //treba odraditi penale
+      var user = tokenDecoder.getUserEmail();
+      alert("Penal"+id);
+      axios.post(`http://localhost:9090/patients/finished/${id}/${user}`);
+      window.location.reload();
+    }
   },
 };
 

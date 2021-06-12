@@ -172,4 +172,20 @@ public class PatientController {
         return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/finished/{email}/{emailMed}")
+    public void finished(@PathVariable String email,@PathVariable String emailMed){
+        Patient patient = service.findOneByEmail(email);
+        List<Appointment> appointmentList=appointmentService.findActiveAppointmentsByPatientId(patient.getEmail());
+        LocalDateTime now = LocalDateTime.now();
+        for(Appointment a :appointmentList) {
+            if(!a.getMedicalWorker().getEmail().equals(emailMed))
+                continue;
+            long diff = Math.abs(ChronoUnit.MINUTES.between(a.getStartTime(),now));
+            if (diff <= 15 && !a.isFinished()) {
+                appointmentService.updateFinished(a.getId());
+                break;
+            }
+        }
+    }
+
 }

@@ -107,7 +107,7 @@ public class AppointmentService {
         return appointmentRepository.findActiveAppointmentsByPharmacy(regNo);
     }
 
-    public void update(Long id) {
-        appointmentRepository.update(id);
+    public void updateFinished(Long id) {
+        appointmentRepository.updateFinished(id);
     }
 }

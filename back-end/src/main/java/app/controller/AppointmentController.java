@@ -18,7 +18,7 @@ public class AppointmentController {
         System.out.println("usao");
         Appointment a = appointmentService.findOneById(id);
         System.out.println("prosao");
-        appointmentService.update(a.getId());
+        appointmentService.updateFinished(a.getId());
     }
 
 }
