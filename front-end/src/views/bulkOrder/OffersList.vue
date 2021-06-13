@@ -23,6 +23,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from '../PharmacyAdminHome.vue'
+import authHeader from '../../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
   name: 'OffersList',
@@ -41,7 +42,7 @@ export default {
   mounted() {
       let path = 'http://localhost:9090/api/order/offers/' + this.$route.params.id
       axios
-      .get(path)
+      .get(path, { headers: authHeader() })
       .then(response => {
           this.offers = response.data
       })
@@ -53,7 +54,7 @@ export default {
       acceptOffer(item) {
           let path = 'http://localhost:9090/api/order/offer/accept/' + item.order_id + '/' + item.id
           axios
-          .put(path)
+          .put(path, { headers: authHeader() })
           .then(response => {
               console.log(response.data)
               alert('Succesfully accepted order')
