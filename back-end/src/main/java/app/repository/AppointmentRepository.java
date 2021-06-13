@@ -63,7 +63,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     )
     public List<Appointment> findPatientsAppointments(String email);
 
-
+    @Query(
+            value = "select * from appointment a where a.patient_id = ?1 and a.medical_worker_id in (select user_id from user_role ur where ur.role_id = 2)",
+            nativeQuery = true
+    )
+    public List<Appointment> findPatientsPharmacistAppointments(String email);
     @Query(
             value = "select a from Appointment a where a.pharmacy.regNo = ?1 and a.isCanceled = false"
     )

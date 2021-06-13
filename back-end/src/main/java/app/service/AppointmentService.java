@@ -76,6 +76,10 @@ public class AppointmentService {
         return appointmentRepository.findPatientsAppointments(email);
     }
 
+    public List<Appointment> findPatientsPharmacistAppointments(String email){
+        return appointmentRepository.findPatientsPharmacistAppointments(email);
+    }
+
     public boolean createNewAppointment(DermatologistAppointment da, Patient patient) {
         LocalDateTime startTime = da.getTime();
         LocalDateTime endTime = startTime.plusMinutes(da.getDuration().getMinute());

@@ -59,8 +59,11 @@
       <MedicineOrder v-if="show_menu==='medicineOrder'"/>
       <MedicineList v-if="show_menu==='MedicineList'"/>
       <AppointmentsHistory v-if="show_menu==='history'"/>
+      <PharmacistsAppointmentsHistory v-if="show_menu==='pharmacistHistory'"/>
       <Advertising v-if="show_menu==='advertising'"/>
       <Allergies v-if="show_menu==='addAllergies'"/>
+      
+      
                
     </v-main>
 
@@ -77,6 +80,7 @@
   import AppointmentsHistory from '@/components/patient/AppointmentsHistory.vue'
   import Advertising from '@/components/patient/Advertising.vue'
   import Allergies from '@/components/patient/Allergies.vue'
+  import PharmacistsAppointmentsHistory from '@/components/patient/PharmacistsAppointmentsHistory.vue'
   
   export default {
     name: "HomePagePatient",
@@ -90,6 +94,7 @@
       AppointmentsHistory,
       Advertising,
       Allergies,
+      PharmacistsAppointmentsHistory,
       
     },
     props: {
@@ -144,8 +149,12 @@
         to: "medicineOrder",
       },
       {
-        title: "History",
+        title: "Istorija posjeta dermatologu",
         to: "history",
+      },
+      {
+        title: "Istorija posjeta farmaceutu",
+        to: "pharmacistHistory",
       },
       {
         title: "Advertising",

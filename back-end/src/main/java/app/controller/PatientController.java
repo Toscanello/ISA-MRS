@@ -153,6 +153,17 @@ public class PatientController {
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/appointments/pharmacist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AppointmentDTO>> getPharmacistAppointments(@PathVariable String email){
+        List<Appointment> appointments = appointmentService.findPatientsPharmacistAppointments(email);
+        List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
+
+        for (Appointment a : appointments) {
+            appointmentDTOs.add(new AppointmentDTO(a));
+        }
+        return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/advertising/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimplePharmacyDTO>> getPatientsPharmacies(@PathVariable String email){
 
