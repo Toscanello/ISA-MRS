@@ -8,9 +8,10 @@
                 <v-toolbar-title>Lista lekova apoteke</v-toolbar-title>
             </v-app-bar>
             <v-container>
+                <v-text-field label="Search here..." v-model="searchQuery"></v-text-field>
                 <v-row>
                     <v-col cols="12"
-                        v-for="(med, index) in medicine"
+                        v-for="(med, index) in filteredMedicine"
                         :key="index">
                         <v-card>
                             <div class="d-flex flex-no-wrap justify-space-between">
@@ -44,7 +45,15 @@ export default {
     name: 'MedicineList',
     data () {
         return {
-            medicine: []
+            medicine: [],
+            searchQuery: '',
+        }
+    },
+    computed: {
+        filteredMedicine () {
+            if (!this.searchQuery.trim())
+                return this.medicine
+            return this.medicine.filter(this.searchCriteria(this.searchQuery.trim()))
         }
     },
     mounted () {
@@ -75,6 +84,19 @@ export default {
         },
         createDiscount(code) {
             this.$router.push('/discount/' + this.$route.params.regNo + '/' + code)
+        },
+        searchCriteria(query) {
+            return function(medicine) {
+                if (medicine.code.toUpperCase().includes(query.toUpperCase()))
+                    return true
+                if (medicine.name.toUpperCase().includes(query.toUpperCase()))
+                    return true
+                if (medicine.manufacturer.toUpperCase().includes(query.toUpperCase()))
+                    return true
+                if (medicine.drugForm.toUpperCase().includes(query.toUpperCase()))
+                    return true
+                return false
+            }
         }
     }
 }
