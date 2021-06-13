@@ -95,11 +95,15 @@ public class PharmacyController {
 
         LocalTime start = LocalTime.parse(time);
         LocalTime end = start.plusMinutes(30); //svaki sastanak sa farmaceutom traje 30 minuta
-        /*List<Pharmacist> pharmacists = pharmacistService.findPharmacist(start, end, dateTime, regNo);
-        List<PharmacistDTO> toReturn = new ArrayList<>();
-        for (Pharmacist p :pharmacists)
-            toReturn.add(new PharmacistDTO(p));*/
         return new ResponseEntity<>(pharmacistService.findPharmacist(start, end, dateTime, regNo), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "add/pharmacist/appointment/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SimplePharmacyDTO>
+    addPharmacistAppointment(@PathVariable String date, @PathVariable String time, @PathVariable String pharmacistEmail,
+                             @PathVariable String userEmail, @PathVariable String regNo) {
+        appointmentService.addPharmacistAppointment(userEmail,pharmacistEmail, date, time, regNo);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

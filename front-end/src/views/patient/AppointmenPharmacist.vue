@@ -99,6 +99,7 @@
               outlined
               style = "align: right;"
               text
+              @click="reserveAppointment(pharmacist)"
             >
               Button
             </v-btn>
@@ -113,9 +114,11 @@
 
 
 <script>
+  import TokenDecoder from '../../services/token-decoder'
   import axios from 'axios'
   import PharmacySort from '@/components/patient/PharmacySort.vue'
   import PharmacistSort from '@/components/patient/PharmacistSort.vue'
+  
   export default {
     data () {
       return {
@@ -125,6 +128,9 @@
         pharmacists : [],
         show : "pharmacy",
         sortParam : "",
+        regNo: null,
+        pharmacist: null,
+        user: null,
       }
     },
     components: {
@@ -143,6 +149,7 @@
           return avgRating / pharmacy.ratings.length
     },
     search: function () {
+        
         let path = "http://localhost:9090/api/pharmacy/apoteke/" + this.date + "_" + this.time
         this.show = "a"
         this.show = "pharmacy"
@@ -157,8 +164,9 @@
           this.$router.push('/')
         })
     },
-    open: function (name) {
-      let path = "http://localhost:9090/api/pharmacy/pharmacist/" + this.date + "_" + this.time + "_" + name
+    open: function (regNo) {
+      this.regNo = regNo
+      let path = "http://localhost:9090/api/pharmacy/pharmacist/" + this.date + "_" + this.time + "_" + this.regNo
       this.show = "pharmacist"
       axios
         .get(path)
@@ -169,6 +177,17 @@
           alert('Error: status ' + error.response.status)
           this.$router.push('/')
         })
+    },
+    reserveAppointment: function(pharmacist){
+      let usersEmail = TokenDecoder.getUserEmail()
+      this.pharmacist = pharmacist
+      axios
+      .post('http://localhost:9090/api/pharmacy/add/pharmacist/appointment/' + 
+                 this.date + "_" + this.time + "_" + this.pharmacist + "_" + usersEmail + "_" + this.regNo , null )
+      .then(response => {
+      console.log(response)
+      })
+
     },
     onSortClick: function (sorting) {
       this.sortParam = sorting

@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
@@ -80,4 +81,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
             nativeQuery = true
     )
     public void updateFinished(Long id);
-}
+
+    @Modifying
+    @Transactional
+    @Query(
+            value = "insert into appointment(patient_id,medical_worker_id, " +
+                    "price, start_time, end_time, canceled, pharmacy_reg_no,finished) " +
+                    "values(?1, ?2, 1000, ?3, " +
+                    "?4, false, ?5, false)",
+            nativeQuery = true
+    )
+    public void addPharmacistAppointment(String patient_id, String medical_worker_id,
+                                         LocalDateTime start, LocalDateTime end, String regNo);
+
+ }

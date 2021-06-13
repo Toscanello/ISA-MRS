@@ -8,6 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -113,5 +115,17 @@ public class AppointmentService {
 
     public void updateFinished(Long id) {
         appointmentRepository.updateFinished(id);
+    }
+
+    public void addPharmacistAppointment(String patient_id, String medical_worker_id,
+                                         String startDate, String time, String regNo)
+    {
+        String str = startDate + " " + time; //"2019-05-04 09:10";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+        LocalDateTime end = dateTime.plusMinutes(30);
+
+        appointmentRepository.addPharmacistAppointment(patient_id, medical_worker_id, dateTime, end, regNo);
     }
 }
