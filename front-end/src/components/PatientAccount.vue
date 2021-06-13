@@ -61,12 +61,73 @@
                     v-model="newPassword"
                     label="New Password"></v-text-field>
 
+                    <v-text-field
+                    v-model="confirmPassword"
+                    label="Confirm Password"></v-text-field>
+
                 </v-card-text>
                 <v-card-actions>
                     <v-btn text color="primary" :loading="loading" @click.native="update">
                         Save Changes
                     </v-btn>
                 </v-card-actions>
+                <v-card-text>
+
+
+
+                    <v-data-table
+                        :headers="headers"
+                        :items="orders"
+                        sort-by="calories"
+                        class="elevation-1"
+                    >
+                        <template v-slot:top>
+                        <v-toolbar
+                            flat
+                        >
+                            <v-toolbar-title>Allergies</v-toolbar-title>
+                            <v-divider
+                            class="mx-4"
+                            inset
+                            vertical
+                            ></v-divider>
+                            <v-spacer></v-spacer>
+                            <v-dialog
+                            v-model="dialog"
+                            max-width="500px"
+                            >
+                            <v-card>
+
+                                <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                    </v-row>
+                                </v-container>
+                                </v-card-text>
+                            </v-card>
+                            </v-dialog>
+                        </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ item }">
+                        <v-icon
+                            small
+                            @click="deleteItem(item)"
+                        >
+                            mdi-plus
+                        </v-icon>
+                        </template>
+                        <template v-slot:no-data>
+                        <v-btn
+                            text
+                            color="primary"
+                        >
+                            Nema dodatih alergija
+                        </v-btn>
+                        </template>
+                    </v-data-table>
+
+
+                </v-card-text>
             </v-card>
         </v-layout>
     </v-container>
@@ -80,12 +141,51 @@
             return {
                 loading: false,
                 user : null,
-                newPassword:'',    
+                newPassword:'',
+                confirmPassword:'',
+                
+                
+                dialog: false,
+                dialogDelete: false,
+                headers: [
+                    {
+                    text: 'Medicine',
+                    align: 'start',
+                    value: 'name',
+                    },
+                    { text: 'Type', value: 'type' },
+                    { text: 'Drug Form', value: 'drugForm' },
+                    { text: 'Delete', value: 'actions', sortable: false },
+                ],
+                orders: [],
+                selectedItem: null,
+                medicineQuantity: 0,
+                editedItem: {
+                code:"",name:"",type:"",manufacturer:"",drugForm:"",composition:"",description:"",category:""   
+                },
+                defaultItem: {
+                    code:"",name:"",type:"",manufacturer:"",drugForm:"",composition:"",description:"",category:""           
+                },
+                userRole: null,
+                usersEmail: null,
             }
+
         },
-        created() {
-            let usersEmail = TokenDecoder.getUserEmail()
-            let path = "http://localhost:9090/patients/patient/" + usersEmail;
+        watch: {
+      dialogDelete (val) {
+        val || this.closeDelete()
+      },
+    },
+
+     created () {
+            this.usersEmail = TokenDecoder.getUserEmail()
+            this.userRole = TokenDecoder.getUserRole()
+            let path = "http://localhost:9090/patients/my/allergies/" + this.usersEmail;
+            axios.get(path).then((response) => {
+                this.orders = response.data;
+            })
+            
+            path = "http://localhost:9090/patients/patient/" + this.usersEmail;
             axios.get(path).then((response) => {
                 this.user = response.data;
                 console.log(this.user)
@@ -93,13 +193,16 @@
         },
         methods: {
             update(){
-            let usersEmail = TokenDecoder.getUserEmail()
+            if(this.newPassword != this.confirmPassword){
+                alert('Nepoklapanje sifre')
+                return
+            }
             if(this.newPassword != ""){
                 this.user.password = this.newPassword
             }
 
             axios
-            .put('http://localhost:9090/patients/edit/' + usersEmail, this.user)
+            .put('http://localhost:9090/patients/edit/' + this.usersEmail, this.user)
             .then(response => {
               alert('Uspesno izmenjeni podaci!' + response)
             })
@@ -107,6 +210,24 @@
                 console.log(response)
               alert('Error')
             })
+            },
+
+            deleteItem (item) {
+                this.selectedItem = item
+
+                axios
+                .post('http://localhost:9090/patients/delete/allergy/' + this.usersEmail + '/' + this.selectedItem.code)
+                .then(response => {
+                //alert('Uspesno izmenjeni podaci!' + response)
+                console.log(response)
+                })
+            
+                let path = "http://localhost:9090/patients/my/allergies/" + this.usersEmail;
+                axios.get(path).then((response) => {
+                    this.orders = response.data;
+                })
+
+                this.dialogDelete = true
             },
         }
     }

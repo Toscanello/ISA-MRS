@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:8081","http://localhost:8080"})
@@ -37,6 +34,9 @@ public class PatientController {
 
     @Autowired
     private MedicineOrderService medicineOrderService;
+
+    @Autowired
+    private MedicineService medicineService;
 
     @Autowired
     private PharmacyService pharmacyService;
@@ -144,7 +144,6 @@ public class PatientController {
     @PutMapping(value = "add/order/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     newOrder(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
-        System.out.println(editedPatient);
         return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
 
@@ -192,5 +191,22 @@ public class PatientController {
     public ResponseEntity<String> addAllergy(@PathVariable String email, @PathVariable String code){
         service.insertAllergy(email, code);
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "my/allergies/{email}")
+    public ResponseEntity<Set<SimpleMedicineDTO>> patientsAllergies(@PathVariable String email){
+        List<Medicine> allAllergies = medicineService.findPatientsAllergies(email);
+        Set<SimpleMedicineDTO> allergies = new HashSet<>();
+        for (Medicine m : allAllergies) {
+            allergies.add(new SimpleMedicineDTO(m));
+        }
+        return new ResponseEntity<>(allergies, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "delete/allergy/{email}/{code}")
+    public ResponseEntity<String>
+    deleteAllergyMethod(@PathVariable String email, @PathVariable String code) {
+        service.deleteAllergy(email, code);
+        return new ResponseEntity<>("deletedAllergy", HttpStatus.OK);
     }
 }

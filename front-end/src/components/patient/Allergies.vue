@@ -93,6 +93,7 @@
         code:"",name:"",type:"",manufacturer:"",drugForm:"",composition:"",description:"",category:""           
       },
       userRole: null,
+      usersEmail: null,
     }),
 
 
@@ -119,7 +120,13 @@
       },
 
       deleteItemConfirm () {
-
+          ///allergy/{email}/{code}
+          this.usersEmail = TokenDecoder.getUserEmail()
+          axios
+              .post('http://localhost:9090/patients/allergy/' + this.usersEmail + '/' + this.selectedItem.code , null )
+              .then(response => {
+                console.log(response)
+              })
         this.closeDelete()
       },
 

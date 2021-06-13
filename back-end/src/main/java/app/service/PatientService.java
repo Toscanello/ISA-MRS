@@ -1,9 +1,6 @@
 package app.service;
 
-import app.domain.Appointment;
-import app.domain.MedicineOrder;
-import app.domain.Patient;
-import app.domain.Pharmacy;
+import app.domain.*;
 import app.dto.PatientDTO;
 
 import java.util.List;
@@ -18,4 +15,5 @@ public interface PatientService {
     Patient save(Patient patient, PatientDTO editedPatient);
     List<Patient> getAllSubscribedToPharmacy(String regNo);
     void insertAllergy(String patient_email, String medicine_code);
+    void deleteAllergy(String patient_email, String medicine_code);
 }

@@ -21,4 +21,7 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
     )
     public List<Medicine> findMedicineByPharmacyRegNo(String regNo);
 
+    @Query(value = "select * from medicine m where m.code in (select medicine_code from patient_allergies where patient_id = ?1)",
+            nativeQuery = true)
+    public List<Medicine> findPatientsAllergies(String patient_email);
 }

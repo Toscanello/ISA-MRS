@@ -1,5 +1,6 @@
 package app.repository;
 
+import app.domain.Medicine;
 import app.domain.MedicineOrder;
 import app.domain.Patient;
 import org.springframework.data.domain.Page;
@@ -43,4 +44,9 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
     @Query(value = "select patient_id from patient_allergies where patient_id = ?1 and medicine_code = ?2",
             nativeQuery = true)
     public String findAllergy(String patient_email, String medicine_code);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from patient_allergies where patient_id = ?1 and medicine_code = ?2", nativeQuery = true)
+    public void deleteAllergy(String patient_email, String medicine_code);
 }

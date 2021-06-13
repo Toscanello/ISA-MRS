@@ -95,4 +95,10 @@ public class PatientServiceImpl implements PatientService {
         if(patientRepository.findAllergy(patient_email, medicine_code) == null)
             patientRepository.insertAllergy(patient_email, medicine_code);
     }
+
+    @Override
+    public void deleteAllergy(String patient_email, String medicine_code){
+        patientRepository.deleteAllergy(patient_email, medicine_code);
+    }
+
 }
