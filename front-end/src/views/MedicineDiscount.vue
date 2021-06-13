@@ -54,6 +54,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from './PharmacyAdminHome.vue'
+import authHeader from '../services/auth-header'
 export default {
     components: { PharmacyAdminHome },
     name: 'MedicineDiscount',
@@ -81,7 +82,7 @@ export default {
                 }
 
                 axios
-                .post('http://localhost:9090/api/discount/new', discount)
+                .post('http://localhost:9090/api/discount/new', discount, { headers: authHeader() })
                 .then(response => {
                     console.log(response)
                     alert('Succesfully created a discount')

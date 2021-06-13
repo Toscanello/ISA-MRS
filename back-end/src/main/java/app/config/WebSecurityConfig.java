@@ -80,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // svim korisnicima dopusti da pristupe sledecim putanjama:
                 .authorizeRequests().antMatchers("/auth/**").permitAll()		// /auth/**
                 .antMatchers("/h2-console/**").permitAll()	// /h2-console/** ako se koristi H2 baza)
-                .antMatchers("/api/**").permitAll()		// /api/foo
+                //.antMatchers("/api/**").permitAll()		// /api/foo
                 .antMatchers("/patients/**").permitAll()
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
                 // koji tip korisnika moze da pristupi odgovarajucoj ruti. Npr. ukoliko zelimo da definisemo da ruti 'admin' moze da pristupi
@@ -91,7 +91,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/pharmacy/edit/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/pharmacy/report/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/order/**").hasRole("PH_ADMIN")
-                .antMatchers("/api/vaccation/pharmacist").hasRole("PH_ADMIN")
                 .antMatchers("/api/dermatologists/employ").hasRole("PH_ADMIN")
                 .antMatchers("/api/dermatologists/delete/employment/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/pharmacist/employ").hasRole("PH_ADMIN")
@@ -101,7 +100,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/medicine/set/pricing/**").hasRole("PH_ADMIN")
                 .antMatchers("/api/users/**").authenticated()
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
-                .anyRequest().authenticated().and()
+                .anyRequest().permitAll().and()
+                //.anyRequest().authenticated().and()
 
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and()
