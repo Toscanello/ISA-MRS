@@ -19,14 +19,16 @@
           <v-spacer></v-spacer>
           <v-container>
             <div id="pickers">
-              <div id="start-time-pickr">
-                <v-time-picker v-model="startTime"
-                color="dark cyan"></v-time-picker>
-              </div>
-              <div id="end-time-pickr">
-                <v-time-picker v-model="endTime"
-                color="dark cyan"></v-time-picker>
-              </div>
+              <v-row justify="center">
+                <div id="start-time-pickr">
+                  <v-time-picker v-model="startTime"
+                  color="dark cyan"></v-time-picker>
+                </div>
+                <div id="end-time-pickr">
+                  <v-time-picker v-model="endTime"
+                  color="dark cyan"></v-time-picker>
+                </div>
+              </v-row>
             </div>
             <v-btn class="submit-dgm" @click="employ">Employ</v-btn>
           </v-container>
@@ -39,6 +41,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from '../PharmacyAdminHome.vue'
+import authHeader from '../../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
     Name: 'EmployDermatologistForm',
@@ -57,7 +60,10 @@ export default {
                 endTime: this.endTime
             }
             axios
-            .post('http://localhost:9090/api/dermatologists/employ', workHour)
+            .post(
+              'http://localhost:9090/api/dermatologists/employ', workHour, 
+              { headers: authHeader() }
+            )
             .then(response => {
                 console.log(response)
                 alert('Successfully added an employee')

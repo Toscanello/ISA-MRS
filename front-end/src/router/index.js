@@ -293,41 +293,97 @@ const routes = [
   {
     path: '/orders/:regNo',
     name: 'OrderList',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: OrderList
   },
   {
     path: '/offers/:id',
     name: 'OffersList',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: OffersList
   },
   {
     path: '/discount/:regNo/:code',
     name: 'MedicineDiscount',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: MedicineDiscount
   },
   {
     path: '/employ/list/dermatologists/:regNo',
     name: 'EmployDermatologist',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: EmployDermatologist
   },
   {
     path: '/employ/dermatologist/:regNo/:email',
     name: 'EmployDermatologistForm',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: EmployDermatologistForm
   },
   {
     path: '/employ/list/pharmacists/:regNo',
     name: 'EmployPharmacist',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: EmployPharmacist
   },
   {
     path: '/employ/pharmacist/:regNo/:email',
     name: 'EmployPharmacistForm',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: EmployPharmacistForm
   },
   {
     path: '/reports/:regNo',
     name: 'IncomeReport',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role != 'ROLE_PH_ADMIN')
+        next({name: 'UserHomePage'})
+      else
+        next()
+    },
     component: IncomeReport
   }
 ]
