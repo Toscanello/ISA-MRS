@@ -25,6 +25,9 @@ public class Vaccation {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Version
+    private Long version;
+
     public Vaccation() {
     }
 
@@ -73,5 +76,13 @@ public class Vaccation {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

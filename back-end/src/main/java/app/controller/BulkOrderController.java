@@ -102,8 +102,8 @@ public class BulkOrderController {
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<String> deleteOffer(@PathVariable Long id) {
         List<OrderResponse> responses = orderResponseService.getAllByOrderId(id);
-        for (OrderResponse or : responses)
-            orderResponseService.delete(or);
+        if (responses.size() != 0)
+            return new ResponseEntity<>("Narudzbenica vec ima ponude", HttpStatus.BAD_REQUEST);
         BulkOrder bo = bulkOrderService.getOneById(id);
         bulkOrderService.delete(bo);
         return new ResponseEntity<>("OK", HttpStatus.OK);
