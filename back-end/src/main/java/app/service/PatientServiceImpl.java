@@ -18,19 +18,7 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final List<Patient> patients = new ArrayList<Patient>() {
-        {
-            add(new Patient("pera@gmail.com", "pass", "pera", "peric", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-            add(new Patient("mika@gmail.com", "pass", "mika", "mikic", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-            add(new Patient("zika@gmail.com", "pass", "zika", "zikic", "+38162514578",
-                    new Address("ulica", "broj", "grad", "Srbija",
-                            new Location(24.5, 24.5))));
-        }
-    };
+    private final List<Patient> patients = new ArrayList<Patient>();
 
     private final Collection<Pharmacy> pharmacies = new ArrayList<>();
 
@@ -99,6 +87,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteAllergy(String patient_email, String medicine_code){
         patientRepository.deleteAllergy(patient_email, medicine_code);
+    }
+
+    @Override
+    public void addPenalty(Patient patient) {
+        patientRepository.addPenalty(patient.getEmail(),patient.getPenalty()+1);
     }
 
 }
