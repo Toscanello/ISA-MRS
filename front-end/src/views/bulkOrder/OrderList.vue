@@ -87,7 +87,7 @@ export default {
                     this.$router.go()
                 })
                 .catch(error => {
-                    alert(error.message)
+                    alert(error.response.data)
                 })
         }
     }

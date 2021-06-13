@@ -83,15 +83,7 @@ public class VaccationController {
     public ResponseEntity<String> approvePharmacistRequest(@RequestBody HashMap<String, String> vacayResponse) {
         String pharmacistEmail = vacayResponse.get("MedicalWorkerID");
         Vaccation v = vaccationService.findVacationByMedicalWorkerEmail(pharmacistEmail);
-        v.setStatus(Vaccation.Status.ACCEPT);
-        vaccationService.save(v);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("mat3xthepro@gmail.com");
-        message.setSubject("Vacation request reviewed");
-        String response = "Your vacation request has been accepted";
-        message.setText(response);
-        emailSender.send(message);
+        vaccationService.acceptVacationRequest(v, pharmacistEmail);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
@@ -101,16 +93,7 @@ public class VaccationController {
         String pharmacistEmail = vacayResponse.get("MedicalWorkerID");
         String declineReason = vacayResponse.get("text");
         Vaccation v = vaccationService.findVacationByMedicalWorkerEmail(pharmacistEmail);
-        v.setStatus(Vaccation.Status.REJECT);
-        vaccationService.save(v);
-        System.out.println(vacayResponse.get("text"));
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("mat3xthepro@gmail.com");
-        message.setSubject("Vacation request reviewed");
-        String response = String.format("Your vacation request has been declined because of: \n\t%s", declineReason);
-        message.setText(response);
-        emailSender.send(message);
+        vaccationService.declineVacationRequest(v, pharmacistEmail, declineReason);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
