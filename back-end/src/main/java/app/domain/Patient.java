@@ -22,15 +22,17 @@ public class Patient extends User {
             inverseJoinColumns = @JoinColumn(name = "pharmacy_reg_no", referencedColumnName = "reg_no"))
     private Set<Pharmacy> promotions = new HashSet<>();
 
-    @Column(name = "penalty",nullable = false)
-    private Integer penalty;
+    @ManyToMany
+    @JoinTable(name = "patient_allergies",
+            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "email"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_code", referencedColumnName = "code"))
+    private Set<Medicine> allergies = new HashSet<>();
 
     public Patient() {
     }
 
-    public Patient(String email, String password, String name, String surname, String phoneNumber, Address address,Integer penalty) {
+    public Patient(String email, String password, String name, String surname, String phoneNumber, Address address) {
         super(email, password, name, surname, phoneNumber, address);
-        this.penalty = penalty;
     }
 
     public Set<Pharmacy> getPromotions() {
@@ -49,19 +51,19 @@ public class Patient extends User {
         this.appointments = appointments;
     }
 
+    public Set<Medicine> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(Set<Medicine> allergies) {
+        this.allergies = allergies;
+    }
+
     public Set<MedicineOrder> getOrders() {
         return orders;
     }
 
     public void setOrders(Set<MedicineOrder> orders) {
         this.orders = orders;
-    }
-
-    public Integer getPenalty() {
-        return penalty;
-    }
-
-    public void setPenalty(Integer penalty) {
-        this.penalty = penalty;
     }
 }

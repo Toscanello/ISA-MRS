@@ -60,6 +60,7 @@
       <MedicineList v-if="show_menu==='MedicineList'"/>
       <AppointmentsHistory v-if="show_menu==='history'"/>
       <Advertising v-if="show_menu==='advertising'"/>
+      <Allergies v-if="show_menu==='addAllergies'"/>
                
     </v-main>
 
@@ -75,6 +76,8 @@
   import MedicineList from '@/components/patient/MedicineList.vue'
   import AppointmentsHistory from '@/components/patient/AppointmentsHistory.vue'
   import Advertising from '@/components/patient/Advertising.vue'
+  import Allergies from '@/components/patient/Allergies.vue'
+  
   export default {
     name: "HomePagePatient",
     components: {
@@ -85,7 +88,9 @@
       MedicineOrder,
       MedicineList,
       AppointmentsHistory,
-      Advertising
+      Advertising,
+      Allergies,
+      
     },
     props: {
     expandOnHover: {
@@ -106,7 +111,7 @@
       {
         icon: "mdi-account",
         title: "Acoount",
-        to: "DermatologistAppointment/:regNo",
+        to: "acoount", //DermatologistAppointment/:regNo
       },
       {
         icon: "mdi-calendar",
@@ -145,6 +150,10 @@
       {
         title: "Advertising",
         to: "advertising",
+      },
+      {
+        title: "Dodavanje alergija",
+        to: "addAllergies",
       },
     ],
   }),
