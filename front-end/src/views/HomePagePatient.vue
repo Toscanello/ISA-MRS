@@ -140,12 +140,12 @@
       },
       {
         icon: "mdi-plus",
-        title: "Allegries",
+        title: "Rezervisanje lijekova",
         to: "MedicineList",
       },
       {
         icon: "mdi-emoticon-angry-outline",
-        title: "Complaints",
+        title: "Moje rezervacije",
         to: "medicineOrder",
       },
       {
