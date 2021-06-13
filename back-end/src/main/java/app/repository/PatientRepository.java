@@ -30,7 +30,7 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
 
     public Patient findOneByEmail(String email);
 
-    @Query(value = "select * from users p full outer join patients pat on p.email = pat.email" +
+    @Query(value = "select * from users p full outer join patients pat on p.email = pat.email " +
             "where p.email in (select s.patient_email from patient_pharmacies s where pharmacy_reg_no = ?1)",
             nativeQuery = true)
     public List<Patient> findAllSubscribedToPharmacy(String regNo);

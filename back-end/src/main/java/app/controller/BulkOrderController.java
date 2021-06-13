@@ -8,6 +8,7 @@ import app.domain.bulk_order.BulkOrderItem;
 import app.domain.bulk_order.OrderResponse;
 import app.dto.bulk_order.*;
 import app.repository.MedicineQuantityRepository;
+import app.service.MedicinePricingService;
 import app.service.MedicineQuantityService;
 import app.service.MedicineService;
 import app.service.PharmacyService;
@@ -38,6 +39,8 @@ public class BulkOrderController {
     private MedicineService medicineService;
     @Autowired
     private MedicineQuantityService medicineQuantityService;
+    @Autowired
+    private MedicinePricingService medicinePricingService;
     @Autowired
     private PharmacyService pharmacyService;
 
@@ -84,6 +87,7 @@ public class BulkOrderController {
         List<OrderResponse> responses = orderResponseService.getAll();
         orderResponseService.setPharmacyService(pharmacyService);
         orderResponseService.setMedicineQuantityService(medicineQuantityService);
+        orderResponseService.setMedicinePricingService(medicinePricingService);
         for (OrderResponse or : responses) {
             if (!or.getOrder().getId().equals(orderId))
                 continue;
