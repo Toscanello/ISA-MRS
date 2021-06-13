@@ -36,8 +36,9 @@ public class VaccationService{
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Vaccation acceptVacationRequest(Vaccation vac, String email) {
+    public void acceptVacationRequest(Vaccation vac, String email) {
         vac.setStatus(Vaccation.Status.ACCEPT);
+        vaccationRepository.save(vac);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
         message.setTo("mat3xthepro@gmail.com");
@@ -45,12 +46,12 @@ public class VaccationService{
         String response = "Your vacation request has been accepted";
         message.setText(response);
         emailSender.send(message);
-        return  vaccationRepository.save(vac);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Vaccation declineVacationRequest(Vaccation vac, String email, String declineReason) {
+    public void declineVacationRequest(Vaccation vac, String email, String declineReason) {
         vac.setStatus(Vaccation.Status.REJECT);
+        vaccationRepository.save(vac);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
         message.setTo("mat3xthepro@gmail.com");
@@ -58,6 +59,5 @@ public class VaccationService{
         String response = String.format("Your vacation request has been declined because of: \n\t%s", declineReason);
         message.setText(response);
         emailSender.send(message);
-        return vaccationRepository.save(vac);
     }
 }

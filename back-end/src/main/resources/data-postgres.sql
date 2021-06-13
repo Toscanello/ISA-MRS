@@ -205,12 +205,12 @@ values('2021-06-10 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 
 
 
-insert into vaccation(medical_worker_id,start_date,end_date,status, version)
-values('farm@gmail.com','2021-04-09','2021-04-18','ACCEPT', 0);
-insert into vaccation(medical_worker_id,start_date,end_date,status, version)
-values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY', 0);
-insert into vaccation(medical_worker_id,start_date,end_date,status, version)
-values('farm@gmail.com','2021-03-09','2021-03-18','DECLINE', 0);
+-- insert into vaccation(medical_worker_id,start_date,end_date,status, version)
+-- values('farm@gmail.com','2021-04-09','2021-04-18','ACCEPT', 0);
+-- insert into vaccation(medical_worker_id,start_date,end_date,status, version)
+-- values('farm@gmail.com','2021-05-09','2021-05-18','STANDBY', 0);
+-- insert into vaccation(medical_worker_id,start_date,end_date,status, version)
+-- values('farm@gmail.com','2021-03-09','2021-03-18','DECLINE', 0);
 insert into vaccation(medical_worker_id,start_date,end_date,status, version)
 values('farmC@gmail.com','2021-04-09','2021-04-18','ACCEPT', 0);
 insert into vaccation(medical_worker_id,start_date,end_date,status, version)
