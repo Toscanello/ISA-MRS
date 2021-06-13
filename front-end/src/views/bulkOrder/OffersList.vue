@@ -54,14 +54,14 @@ export default {
       acceptOffer(item) {
           let path = 'http://localhost:9090/api/order/offer/accept/' + item.order_id + '/' + item.id
           axios
-          .put(path, { headers: authHeader() })
+          .put(path, null, { headers: authHeader() })
           .then(response => {
               console.log(response.data)
               alert('Succesfully accepted order')
               this.$router.go()
           })
           .catch(error => {
-              alert(error.response.status)
+              alert(error.message)
           })
       }
   }

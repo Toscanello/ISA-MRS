@@ -98,4 +98,14 @@ public class BulkOrderController {
         }
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<String> deleteOffer(@PathVariable Long id) {
+        List<OrderResponse> responses = orderResponseService.getAllByOrderId(id);
+        for (OrderResponse or : responses)
+            orderResponseService.delete(or);
+        BulkOrder bo = bulkOrderService.getOneById(id);
+        bulkOrderService.delete(bo);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
 }

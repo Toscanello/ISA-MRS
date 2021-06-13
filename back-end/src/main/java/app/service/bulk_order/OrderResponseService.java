@@ -46,6 +46,7 @@ public class OrderResponseService {
         return orderResponseRepository.save(or);
     }
 
+    public void delete(OrderResponse or) { orderResponseRepository.delete(or); }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void accept(OrderResponse or) {

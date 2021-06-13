@@ -9,7 +9,6 @@
                 :items-per-page="10"
                 :expanded.sync="expanded"
                 show-expand
-                @click:row = "viewOffers"
                 class="elevation-1"
               >
                 <template v-slot:expanded-item="{ headers, item }">
@@ -26,6 +25,14 @@
                         </template>
                     </v-simple-table>
                     </td>
+                </template>
+                <template v-slot:item.actions="{ item }">
+                    <v-icon small class="mr-2" @click="deleteOrder(item)">
+                        mdi-delete
+                    </v-icon>
+                    <v-icon small class="mr-2" @click="viewOffers(item)">
+                        mdi-eye
+                    </v-icon>
                 </template>
               </v-data-table>
           </v-col>
@@ -46,6 +53,7 @@ export default {
             headers: [
                 {text: 'Order ID', value: 'id'},
                 {text: 'Due date', value: 'dueDate'},
+                {text: 'Actions', value: 'actions'}
             ],
             expanded: [],
         }
@@ -64,6 +72,23 @@ export default {
     methods: {
         viewOffers(data) {
             this.$router.push('/offers/' + data.id)
+        },
+        deleteOrder(order) {
+            if (Date.parse(order.dueDate) < Date.now()) {
+                alert('Datum za izmenu narudzbine je prosao')
+                return
+            }
+            let path = 'http://localhost:9090/api/order/delete/' + order.id
+            axios
+                .delete(path, { headers: authHeader() })
+                .then(response => {
+                    console.log(response)
+                    alert('Uspesno izbrisana narudzbina')
+                    this.$router.go()
+                })
+                .catch(error => {
+                    alert(error.message)
+                })
         }
     }
 }
