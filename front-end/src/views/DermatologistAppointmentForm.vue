@@ -20,14 +20,16 @@
           <v-spacer></v-spacer>
           <v-container>
             <div id="pickers">
-              <div id="date-pickr">
-                <v-date-picker v-model="date"
-                color="dark cyan"></v-date-picker>
-              </div>
-              <div id="time-pickr">
-                <v-time-picker v-model="time" format="24hrs"
-                color="dark cyan"></v-time-picker>
-              </div>
+              <v-row justify="center">
+                <div id="date-pickr">
+                  <v-date-picker v-model="date"
+                  color="dark cyan"></v-date-picker>
+                </div>
+                <div id="time-pickr">
+                  <v-time-picker v-model="time" format="24hrs"
+                  color="dark cyan"></v-time-picker>
+                </div>
+              </v-row>
             </div>
             <br />
             <hr />
