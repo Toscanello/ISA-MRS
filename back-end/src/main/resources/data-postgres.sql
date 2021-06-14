@@ -270,6 +270,21 @@ insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('mika9545
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('pera@gmail.com', 'ccc');
 
 insert into pharmacist_rating(patient, pharmacist, rating) values('ika@gmail.com', 'farm@gmail.com', 2.5);
-insert into dermatologist_rating(patient, dermatologist, rating) values('ika@gmail.com', 'derm1@gmail.com', 3.5);
+insert into pharmacist_rating(patient, pharmacist, rating) values('mika95455@gmail.com', 'farm@gmail.com', 4.5);
+insert into pharmacist_rating(patient, pharmacist, rating) values('pera@gmail.com', 'farm@gmail.com', 5);
+
+insert into pharmacist_rating(patient, pharmacist, rating) values('ika@gmail.com', 'farmC@gmail.com', 5);
+insert into pharmacist_rating(patient, pharmacist, rating) values('mika95455@gmail.com', 'farmC@gmail.com', 4.5);
+insert into pharmacist_rating(patient, pharmacist, rating) values('pera@gmail.com', 'farmC@gmail.com', 5);
+
+
+insert into dermatologist_rating(patient, dermatologist, rating) values('ika@gmail.com', 'derm1@gmail.com', 4);
+insert into dermatologist_rating(patient, dermatologist, rating) values('mika95455@gmail.com', 'derm1@gmail.com', 3);
+insert into dermatologist_rating(patient, dermatologist, rating) values('pera@gmail.com', 'derm1@gmail.com', 5);
+
+insert into dermatologist_rating(patient, dermatologist, rating) values('ika@gmail.com', 'derm2@gmail.com', 3.5);
+insert into dermatologist_rating(patient, dermatologist, rating) values('mika95455@gmail.com', 'derm2@gmail.com', 2.5);
+insert into dermatologist_rating(patient, dermatologist, rating) values('pera@gmail.com', 'derm2@gmail.com', 5);
+
 
 insert into patient_allergies(patient_id,medicine_code) values('ika@gmail.com','lek1');

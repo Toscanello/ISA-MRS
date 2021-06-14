@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface DermatologistRatingRepository extends JpaRepository<DermatologistRating, Long> {
     @Modifying
     @Transactional
@@ -30,4 +32,6 @@ public interface DermatologistRatingRepository extends JpaRepository<Dermatologi
             nativeQuery = true
     )
     public void updateRating(String patientEmail, String dermatologistEmail, Double rating);
+
+    public List<DermatologistRating> getDermatologistRatingsByDermatologistEmail(String email);
 }

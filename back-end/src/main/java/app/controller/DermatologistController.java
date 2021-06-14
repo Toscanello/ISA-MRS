@@ -3,7 +3,6 @@ package app.controller;
 import app.domain.*;
 import app.dto.*;
 import app.service.*;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +26,8 @@ import java.util.Set;
 public class DermatologistController {
     @Autowired
     DermatologistService dermatologistService;
+    @Autowired
+    DermatologistRatingService dermatologistRatingService;
     @Autowired
     DermatologistAppointmentService dermatologistAppointmentService;
     @Autowired
@@ -308,5 +309,36 @@ public class DermatologistController {
         for (Dermatologist d : pharmacists)
             toRet.add(new SimpleDermatologistDTO(d));
         return new ResponseEntity<Set<SimpleDermatologistDTO>>(toRet,HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/ratings/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<MedicalWorkerRatingDTO>>
+    getDermatologistsRatingsByPharmacy(@PathVariable String regNo) {
+        List<Dermatologist> allDermatologists = dermatologistService.findPharmacyDermatologists(regNo);
+        Set<MedicalWorkerRatingDTO> ratingSet = new HashSet<>();
+        for (Dermatologist dermatologist : allDermatologists) {
+            double rating = dermatologistRatingService
+                    .calculateRatingByDermatologist(dermatologist.getEmail());
+            MedicalWorkerRatingDTO ratingObject = new MedicalWorkerRatingDTO();
+            ratingObject.setMedicalWorkerEmail(dermatologist.getEmail());
+            ratingObject.setRating(rating);
+            ratingSet.add(ratingObject);
+        }
+        return new ResponseEntity<>(ratingSet, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/all-ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<MedicalWorkerRatingDTO>> getAllRatings() {
+        List<Dermatologist> allDermatologists = dermatologistService.findAll();
+        Set<MedicalWorkerRatingDTO> ratingSet = new HashSet<>();
+        for (Dermatologist dermatologist : allDermatologists) {
+            double rating = dermatologistRatingService
+                    .calculateRatingByDermatologist(dermatologist.getEmail());
+            MedicalWorkerRatingDTO ratingObject = new MedicalWorkerRatingDTO();
+            ratingObject.setMedicalWorkerEmail(dermatologist.getEmail());
+            ratingObject.setRating(rating);
+            ratingSet.add(ratingObject);
+        }
+        return new ResponseEntity<>(ratingSet, HttpStatus.OK);
     }
 }
