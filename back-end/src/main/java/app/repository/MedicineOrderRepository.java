@@ -30,6 +30,7 @@ public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, Lo
             nativeQuery = true)
     public List<MedicineOrder> findAllByPharmacyRegNo(String regno);
 
+
     @Modifying
     @Transactional
     @Query(

@@ -1,6 +1,7 @@
 <template>
   <v-card
-    color="grey lighten-4"
+  class="text-center"
+    color="white"
     flat
     height="200px"
     tile
@@ -62,9 +63,7 @@
       <PharmacistsAppointmentsHistory v-if="show_menu==='pharmacistHistory'"/>
       <Advertising v-if="show_menu==='advertising'"/>
       <Allergies v-if="show_menu==='addAllergies'"/>
-      
-      
-               
+      <Rating v-if="show_menu==='rating'"/>     
     </v-main>
 
   </v-card>
@@ -80,6 +79,7 @@
   import AppointmentsHistory from '@/components/patient/AppointmentsHistory.vue'
   import Advertising from '@/components/patient/Advertising.vue'
   import Allergies from '@/components/patient/Allergies.vue'
+  import Rating from '@/components/patient/Rating.vue'
   import PharmacistsAppointmentsHistory from '@/components/patient/PharmacistsAppointmentsHistory.vue'
   
   export default {
@@ -95,7 +95,7 @@
       Advertising,
       Allergies,
       PharmacistsAppointmentsHistory,
-      
+      Rating
     },
     props: {
     expandOnHover: {
@@ -163,6 +163,10 @@
       {
         title: "Dodavanje alergija",
         to: "addAllergies",
+      },
+      {
+        title: "Rating",
+        to: "rating",
       },
     ],
   }),

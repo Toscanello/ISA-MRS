@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.*;
 import app.dto.*;
+import app.repository.MedicineRatingRespository;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class PatientController {
 
     @Autowired
     private PharmacyService pharmacyService;
+
+    @Autowired
+    private MedicineRatingService medicineRatingService;
 
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
@@ -222,5 +226,31 @@ public class PatientController {
     deleteAllergyMethod(@PathVariable String email, @PathVariable String code) {
         service.deleteAllergy(email, code);
         return new ResponseEntity<>("deletedAllergy", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/medicine/rating/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SimpleMedicineDTO>> getMedicineForRating(@PathVariable String email){
+
+        Set<Medicine> medicines = medicineService.findMedicineForRating(email);
+        List<SimpleMedicineDTO> medicineDTOS = new ArrayList<>();
+
+        for (Medicine m : medicines) {
+            medicineDTOS.add(new SimpleMedicineDTO(m));
+        }
+        return new ResponseEntity<>(medicineDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "get/medicine/rating/{email}/{code}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getMedicineRating(@PathVariable String email, @PathVariable String code){
+
+        return new ResponseEntity<>(medicineRatingService.getRating(email, code), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/medicine/rate/{email}/{code}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> rateMedicine(@PathVariable String email,
+                                               @PathVariable String code, @PathVariable Double rating){
+
+        medicineRatingService.addRating(email, code, rating);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
