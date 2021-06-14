@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.DateFormatter;
@@ -37,11 +38,11 @@ public class VaccationController {
     @Autowired
     JavaMailSender emailSender;
 
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @PostMapping(value = "/addVaccation",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addVaccation(@RequestBody VaccationDTO vaccationDTO){
         MedicalWorker medicalWorker = pharmacistService.findPharmacistByEmail(vaccationDTO.getMedicalWorkerId());
-        System.out.println("******************************************************************");
         if(medicalWorker==null){
             medicalWorker= dermatologistService.findDermatologist(vaccationDTO.getMedicalWorkerId());
         }

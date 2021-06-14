@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -50,6 +51,7 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @PostMapping(value = "/addAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentDTO newAppointment) {
@@ -106,6 +108,7 @@ public class DermatologistController {
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @GetMapping(path = "/appointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
         List<Appointment> appointments = appointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
@@ -117,6 +120,7 @@ public class DermatologistController {
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @GetMapping(path = "/dermAppointments/{email}/{pharmacy}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FreeAppointmentDTO>> findAllDermAppointmentsByDermatologist(@PathVariable String email,@PathVariable String pharmacy){
         List<DermatologistAppointment> appointments = dermatologistAppointmentService.findActiveAppointmentsByDermatologist(email,pharmacy);
@@ -187,6 +191,7 @@ public class DermatologistController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @PostMapping(value = "/scheduleNewAppointment/{id}/{email}")
     public ResponseEntity<String> scheduleNewAppointment(@PathVariable Long id, @PathVariable String email){
         DermatologistAppointment da = dermatologistAppointmentService.findById(id);
@@ -206,6 +211,7 @@ public class DermatologistController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @PostMapping(value = "/scheduleNewAppointmentByTime",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentPatientDTO newAppointment){

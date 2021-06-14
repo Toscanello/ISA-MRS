@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -161,6 +162,7 @@ public class MedicineController {
         return new ResponseEntity<>(toRet, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('PHARMACIST')")
     @GetMapping(value = "/check/{farm}/{id}/{patient}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MedicinePricingDTO>> check(@PathVariable String farm,@PathVariable Long id,@PathVariable String patient) {
         Medicine medicine = medicinePricingService.findMedicinePricingID(id).getMedicine();
@@ -247,6 +249,7 @@ public class MedicineController {
         return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @PostMapping(value = "prescribe/{regno}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> prescribeMedicine(@PathVariable String regno,@RequestBody List<String> ids){
@@ -261,6 +264,8 @@ public class MedicineController {
     public ResponseEntity<List<MedicineOrderDTO>> getOrdersForPharmacy(@PathVariable String regno){
         return new ResponseEntity<>(medicineOrderService.findOrdersByPharmacy(regno),HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('PHARMACIST')")
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<String> updateOrder(@PathVariable Long id){
         MedicineOrder mo=medicineOrderService.findOrderById(id);
@@ -281,6 +286,7 @@ public class MedicineController {
         return flag;
     }
 
+    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @GetMapping(value = "/check/derm/{pharm}/{id}/{patient}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MedicinePricingDTO>> checkDerm(@PathVariable String pharm,@PathVariable Long id,@PathVariable String patient) {
         Medicine medicine = medicinePricingService.findMedicinePricingID(id).getMedicine();

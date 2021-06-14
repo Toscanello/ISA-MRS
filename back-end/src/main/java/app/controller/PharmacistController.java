@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ public class PharmacistController {
     @Autowired
     private JavaMailSender emailSender;
 
+    @PreAuthorize("hasRole('PHARMACIST')")
     @PostMapping(value="/addAppointment",
         consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentPatientDTO newAppointment){
@@ -86,6 +88,7 @@ public class PharmacistController {
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('PHARMACIST')")
     @GetMapping(path = "/appointments/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
 

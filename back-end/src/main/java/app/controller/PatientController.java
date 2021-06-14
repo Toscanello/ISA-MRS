@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -51,6 +52,7 @@ public class PatientController {
     @Autowired
     private PharmacistRatingService pharmacistRatingService;
 
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
         System.out.println(search);
@@ -187,6 +189,7 @@ public class PatientController {
         return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @PostMapping(path = "/finished/{email}/{emailMed}/{appearance}")
     public void finished(@PathVariable String email,@PathVariable String emailMed,@PathVariable Boolean appearance){
         Patient patient = service.findOneByEmail(email);
@@ -204,11 +207,13 @@ public class PatientController {
             }
         }
     }
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @PutMapping(path = "/penalty/{id}")
     public void penalty(@PathVariable Long id){
 
         service.addPenalty(appointmentService.findOneById(id).getPatient());
     }
+    @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @PutMapping(path = "/penalty/user/{email}")
     public void penaltyUser(@PathVariable String email){
         service.addPenalty(service.findOneByEmail(email));
