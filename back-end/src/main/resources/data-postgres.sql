@@ -67,38 +67,38 @@ values('lek3', 'lek4');
 insert into alternative_medicine(medicine_code, alternative_code)
 values('lek4', 'lek3');
 
-insert into users(email,password,name,surname,phone_number,address_id,enabled, last_password_reset_date)
-values('ika@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ivan','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('pera@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','pera','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('mika95455@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('a@gmail.com','pass','a','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('b@gmail.com','pass','b','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('c@gmail.com','pass','c','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('d@gmail.com','pass','d','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id,enabled, last_password_reset_date, version)
+values('ika@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','ivan','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('pera@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','pera','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('mika95455@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','mika','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('a@gmail.com','pass','a','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('b@gmail.com','pass','b','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('c@gmail.com','pass','c','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('d@gmail.com','pass','d','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
 
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('derm1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('derm2@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farm@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('farmC@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','temp','farm','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('derm1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','derm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('derm2@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','drmtlg','matovic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('farm@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('farmA@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('farmB@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','farm','luburic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('farmC@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','temp','farm','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
 
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('phadmin@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
-insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date)
-values('phadmin1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07');
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('phadmin@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
+insert into users(email,password,name,surname,phone_number,address_id, enabled, last_password_reset_date, version)
+values('phadmin1@gmail.com','$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra','admin','apotekic','+38154784566',1, true, '2017-10-01 21:58:58.508-07', 0);
 
 INSERT INTO ROLE (name) VALUES ('ROLE_USER');
 INSERT INTO ROLE (name) VALUES ('ROLE_PHARMACIST');
@@ -158,8 +158,8 @@ values('farmB@gmail.com',3,'ccc');
 insert into pharmacist(email,work_hour,pharmacy)
 values('farmC@gmail.com',4,'abc');
 
-insert into dermatologist(email)values('derm1@gmail.com');
-insert into dermatologist(email)values('derm2@gmail.com');
+insert into dermatologist(email) values('derm1@gmail.com');
+insert into dermatologist(email) values('derm2@gmail.com');
 
 insert into pharmacy_dermatologists(pharmacy_reg_no, dermatologist_email)
 values ('abc', 'derm1@gmail.com');

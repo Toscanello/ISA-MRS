@@ -39,6 +39,8 @@ public class DermatologistController {
     @Autowired
     PatientService patientService;
     @Autowired
+    UserService userService;
+    @Autowired
     private JavaMailSender emailSender;
 
     @GetMapping(value = "/pharmacy/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,61 +54,15 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('DERMATOLOGIST')")
     @PostMapping(value = "/addAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentDTO newAppointment) {
-        List<DermatologistWorkHour> dermatologistWorkHours
-                = workHourService.getDermatologistWorkHours(newAppointment.getDermatologistEmail());
-
-        System.out.println(newAppointment.getBegin());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime appointmentBeginLDT = LocalDateTime.parse(newAppointment.getBegin().trim(), formatter);
-
-        LocalTime appointmentDuration = LocalTime.parse(newAppointment.getDuration());
-        LocalTime appointmentBegin = appointmentBeginLDT.toLocalTime();
-
-        int appointmentDurationInMinutes = appointmentDuration.getHour()*60 + appointmentDuration.getMinute();
-        LocalTime appointmentEnd = appointmentBegin.plusMinutes(appointmentDurationInMinutes);
-        LocalDateTime appointmentEndLDT = appointmentBeginLDT.plusMinutes(appointmentDurationInMinutes);
-
-        /* Check if the dermatologist works at the time of appointment */
-        for (DermatologistWorkHour wh : dermatologistWorkHours) {
-            if (!wh.getPharmacy().getRegNo().equals(newAppointment.getPharmacyRegNo()))
-                continue;   /* No need to check other pharmacy work hours */
-            if (wh.getBegginingHour().isAfter(appointmentBegin) || wh.getEndingHour().isBefore(appointmentEnd)) {
-                return new ResponseEntity<>("Dermatologist isn't in office at that hour", HttpStatus.OK);
-            }
-        }
-
-        /* Check if dermatologist has other appointments at specified time */
-        List<Appointment> dermatologistAppointments
-                = appointmentService.getAllAppointments(newAppointment.getDermatologistEmail());
-        for (Appointment ap : dermatologistAppointments) {
-            if (ap.getStartTime().isBefore(appointmentEndLDT) && ap.getEndTime().isAfter(appointmentBeginLDT)) {
-                return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.OK);
-            }
-        }
-
-        List<DermatologistAppointment> freeDermatologistAppointments
-                = dermatologistAppointmentService.findFreeAppointmentsByDermatologist(newAppointment.getDermatologistEmail());
-        for (DermatologistAppointment da : freeDermatologistAppointments) {
-            if (da.getTime().isBefore(appointmentEndLDT) && da.getEndTime().isAfter(appointmentBeginLDT)) {
-                return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.OK);
-            }
-        }
-
-        Pharmacy p = pharmacyService.getPharmacy(newAppointment.getPharmacyRegNo());
-        Dermatologist d = dermatologistService.findDermatologist(newAppointment.getDermatologistEmail());
-        DermatologistAppointment da = new DermatologistAppointment(
-                appointmentBeginLDT,
-                appointmentDuration,
-                d,
-                p,
-                newAppointment.getPrice()
-        );
-        dermatologistAppointmentService.save(da);
-        return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
+        dermatologistAppointmentService.setAppointmentService(appointmentService);
+        dermatologistAppointmentService.setDermatologistService(dermatologistService);
+        dermatologistAppointmentService.setPharmacyService(pharmacyService);
+        dermatologistAppointmentService.setWorkHourService(workHourService);
+        dermatologistAppointmentService.setUserService(userService);
+        return dermatologistAppointmentService.addNewFreeAppointment(newAppointment);
     }
 
     @PreAuthorize("hasRole('DERMATOLOGIST')")

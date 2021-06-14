@@ -6,8 +6,12 @@ import app.dto.PatientDTO;
 import app.dto.UserDTO;
 import app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.LockModeType;
 
 @Service
 public class UserService {
@@ -30,5 +34,15 @@ public class UserService {
         if(!user.getPassword().equals(editedUser.getPassword()))
             user.setPassword(passwordEncoder.encode(editedUser.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public User saveUser(User u) {
+        return userRepository.save(u);
+    }
+
+    @Transactional
+    public User getAndIncrement(String email) {
+        return userRepository.getAndIncrementVersion(email);
     }
 }
