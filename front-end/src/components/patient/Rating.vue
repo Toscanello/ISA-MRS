@@ -74,6 +74,8 @@
 
   <RatingMedicine v-if="contoller == 'RatingMedicine'"/> 
   <DermatologistRating v-if="contoller == 'DermatologistRating'"/>
+  <PharmacistRating v-if="contoller == 'PharmacistRating'"/>
+  
 
   <div v-if="contoller == 'dermatologist'">
     <v-data-table
@@ -81,10 +83,6 @@
     :items="appointments"
     class="elevation-1"
   >
-    <template v-slot:item.startTime="{ item }">
-
-        {{ item.startTime.split("T")[0]}} {{ item.startTime.split("T")[1]}}
-    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
@@ -98,18 +96,14 @@
 
   <div v-if="contoller == 'pharmacist'">
     <v-data-table
-    :headers="headers1"
+    :headers="headers2"
     :items="pharmacistAppointments"
     class="elevation-1"
   >
-    <template v-slot:item.startTime="{ item }">
-
-        {{ item.startTime.split("T")[0]}} {{ item.startTime.split("T")[1]}}
-    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
-        @click="dermatologistList(item)"
+        @click="pharmacistList(item)"
       >
         mdi-plus
       </v-icon>
@@ -127,6 +121,7 @@
   import axios from "axios"
   import RatingMedicine from '@/components/patient/RatingMedicine.vue'
   import DermatologistRating from '@/components/patient/DermatologistRating.vue'
+  import PharmacistRating from '@/components/patient/PharmacistRating.vue'
   export default {
     data: () => ({
       dialog: false,
@@ -144,12 +139,22 @@
         {
           text: 'Dermatologist name',
           align: 'start',
-          value: 'medicalWorker.name',
+          value: 'name',
         },
-        { text: 'Dermatologist surname', value: 'medicalWorker.surname' },
-        { text: 'Dermatologist email', value: 'medicalWorker.email' },
-        { text: 'Price', value: 'price' },
-        { text: 'Date and Time', value: 'startTime' },
+        { text: 'Dermatologist surname', value: 'surname' },
+        { text: 'Dermatologist email', value: 'email' },
+        { text: 'Actions', value: 'actions', sortable: false },
+      ],
+      headers2: [
+        {
+          text: 'Pharmacist name',
+          align: 'start',
+          value: 'name',
+        },
+        { text: 'Pharmacist surname', value: 'surname' },
+        { text: 'Pharmacist email', value: 'email' },
+        { text: 'Pharmacy', value: 'pharmacyName' },
+        { text: 'Phone Number', value: 'phoneNumber' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       appointments: [],
@@ -163,7 +168,8 @@
     }),
     components: {
         RatingMedicine,
-        DermatologistRating
+        DermatologistRating,
+        PharmacistRating
     },
      created () {
        this.userRole = TokenDecoder.getUserRole()
@@ -173,13 +179,12 @@
                 this.orders = response.data;
             })
        let usersEmail = TokenDecoder.getUserEmail()
-            let path1 = "http://localhost:9090/patients/appointments/dermatologist/" + usersEmail ;
+            let path1 = "http://localhost:9090/api/dermatologists/dermatologist/rating/" + usersEmail ;
             axios.get(path1).then((response) => {
                 this.appointments = response.data;
             })
-
-            
-            axios.get(path1).then((response) => {
+            let path2 = "http://localhost:9090/api/pharmacist/pharmacy/rating/" + usersEmail ;
+            axios.get(path2).then((response) => {
                 this.pharmacistAppointments = response.data;
             })
     },
@@ -201,8 +206,16 @@
         this.selectedItem = item
         console.log(item)
         //localStorage.setItem('pacijent',localStorage.getItem('medicineRating'));
-        localStorage.setItem('dermatologistRating', item.medicalWorker.email);
+        localStorage.setItem('dermatologistRating', item.email);
         this.contoller = "DermatologistRating"
+      },
+      
+      pharmacistList (item) {
+        this.selectedItem = item
+        console.log(item)
+        //localStorage.setItem('pacijent',localStorage.getItem('medicineRating'));
+        localStorage.setItem('pharmacistRating', item.email);
+        this.contoller = "PharmacistRating"
       },
 
     },

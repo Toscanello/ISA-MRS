@@ -4,6 +4,7 @@ import app.domain.Patient;
 import app.domain.Pharmacist;
 import app.dto.MedicalWorkerDTO;
 import app.dto.PatientDTO;
+import app.dto.PharmacistDTO;
 import app.repository.PharmacistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PharmacistService {
@@ -52,4 +55,13 @@ public class PharmacistService {
     }
 
     public List<Pharmacist> getUnemployed() { return pharmacistRepository.getUnemployed(); }
+
+    public Set<Pharmacist> findPharmacistForRating(String patientEmail){
+        Set<String> pharmacistEmails = pharmacistRepository.findPharmacistForRating(patientEmail);
+        Set<Pharmacist> pharmacists = new HashSet<>();
+
+        for (String email : pharmacistEmails)
+            pharmacists.add(pharmacistRepository.findOneByEmail(email));
+        return pharmacists;
+    }
 }

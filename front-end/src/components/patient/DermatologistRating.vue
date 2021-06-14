@@ -34,7 +34,7 @@
 
 <script>
   import axios from "axios";
-  //import TokenDecoder from '../../services/token-decoder'
+  import TokenDecoder from '../../services/token-decoder'
   export default {
     data: () => ({
       rating: 0.0,
@@ -45,24 +45,24 @@
       this.dermatologistEmail = localStorage.getItem('dermatologistRating')
 
       let path = "http://localhost:9090/api/dermatologists/derm/" + this.dermatologistEmail;
-      console.log(path)
       axios.get(path).then((response) => {
           console.log( response.data)
           this.dermatologist = response.data;
       })
-      console.log("blaaaa")
-      console.log(this.dermatologistEmail)
-      console.log(this.dermatologist)
+      let path1 = 'http://localhost:9090/patients/get/dermatologist/rating/' + TokenDecoder.getUserEmail() + '/' + this.dermatologistEmail;
+      axios.get(path1).then((response) => {
+          this.rating = response.data;
+      })
      
     },
     methods: {
       rate(){
-        /*axios
-        .post('http://localhost:9090/patients/medicine/rate/' + TokenDecoder.getUserEmail() + '/' + this.medicineCode + '/' + this.rating, null )
+        axios
+        .post('http://localhost:9090/patients/dermatologist/rate/' + TokenDecoder.getUserEmail() + '/' + this.dermatologistEmail + '/' + this.rating, null )
         .then(response => {
           console.log(response)
         })
-          */
+          
       }
     }
   }

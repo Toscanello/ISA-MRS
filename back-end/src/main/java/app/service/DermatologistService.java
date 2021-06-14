@@ -1,16 +1,15 @@
 package app.service;
 
-import app.domain.Appointment;
-import app.domain.Dermatologist;
-import app.domain.DermatologistAppointment;
-import app.domain.DermatologistWorkHour;
+import app.domain.*;
 import app.dto.MedicalWorkerDTO;
 import app.repository.DermatologistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DermatologistService {
@@ -59,5 +58,14 @@ public class DermatologistService {
 
     public void addEmployement(String email, String regNo) {
         dermatologistRepository.addEmployement(email, regNo);
+    }
+
+    public Set<Dermatologist> findDermatologistForRating(String patientEmail){
+        Set<String> dermatologistEmails = dermatologistRepository.findDermatologistForRating(patientEmail);
+        Set<Dermatologist> dermatologists = new HashSet<>();
+
+        for (String email : dermatologistEmails)
+            dermatologists.add(dermatologistRepository.findOneByEmail(email));
+        return dermatologists;
     }
 }

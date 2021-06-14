@@ -98,7 +98,7 @@ public class PharmacyController {
         return new ResponseEntity<>(pharmacistService.findPharmacist(start, end, dateTime, regNo), HttpStatus.OK);
     }
 
-    @PostMapping(value = "`add/pharmacist/appointment`/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "add/pharmacist/appointment/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SimplePharmacyDTO>
     addPharmacistAppointment(@PathVariable String date, @PathVariable String time, @PathVariable String pharmacistEmail,
                              @PathVariable String userEmail, @PathVariable String regNo) {
