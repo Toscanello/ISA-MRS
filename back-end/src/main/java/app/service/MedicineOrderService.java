@@ -36,13 +36,15 @@ public class MedicineOrderService {
     public void insertNewOrder(Long medicinePricingId, int quantity,
                                double price, String patientEmail, LocalDateTime start, LocalDateTime end){
 
+
+        Integer mo = medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
         message.setTo("klimentaj99@gmail.com");
         message.setSubject("Rezervacija lijeka");
-        message.setText("Narucen je lijek " + Long.toString(medicinePricingId));
+        message.setText("Jedinstveni id rezervacije je: Narucen je lijek " + Integer.toString(mo));
         emailSender.send(message);
-        medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
     }
 
     public List<MedicineOrderDTO> findOrdersByPharmacy(String regno) {

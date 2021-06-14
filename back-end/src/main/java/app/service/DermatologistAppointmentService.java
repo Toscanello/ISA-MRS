@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class DermatologistAppointmentService {
     }
 
     public List<DermatologistAppointment> findFreeAppointmentsByPharmacyRegNo(String regNo){
-        return dermatologistAppointmentRepository.findFreeAppointmentsByPharmacyRegNo(regNo);
+        return dermatologistAppointmentRepository.findFreeAppointmentsByPharmacyRegNo(regNo, LocalDateTime.now());
     }
 
     public void deleteDermatologistAppointment(Long id){

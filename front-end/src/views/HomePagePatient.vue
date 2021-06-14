@@ -47,7 +47,7 @@
       </v-btn>
       <v-toolbar-title>Title</v-toolbar-title>
       <v-spacer></v-spacer>
-       <v-btn text style="background-color: #00b2b2; ">
+       <v-btn text style="background-color: #00b2b2;" @click="logout()">
          <span>Sign out</span>
       </v-btn>
     </v-app-bar>
@@ -178,6 +178,10 @@
     onScheduleClick:function(check){
       this.show_menu=check;
       this.drawer=false;
+    },
+    logout() {
+      localStorage.removeItem("user");
+      this.$router.push("/");
     }
   }
 };

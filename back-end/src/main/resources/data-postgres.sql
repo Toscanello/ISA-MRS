@@ -195,11 +195,11 @@ insert into appointment(patient_id,medical_worker_id, price, start_time, end_tim
 values('mika95455@gmail.com','derm1@gmail.com',1000, '2021-06-12 12:55:00', '2021-06-12 13:10:00', false,'ccc',false,false);
 
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
-values('2021-06-07 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+values('2021-07-07 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
 values('2021-06-08 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
-values('2021-06-09 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
+values('2021-07-09 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
 values('2021-06-10 14:15:00','14:45:00','derm1@gmail.com','abc',1000);
 
