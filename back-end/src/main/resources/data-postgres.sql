@@ -268,3 +268,6 @@ insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('ika@gmai
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('mika95455@gmail.com', 'abc');
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('mika95455@gmail.com', 'ccc');
 insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('pera@gmail.com', 'ccc');
+
+insert into pharmacist_rating(patient, pharmacist, rating) values('ika@gmail.com', 'farm@gmail.com', 2.5);
+insert into dermatologist_rating(patient, dermatologist, rating) values('ika@gmail.com', 'derm1@gmail.com', 3.5);
