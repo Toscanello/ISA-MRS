@@ -20,10 +20,13 @@
             </div>
             <v-btn class="submit-bttn" @click="submitPricing">Izmenite cenovnik</v-btn>
             <hr />
-            <div>
+            <div v-if="currentPricing">
                 <h2>Trenutni cenovnik leka</h2>
                 <p style="font-size:1.5vw">Cena: {{this.currentPricing.price}}</p>
                 <p style="font-size:1.5vw">Važi od: {{this.currentPricing.pricingStart.substring(0, 10)}}</p>
+            </div>
+            <div v-else> 
+                <h2>Lek jos nema definisanu cenu</h2>
             </div>
             <hr />
             <h2>Prethodni cenovnici leka</h2>
@@ -50,6 +53,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from './PharmacyAdminHome.vue'
+import authHeader from '../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
     name: 'MedicinePricing',
@@ -90,7 +94,7 @@ export default {
     },
     methods: {
         submitPricing() {
-            if (this.startDateTime < this.currentPricing.pricingStart) {
+            if (this.currentPricing && this.startDateTime < this.currentPricing.pricingStart) {
                 alert('Novi cenovnik ne može početi pre trenutnog!')
                 return
             }
@@ -110,7 +114,7 @@ export default {
             console.log(path)
             
             axios
-            .post(path, pricing)
+            .post(path, pricing, { headers: authHeader() })
             .then(response => {
                 alert('Uspešno promenjen cenovnik leka')
                 console.log(response.data)

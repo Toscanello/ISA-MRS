@@ -40,6 +40,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from './PharmacyAdminHome.vue'
+import authHeader from '../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
     name: 'MedicineList',
@@ -58,7 +59,10 @@ export default {
     },
     mounted () {
         axios
-        .get("http://localhost:9090/api/medicine/pharmacy/" + this.$route.params.regNo)
+        .get(
+            "http://localhost:9090/api/medicine/pharmacy/" + this.$route.params.regNo,
+            { headers: authHeader() }
+        )
         .then(response => {
             this.medicine = response.data
         })
@@ -72,7 +76,10 @@ export default {
         },
         deleteMed(code) {
             axios
-            .delete('http://localhost:9090/api/medicine/remove/pricing/' + this.$route.params.regNo + '/' + code)
+            .delete(
+                'http://localhost:9090/api/medicine/remove/pricing/' + this.$route.params.regNo + '/' + code, 
+                { headers: authHeader() }
+            )
             .then(response => {
                 alert(response.data)
                 this.$router.go()

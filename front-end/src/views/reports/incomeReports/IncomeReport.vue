@@ -41,6 +41,7 @@
 import axios from 'axios'
 import incomeReportChart from './IncomeReportChart.vue'
 import PharmacyAdminHome from '../../PharmacyAdminHome.vue'
+import authHeader from '../../../services/auth-header'
 export default {
   components: { incomeReportChart, PharmacyAdminHome },
   name: 'IncomeReport',
@@ -62,7 +63,10 @@ export default {
   async mounted() {
     this.loaded = false,
     await axios
-    .get('http://localhost:9090/api/pharmacy/report/income/' + this.regNo + '/annual')
+    .get(
+      'http://localhost:9090/api/pharmacy/report/income/' + this.regNo + '/annual',
+      { headers: authHeader() }
+    )
     .then(response => {
       let unorderedResponse = response.data
       let orderedRespone = Object.keys(unorderedResponse)
@@ -100,7 +104,10 @@ export default {
           dataLabel = 'Income amount'
 
       await axios
-      .get('http://localhost:9090/api/pharmacy/report/' + this.type + '/' + this.regNo + '/' + this.mode)
+      .get(
+        'http://localhost:9090/api/pharmacy/report/' + this.type + '/' + this.regNo + '/' + this.mode,
+        { headers: authHeader() }
+      )
       .then(response => {
         let unorderedResponse = response.data
         let orderedRespone = Object.keys(unorderedResponse)

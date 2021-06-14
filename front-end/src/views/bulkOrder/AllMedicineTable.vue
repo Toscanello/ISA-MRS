@@ -72,6 +72,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from '../PharmacyAdminHome.vue'
+import authHeader from '../../services/auth-header'
 export default {
   components: { PharmacyAdminHome },
     name: 'AllMedicineTable',
@@ -172,7 +173,10 @@ export default {
                         bulkOrderItemList: this.adaptedOrder
                     }
                 axios
-                .post('http://localhost:9090/api/order/new', newOrder)
+                .post(
+                    'http://localhost:9090/api/order/new', newOrder,
+                    { headers: authHeader() }
+                )
                 .then(response => {
                     alert('Order successfully processed!')
                     console.log(response)

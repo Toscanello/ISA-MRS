@@ -24,4 +24,6 @@ public class BulkOrderService {
         return bulkOrderRepository.getOne(id);
     }
 
+    public void delete(BulkOrder bo) { this.bulkOrderRepository.delete(bo);}
+
 }

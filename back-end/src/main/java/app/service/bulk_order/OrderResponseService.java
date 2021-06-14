@@ -1,12 +1,14 @@
 package app.service.bulk_order;
 
 import app.domain.Medicine;
+import app.domain.MedicinePricing;
 import app.domain.MedicineQuantity;
 import app.domain.Pharmacy;
 import app.domain.bulk_order.BulkOrder;
 import app.domain.bulk_order.BulkOrderItem;
 import app.domain.bulk_order.OrderResponse;
 import app.repository.bulk_order.OrderResponseRepository;
+import app.service.MedicinePricingService;
 import app.service.MedicineQuantityService;
 import app.service.PharmacistService;
 import app.service.PharmacyService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,9 +28,11 @@ public class OrderResponseService {
 
     MedicineQuantityService medicineQuantityService;
     PharmacyService pharmacyService;
+    MedicinePricingService medicinePricingService;
 
     public void setMedicineQuantityService(MedicineQuantityService mqs) { medicineQuantityService = mqs; }
     public void setPharmacyService(PharmacyService ps) { pharmacyService = ps; }
+    public void setMedicinePricingService(MedicinePricingService mps) { medicinePricingService = mps; }
 
     public List<OrderResponse> getAll() {
         return orderResponseRepository.findAll();
@@ -41,6 +46,7 @@ public class OrderResponseService {
         return orderResponseRepository.save(or);
     }
 
+    public void delete(OrderResponse or) { orderResponseRepository.delete(or); }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void accept(OrderResponse or) {
@@ -66,6 +72,15 @@ public class OrderResponseService {
                 mq.setQuantity(boi.getAmount());
                 mq.setMedicine(boi.getMedicine());
                 mq.setPharmacy(p);
+
+                MedicinePricing mp = new MedicinePricing();
+                mp.setPricingStart(LocalDateTime.now());
+                mp.setPricingEnd(null);
+                mp.setMedicine(boi.getMedicine());
+                mp.setPharmacy(bo.getPharmacy());
+                mp.setPrice(0.);
+
+                medicinePricingService.save(mp);
                 pharmacyMedicine.add(mq);
             }
         }

@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+import authHeader from '../../services/auth-header'
 export default {
     name: "PharmacistList",
     data() {
@@ -74,14 +75,15 @@ export default {
             let path = 'http://localhost:9090/api/pharmacist/delete/employment/'
             path += email
             axios
-            .delete(path)
+            .delete(path, { headers: authHeader() })
             .then(response => {
                 alert('Successfully deleted the pharmacist')
                 console.log(response)
                 this.$router.go()
             })
             .catch(error => {
-                alert(error.response.data)
+                console.log(JSON.stringify(error))
+                alert(error.message)
             })
         }
     },

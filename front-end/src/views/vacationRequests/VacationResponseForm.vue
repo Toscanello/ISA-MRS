@@ -68,7 +68,9 @@ export default {
           this.declinationText = ''
           this.showTextArea = false
           axios
-          .put('http://localhost:9090/api/vaccation/pharmacist/approve/request', {MedicalWorkerID: this.$route.params.id})
+          .put('http://localhost:9090/api/vaccation/pharmacist/approve/request', { 
+              MedicalWorkerID: this.$route.params.id
+              }, { headers: authHeader() })
           .then(response => {
               console.log(response)
               alert('Succesfully approved request')
@@ -84,7 +86,7 @@ export default {
           .put('http://localhost:9090/api/vaccation/pharmacist/decline/request', {
               MedicalWorkerID: this.$route.params.id,
               text: this.declinationText
-          }, { headers: authHeader()})
+          }, { headers: authHeader() })
           .then(response => {
               console.log(response)
               alert('Succesfully declined request')

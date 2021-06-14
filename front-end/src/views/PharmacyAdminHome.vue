@@ -42,7 +42,7 @@
           </v-list-item>
 
           <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Cenovnik</v-list-item-title>
+            <v-list-item-title>Cenovnik Lekova</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/dermatologists/list/pharmacy/' + pharmacy.regNo">
@@ -51,10 +51,6 @@
 
           <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
             <v-list-item-title>Farmaceuti</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Medicine pricing</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/employ/list/dermatologists/' + pharmacy.regNo">

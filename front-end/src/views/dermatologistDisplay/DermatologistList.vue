@@ -42,6 +42,7 @@
 
 <script>
 import axios from 'axios'
+import authHeader from '../../services/auth-header'
 export default {
     name: "DermatologistList",
     data() {
@@ -77,7 +78,7 @@ export default {
             let path = 'http://localhost:9090/api/dermatologists/delete/employment/'
             path += this.$route.params.regNo + '/' + email
             axios
-            .delete(path)
+            .delete(path, { headers: authHeader() })
             .then(response => {
                 alert('Successfully deleted the dermatologist')
                 console.log(response)
