@@ -183,4 +183,12 @@ public class PharmacistController {
         return new ResponseEntity<String>(pharmacist.getPharmacy().getRegNo(),HttpStatus.OK);
     }
 
+    @GetMapping(path = "/pharmacy/rating/{patientEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<PharmacistDTO>> getPharmacistForRating(@PathVariable String patientEmail){
+       Set<Pharmacist> pharmacists = pharmacistService.findPharmacistForRating(patientEmail);
+        Set<PharmacistDTO> toRet = new HashSet<>();
+        for (Pharmacist p : pharmacists)
+            toRet.add(new PharmacistDTO(p));
+        return new ResponseEntity<Set<PharmacistDTO>>(toRet,HttpStatus.OK);
+    }
 }

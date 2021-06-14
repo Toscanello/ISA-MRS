@@ -295,5 +295,12 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
-
+    @GetMapping(path = "/dermatologist/rating/{patientEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<SimpleDermatologistDTO>> getDermatologistForRating(@PathVariable String patientEmail){
+        Set<Dermatologist> pharmacists = dermatologistService.findDermatologistForRating(patientEmail);
+        Set<SimpleDermatologistDTO> toRet = new HashSet<>();
+        for (Dermatologist d : pharmacists)
+            toRet.add(new SimpleDermatologistDTO(d));
+        return new ResponseEntity<Set<SimpleDermatologistDTO>>(toRet,HttpStatus.OK);
+    }
 }

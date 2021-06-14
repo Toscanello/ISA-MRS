@@ -1,17 +1,16 @@
 package app.repository;
 
-import app.domain.Appointment;
-import app.domain.Dermatologist;
-import app.domain.DermatologistAppointment;
-import app.domain.DermatologistWorkHour;
+import app.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DermatologistRepository extends JpaRepository<Dermatologist, String > {
+    public Dermatologist findOneByEmail(String email);
     @Query(
             value="select * from users d where d.email in" +
                     "(select pd.dermatologist_email from pharmacy_dermatologists pd where pd.pharmacy_reg_no = ?1)",
@@ -50,5 +49,9 @@ public interface DermatologistRepository extends JpaRepository<Dermatologist, St
     public void addEmployement(String email, String regNo);
 
     public Dermatologist findDermatologistByEmail(String email);
+
+    @Query(value = "select d.email from dermatologist d where d.email IN " +
+            "(select appo.medical_worker_id from appointment appo where appo.patient_id = ?1 and appo.appearance = true)", nativeQuery = true)
+    public Set<String> findDermatologistForRating(String patientEmail);
 
 }
