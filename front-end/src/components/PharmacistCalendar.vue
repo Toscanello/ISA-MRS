@@ -91,7 +91,7 @@
                     Start Appointment
                   </v-btn>
                 </template>
-                <AppointmentForm @clicked="onFinish(selectedEvent.id)"/>
+                <AppointmentForm :patient=selectedEvent.patient_email @clicked="onFinish(selectedEvent.id)"/>
               </v-dialog>
               <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(selectedEvent.id)"
               v-if="checkApp(selectedEvent.start) && !selectedOpen.selected && !selectedEvent.finished">
@@ -154,6 +154,8 @@ export default {
             this.appointments[i].patient.name +
             " " +
             this.appointments[i].patient.surname,
+          patient_email:
+              this.appointments[i].patient.email,
           address:
             this.appointments[i].address.street +
             " " +
@@ -229,9 +231,10 @@ export default {
       this.dialog = false;
       this.selectedOpen = false;
       let check  = localStorage.getItem('check_finished');
-      if(check){
+      if(check=="true"){
         axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`);
       }
+      window.location.reload();
     },
     didntCome(id){
       //treba odraditi penale

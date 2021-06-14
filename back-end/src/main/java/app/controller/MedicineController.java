@@ -41,6 +41,8 @@ public class MedicineController {
     MedicineOrderService medicineOrderService;
 
     @Autowired
+    PatientService patientService;
+    @Autowired
     PharmacistService pharmacistService;
     @Autowired
     DermatologistService dermatologistService;
@@ -159,10 +161,12 @@ public class MedicineController {
         return new ResponseEntity<>(toRet, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/check/{farm}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MedicinePricingDTO>> check(@PathVariable String farm,@PathVariable Long id) {
+    @GetMapping(value = "/check/{farm}/{id}/{patient}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicinePricingDTO>> check(@PathVariable String farm,@PathVariable Long id,@PathVariable String patient) {
         Medicine medicine = medicinePricingService.findMedicinePricingID(id).getMedicine();
+        Patient patient1 = patientService.findOneByEmail(patient);
         Pharmacist ph = pharmacistService.findPharmacistByEmail(farm);
+        Pharmacy pharm=ph.getPharmacy();
         List<MedicinePricing> allMedicine = new ArrayList<MedicinePricing>();
 
         List<Medicine> medicines= null;
@@ -173,12 +177,33 @@ public class MedicineController {
         }
         //alergije treba uraditi
         List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
-        if (medicinePricingService.findActivePricingForMedicineInPharmacy(ph.getPharmacy().getRegNo(), medicine.getCode()) == null){
+        List<PharmacyAdmin> pharmacyAdmins = pharmacyAdminService.findaAllByPharamcy(pharm.getRegNo());
+        if(checkAllergies(medicine,patient1)){
             if(medicines != null && medicines.size() > 0) {
                 for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(ph.getPharmacy().getRegNo())) {
                     for (Medicine m : medicines) {
                         if (mp.getMedicine().getCode().equals(m.getCode()))
-                            allMedicine.add(mp);
+                            if(!checkAllergies(m,patient1))
+                                allMedicine.add(mp);
+                    }
+                }
+            }
+        }
+        else if (medicinePricingService.findActivePricingForMedicineInPharmacy(ph.getPharmacy().getRegNo(), medicine.getCode()) == null){
+            for (PharmacyAdmin pa: pharmacyAdmins) {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom("servis.apoteka@gmail.com");
+                message.setTo("mika95455@gmail.com");
+                message.setSubject("Medicines refill");
+                message.setText("Dear admin,\nMedicine " +medicine.getCode()+"-"+medicine.getName()+" is not available in pharmacy.\nPharmacy service.");
+                emailSender.send(message);
+            }
+            if(medicines != null && medicines.size() > 0) {
+                for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(ph.getPharmacy().getRegNo())) {
+                    for (Medicine m : medicines) {
+                        if (mp.getMedicine().getCode().equals(m.getCode()))
+                            if(!checkAllergies(m,patient1))
+                                allMedicine.add(mp);
                     }
                 }
             }
@@ -187,9 +212,16 @@ public class MedicineController {
         }
         if(allMedicine.isEmpty()) {
             try {
-                List<PharmacyAdmin> pharmacyAdmins;
+
                 if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(pricingDTOS.get(0).getPharmacyDTO().getRegNo(), pricingDTOS.get(0).getMedicineDTO().getCode()) < 1) {
-                    //posalji mail za lek
+                    for (PharmacyAdmin pa: pharmacyAdmins) {
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setFrom("servis.apoteka@gmail.com");
+                        message.setTo("mika95455@gmail.com");
+                        message.setSubject("Medicines refill");
+                        message.setText("Dear admin,\nMedicine " +medicine.getCode()+"-"+medicine.getName()+" needs to be refilled.\nPharmacy service.");
+                        emailSender.send(message);
+                    }
                     pricingDTOS.clear();
                 }
             }
@@ -199,8 +231,17 @@ public class MedicineController {
             return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
         }
         for (MedicinePricing mp : allMedicine) {
-            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1)
+            if (medicineQuantityService.findMedicineQuantityByPharmacyRegNoAndMedicineCode(mp.getPharmacy().getRegNo(), mp.getMedicine().getCode()) < 1) {
+                for (PharmacyAdmin pa : pharmacyAdmins) {
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setFrom("servis.apoteka@gmail.com");
+                    message.setTo("mika95455@gmail.com");
+                    message.setSubject("Medicines refill");
+                    message.setText("Dear admin,\nMedicine " + medicine.getCode() + "-" + medicine.getName() + " needs to be refilled.\nPharmacy service.");
+                    emailSender.send(message);
+                }
                 continue;
+            }
             pricingDTOS.add(new MedicinePricingDTO(mp));
         }
         return new ResponseEntity<>(pricingDTOS, HttpStatus.OK);
@@ -228,9 +269,22 @@ public class MedicineController {
         medicineOrderService.update(mo);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
-    @GetMapping(value = "/check/derm/{pharm}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MedicinePricingDTO>> checkDerm(@PathVariable String pharm,@PathVariable Long id) {
+
+    private boolean checkAllergies(Medicine m, Patient p){
+        boolean flag = false;
+        for(Medicine medicine: medicineService.findPatientsAllergies(p.getEmail())){
+            if(m.getCode().equals(medicine.getCode())){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    @GetMapping(value = "/check/derm/{pharm}/{id}/{patient}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<MedicinePricingDTO>> checkDerm(@PathVariable String pharm,@PathVariable Long id,@PathVariable String patient) {
         Medicine medicine = medicinePricingService.findMedicinePricingID(id).getMedicine();
+        Patient patient1 = patientService.findOneByEmail(patient);
         Pharmacy pharmacy = pharmacyService.getPharmacy(pharm);
         List<MedicinePricing> allMedicine = new ArrayList<MedicinePricing>();
 
@@ -241,9 +295,22 @@ public class MedicineController {
             System.out.println("jea");
         }
         //alergije treba uraditi
+
         List<MedicinePricingDTO> pricingDTOS = new ArrayList<>();
         List<PharmacyAdmin> pharmacyAdmins = pharmacyAdminService.findaAllByPharamcy(pharm);
-        if (medicinePricingService.findActivePricingForMedicineInPharmacy(pharmacy.getRegNo(), medicine.getCode()) == null){
+        if(checkAllergies(medicine,patient1)){
+            if (medicines != null && medicines.size() > 0) {
+                for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(pharmacy.getRegNo())) {
+                    for (Medicine m : medicines) {
+                        if (mp.getMedicine().getCode().equals(m.getCode())) {
+                            if(!checkAllergies(m,patient1))
+                                allMedicine.add(mp);
+                        }
+                    }
+                }
+            }
+        }
+        else if (medicinePricingService.findActivePricingForMedicineInPharmacy(pharmacy.getRegNo(), medicine.getCode()) == null){
             for (PharmacyAdmin pa: pharmacyAdmins) {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom("servis.apoteka@gmail.com");
@@ -256,11 +323,13 @@ public class MedicineController {
                 for (MedicinePricing mp : medicinePricingService.findAllActivePricingInPharmacy(pharmacy.getRegNo())) {
                     for (Medicine m : medicines) {
                         if (mp.getMedicine().getCode().equals(m.getCode()))
-                            allMedicine.add(mp);
+                            if(!checkAllergies(m,patient1))
+                                allMedicine.add(mp);
                     }
                 }
             }
-        }else{
+        }
+        else{
             pricingDTOS.add(new MedicinePricingDTO(medicinePricingService.findMedicinePricingID(id)));
         }
         if(allMedicine.isEmpty()) {

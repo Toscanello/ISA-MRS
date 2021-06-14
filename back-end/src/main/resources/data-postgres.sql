@@ -120,7 +120,7 @@ INSERT INTO USER_ROLE (user_id, role_id) VALUES ('farm@gmail.com', 2);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('phadmin@gmail.com', 4);
 INSERT INTO USER_ROLE (user_id, role_id) VALUES ('phadmin1@gmail.com', 4);
 
-insert into patients(email,penalty)values('ika@gmail.com',0);
+insert into patients(email,penalty)values('ika@gmail.com',4);
 insert into patients(email,penalty)values('pera@gmail.com',0);
 insert into patients(email,penalty)values('mika95455@gmail.com',0);
 insert into patients(email,penalty)values('a@gmail.com',0);
@@ -178,7 +178,7 @@ values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
 values('ika@gmail.com','derm1@gmail.com',1000, '2021-06-12 16:30:00', '2021-06-12 16:45:00', false,'abc',false,false);
 insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
-values('ika@gmail.com','farm@gmail.com',1000, '2021-06-14 10:30:00', '2021-06-14 10:45:00', false,'abc',false,false);
+values('ika@gmail.com','farm@gmail.com',1000, '2021-06-14 18:10:00', '2021-06-14 18:15:00', false,'abc',false,false);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
 values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc',true,true);
 insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
@@ -271,3 +271,5 @@ insert into patient_pharmacies(patient_email, pharmacy_reg_no) values ('pera@gma
 
 insert into pharmacist_rating(patient, pharmacist, rating) values('ika@gmail.com', 'farm@gmail.com', 2.5);
 insert into dermatologist_rating(patient, dermatologist, rating) values('ika@gmail.com', 'derm1@gmail.com', 3.5);
+
+insert into patient_allergies(patient_id,medicine_code) values('ika@gmail.com','lek1');

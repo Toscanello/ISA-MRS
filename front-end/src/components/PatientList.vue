@@ -46,7 +46,7 @@
                 Start Appointment
               </v-btn>
             </template>
-            <AppointmentForm @clicked="onFinish(i.email)" />
+            <AppointmentForm :patient=i.email @clicked="onFinish(i.email)" />
           </v-dialog>
           <v-btn color="orange" style="margin: 10px;" dark @click="didntCome(i.email)"
               v-if="check[i.email]">
@@ -151,10 +151,10 @@ export default {
     },
     onFinish(id){
       this.dialog = false;
-      let check  = localStorage.getItem('check_finished');
+      var check  = localStorage.getItem('check_finished');
       console.log(check);
       var user = tokenDecoder.getUserEmail();
-      if(check){
+      if(check=="true"){
         axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${true}`);
       }
       window.location.reload();

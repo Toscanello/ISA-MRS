@@ -128,7 +128,7 @@
                     Start Appointment
                   </v-btn>
                 </template>
-                <AppointmentForm
+                <AppointmentForm :patient=selectedEvent.patient_email
                   @clicked="onFinish(selectedEvent.id)"
                 />
               </v-dialog>
@@ -210,6 +210,8 @@ export default {
                 this.appointments[i].patient.name +
                 " " +
                 this.appointments[i].patient.surname,
+              patient_email:
+                this.appointments[i].patient.email,
               address:
                 this.appointments[i].address.street +
                 " " +
@@ -240,6 +242,7 @@ export default {
               start: first.toISOString().substring(0, 19),
               price: this.dermappointments[i].price,
               patient: "",
+              patient_email:"",
               address: "",
               end: newDateObj.toISOString().substring(0, 19),
               color: "yellow",
@@ -336,6 +339,8 @@ export default {
               this.appointments[i].patient.name +
               " " +
               this.appointments[i].patient.surname,
+            patient_email:
+              this.appointments[i].patient.email,
             address:
               this.appointments[i].address.street +
               " " +
@@ -366,6 +371,7 @@ export default {
             start: first.toISOString().substring(0, 19),
             price: this.dermappointments[i].price,
             patient: "",
+            patient_email:"",
             address: "",
             end: newDateObj.toISOString().substring(0, 19),
             color: "yellow",
@@ -402,9 +408,10 @@ export default {
       this.dialog = false;
       this.selectedOpen = false;
       let check  = localStorage.getItem('check_finished');
-      if(check){
+      if(check=="true"){
         axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`);
       }
+      
     },
     didntCome(id){
       //treba odraditi penale

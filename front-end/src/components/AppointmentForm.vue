@@ -104,6 +104,7 @@ import axios from "axios";
 export default {
   name: "AppointmentForm",
   components: { PharmacistNewAppointment },
+  props:['patient'],
   data() {
     return {
       e1: 1,
@@ -114,6 +115,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$props.patient);
     let path = "http://localhost:9090/api/medicine/all";
     axios.get(path).then((response) => {
       this.items = response.data;
@@ -126,8 +128,8 @@ export default {
   },
   methods: {
     dialog() {
+      localStorage.setItem('check_finished',false);
       this.$emit("clicked");
-      this.localStorage.setItem('check_finished',false);
       this.report = "";
       this.prescribed_items = [];
       this.e1 = 1;
@@ -151,9 +153,9 @@ export default {
       alert(spec);
       let path;
       if(TokenDecoder.getUserRole()=="ROLE_PHARMACIST")
-        path = `http://localhost:9090/api/medicine/check/${farm}/${id}`;
+        path = `http://localhost:9090/api/medicine/check/${farm}/${id}/${this.$props.patient}`;
       else
-        path = `http://localhost:9090/api/medicine/check/derm/${localStorage.getItem('selectedPh')}/${id}`
+        path = `http://localhost:9090/api/medicine/check/derm/${localStorage.getItem('selectedPh')}/${id}/${this.$props.patient}`
       axios
         .get(path)
         .then((response) => {
@@ -197,8 +199,8 @@ export default {
         })
         .then((response) => {
           console.log(response)
-          this.$emit("clicked",true);
           localStorage.setItem('check_finished',true);
+          this.$emit("clicked",true);
           this.report = "";
           this.prescribed_items = [];
           this.e1 = 1;
