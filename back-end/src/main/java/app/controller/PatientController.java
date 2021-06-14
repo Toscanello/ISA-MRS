@@ -45,6 +45,12 @@ public class PatientController {
     @Autowired
     private MedicineRatingService medicineRatingService;
 
+    @Autowired
+    private DermatologistRatingService dermatologistRatingService;
+
+    @Autowired
+    private PharmacistRatingService pharmacistRatingService;
+
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
         System.out.println(search);
@@ -254,6 +260,34 @@ public class PatientController {
                                                @PathVariable String code, @PathVariable Double rating){
 
         medicineRatingService.addRating(email, code, rating);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "get/pharmacist/rating/{email}/{pharmEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getPharmacistRating(@PathVariable String email, @PathVariable String pharmEmail){
+
+        return new ResponseEntity<>(pharmacistRatingService.getRating(email, pharmEmail), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/pharmacist/rate/{email}/{pharmEmail}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> ratePharmacist(@PathVariable String email,
+                                               @PathVariable String pharmEmail, @PathVariable Double rating){
+
+        pharmacistRatingService.addRating(email, pharmEmail, rating);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "get/dermatologist/rating/{email}/{dermEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getDermatologistRating(@PathVariable String email, @PathVariable String dermEmail){
+
+        return new ResponseEntity<>(dermatologistRatingService.getRating(email, dermEmail), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/dermatologist/rate/{email}/{dermEmail}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> rateDermatologist(@PathVariable String email,
+                                               @PathVariable String dermEmail, @PathVariable Double rating){
+
+        dermatologistRatingService.addRating(email, dermEmail, rating);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
