@@ -84,6 +84,15 @@ public class DermatologistController {
                 return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.OK);
             }
         }
+
+        List<DermatologistAppointment> freeDermatologistAppointments
+                = dermatologistAppointmentService.findFreeAppointmentsByDermatologist(newAppointment.getDermatologistEmail());
+        for (DermatologistAppointment da : freeDermatologistAppointments) {
+            if (da.getTime().isBefore(appointmentEndLDT) && da.getEndTime().isAfter(appointmentBeginLDT)) {
+                return new ResponseEntity<>("Dermatologist already has a scheduled appointment at that time", HttpStatus.OK);
+            }
+        }
+
         Pharmacy p = pharmacyService.getPharmacy(newAppointment.getPharmacyRegNo());
         Dermatologist d = dermatologistService.findDermatologist(newAppointment.getDermatologistEmail());
         DermatologistAppointment da = new DermatologistAppointment(

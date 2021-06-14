@@ -85,4 +85,8 @@ public class DermatologistAppointment {
         this.pharmacy = pharmacy;
     }
 
+    public LocalDateTime getEndTime() {
+        int appointmentDurationInMinutes = duration.getHour()*60 + duration.getMinute();
+        return time.plusMinutes(appointmentDurationInMinutes);
+    }
 }
