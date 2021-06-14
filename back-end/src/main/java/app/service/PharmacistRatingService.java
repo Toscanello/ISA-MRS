@@ -8,6 +8,8 @@ import app.repository.PharmacistRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PharmacistRatingService {
     @Autowired
@@ -26,6 +28,19 @@ public class PharmacistRatingService {
             return 0.0;
         else
             return retVal.getRating();
+    }
+
+    public double calculateRatingByPharmacist(String email) {
+        double sum = 0.;
+        double count = 0.;
+        List<PharmacistRating> pharmacistRatings = pharmacistRatingRepository.getPharmacistRatingsByPharmacistEmail(email);
+        if (pharmacistRatings.isEmpty())
+            return 0.;
+        for (PharmacistRating rating : pharmacistRatings) {
+            sum += rating.getRating();
+            count++;
+        }
+        return sum/count;
     }
 
 }

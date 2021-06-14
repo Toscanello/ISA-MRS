@@ -23,6 +23,7 @@
                                             <p v-for="pharmacyName in dermatologist.pharmacyNames" :key="pharmacyName">
                                                 {{pharmacyName}}
                                             </p>
+                                            <h4>Rating: {{dermatologist.rating.toFixed(2)}}</h4>
                                         </div>
                                     </v-card-text>
                                     <v-card-actions v-if="context === 'PHARMA'">
@@ -48,7 +49,8 @@ export default {
     data() {
         return {
             searchQuery: '',
-            dermatologists: []
+            dermatologists: [],
+            ratings: []
         }
     },
     props: ['context'],
@@ -91,21 +93,38 @@ export default {
     },
     mounted() {
         let path = 'http://localhost:9090/api/dermatologists/list/'
-        if (this.context === 'PHARMA')
+        let ratingsPath = 'http://localhost:9090/api/dermatologists/'
+        if (this.context === 'PHARMA') {
             path += 'pharmacy/' + this.$route.params.regNo
-        else
+            ratingsPath += `ratings/${this.$route.params.regNo}`
+        }
+        else {
             path += 'all'
-        console.log(path)
+            ratingsPath += 'all-ratings'
+        }
+
+        let dermatologistsRequest = axios.get(path)
+        let ratingsRequest = axios.get(ratingsPath)
+
         axios
-        .get(path) //headers
-        .then(response => {
-            console.log('OK')
-            this.dermatologists = response.data
-        })
-        .catch(response => {
-            console.log('PROPO')
-            console.log(response)
-        })
+            .all([dermatologistsRequest, ratingsRequest])
+            .then(axios.spread((...responses) => {
+                this.dermatologists = responses[0].data
+                this.ratings = responses[1].data
+                for (let dermatologist of this.dermatologists) {
+                    for (let rating of this.ratings) {
+                        if (rating.medicalWorkerEmail === dermatologist.email) {
+                            dermatologist['rating'] = rating.rating
+                            break
+                        }
+                    }
+                }
+            }))
+            .catch(errors => {
+                for (let error of errors)
+                    console.log(error)
+                alert('PROPO')
+            })
     }
 }
 </script>

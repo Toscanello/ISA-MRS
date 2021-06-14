@@ -31,6 +31,8 @@ public class PharmacistController {
     @Autowired
     PharmacistService pharmacistService;
     @Autowired
+    PharmacistRatingService pharmacistRatingService;
+    @Autowired
     PatientService patientService;
 
     @Autowired
@@ -190,5 +192,36 @@ public class PharmacistController {
         for (Pharmacist p : pharmacists)
             toRet.add(new PharmacistDTO(p));
         return new ResponseEntity<Set<PharmacistDTO>>(toRet,HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/ratings/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<MedicalWorkerRatingDTO>>
+    getPharmacistRatingsByPharmacy(@PathVariable String regNo) {
+        List<Pharmacist> allPharmacists = pharmacistService.findPharmacistsByPharmacy(regNo);
+        Set<MedicalWorkerRatingDTO> ratingSet = new HashSet<>();
+        for (Pharmacist pharmacist : allPharmacists) {
+            double rating = pharmacistRatingService
+                    .calculateRatingByPharmacist(pharmacist.getEmail());
+            MedicalWorkerRatingDTO ratingObject = new MedicalWorkerRatingDTO();
+            ratingObject.setMedicalWorkerEmail(pharmacist.getEmail());
+            ratingObject.setRating(rating);
+            ratingSet.add(ratingObject);
+        }
+        return new ResponseEntity<>(ratingSet, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/all-ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<MedicalWorkerRatingDTO>> getPharmacistRatingsByPharmacy() {
+        List<Pharmacist> allPharmacists = pharmacistService.findAll();
+        Set<MedicalWorkerRatingDTO> ratingSet = new HashSet<>();
+        for (Pharmacist pharmacist : allPharmacists) {
+            double rating = pharmacistRatingService
+                    .calculateRatingByPharmacist(pharmacist.getEmail());
+            MedicalWorkerRatingDTO ratingObject = new MedicalWorkerRatingDTO();
+            ratingObject.setMedicalWorkerEmail(pharmacist.getEmail());
+            ratingObject.setRating(rating);
+            ratingSet.add(ratingObject);
+        }
+        return new ResponseEntity<>(ratingSet, HttpStatus.OK);
     }
 }

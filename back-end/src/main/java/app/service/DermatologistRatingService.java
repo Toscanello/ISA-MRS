@@ -7,6 +7,8 @@ import app.repository.PharmacistRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DermatologistRatingService {
     @Autowired
@@ -25,5 +27,19 @@ public class DermatologistRatingService {
             return 0.0;
         else
             return retVal.getRating();
+    }
+
+    public double calculateRatingByDermatologist(String email) {
+        double sum = 0.;
+        double count = 0.;
+        List<DermatologistRating> dermatologistRatings
+                = dermatologistRatingRepository.getDermatologistRatingsByDermatologistEmail(email);
+        if (dermatologistRatings.isEmpty())
+            return 0.;
+        for (DermatologistRating rating : dermatologistRatings) {
+            sum += rating.getRating();
+            count++;
+        }
+        return sum/count;
     }
 }

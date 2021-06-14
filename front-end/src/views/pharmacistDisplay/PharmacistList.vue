@@ -21,6 +21,7 @@
                                             <p>{{pharmacist.phoneNumber}} | {{pharmacist.email}}</p>
                                             <h4>Employed at:</h4>
                                             <p>{{pharmacist.pharmacyName}}</p>
+                                            <h4>Rating: {{pharmacist.rating.toFixed(2)}}</h4>
                                         </div>
                                     </v-card-text>
                                     <v-card-actions v-if="context === 'PHARMA'">
@@ -46,7 +47,8 @@ export default {
     data() {
         return {
             searchQuery: '',
-            pharmacists: []
+            pharmacists: [],
+            ratings: []
         }
     },
     props: ['context'],
@@ -89,21 +91,38 @@ export default {
     },
     mounted() {
         let path = 'http://localhost:9090/api/pharmacist/list/'
-        if (this.context === 'PHARMA')
+        let ratingsPath = 'http://localhost:9090/api/pharmacist/'
+        if (this.context === 'PHARMA') {
             path += 'pharmacy/' + this.$route.params.regNo
-        else
+            ratingsPath += `ratings/${this.$route.params.regNo}`
+        }
+        else {
             path += 'all'
-        console.log(path)
+            ratingsPath += 'all-ratings'
+        }
+
+        let pharmacistsRequest = axios.get(path)
+        let ratingsRequest = axios.get(ratingsPath)
+
         axios
-        .get(path) //headers
-        .then(response => {
-            console.log('OK')
-            this.pharmacists = response.data
-        })
-        .catch(response => {
-            console.log('PROPO')
-            console.log(response)
-        })
+            .all([pharmacistsRequest, ratingsRequest])
+            .then(axios.spread((...responses) => {
+                this.pharmacists = responses[0].data
+                this.ratings = responses[1].data
+                for (let pharmacist of this.pharmacists) {
+                    for (let rating of this.ratings) {
+                        if (rating.medicalWorkerEmail === pharmacist.email) {
+                            pharmacist['rating'] = rating.rating
+                            break
+                        }
+                    }
+                }
+            }))
+            .catch(errors => {
+                for (let error of errors)
+                    console.log(error)
+                alert('PROPO')
+            })
     }
 }
 </script>
