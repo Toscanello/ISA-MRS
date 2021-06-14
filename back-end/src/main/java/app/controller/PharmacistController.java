@@ -39,6 +39,9 @@ public class PharmacistController {
     @PostMapping(value="/addAppointment",
         consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentPatientDTO newAppointment){
+        Patient patient = patientService.findOneByEmail(newAppointment.getPatientEmail());
+        if(patient.getPenalty()>3)
+            return new ResponseEntity<>("Patient has more than 3 penalties.", HttpStatus.OK);
         Pharmacist pharmacist = pharmacistService.findPharmacistByEmail(newAppointment.getDermatologistEmail());
         System.out.println(pharmacist.getName());
         WorkHour wh = pharmacist.getWorkHour();

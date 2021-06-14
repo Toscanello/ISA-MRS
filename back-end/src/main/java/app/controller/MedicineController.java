@@ -225,7 +225,6 @@ public class MedicineController {
         MedicineOrder mo=medicineOrderService.findOrderById(id);
         if(mo==null)
             return new ResponseEntity<>("No",HttpStatus.OK);
-        mo.setStatus(false);
         medicineOrderService.update(mo);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }

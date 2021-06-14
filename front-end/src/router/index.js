@@ -82,6 +82,26 @@ const routes = [
   },
   {
     path: '/login',
+    beforeEnter: (to, from, next) => {
+      let role = TokenDecoder.getUserRole()
+      if (role == 'ROLE_USER') {  /* TODO: ROLE_PATIENT */
+        next({name: 'HomePagePatient'})
+      }
+      else if (role == 'ROLE_PHARMACIST') {
+        next({name: 'HomePagePharmacist'})
+      }
+      else if (role == 'ROLE_DERMATOLOGIST') {
+        next({name: 'HomePageDermatologist'})
+      }
+      else if (role == 'ROLE_SYSADMIN') {
+        next({name: 'SystemAdminHome'})
+      }
+      else if (role == 'ROLE_PH_ADMIN') {
+        next({name: 'HomePagePharmacyAdmin'})
+      }
+      else 
+        next()
+  },
     name: 'Login',
     component: Login
   },

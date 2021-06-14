@@ -191,6 +191,8 @@ public class DermatologistController {
     public ResponseEntity<String> scheduleNewAppointment(@PathVariable Long id, @PathVariable String email){
         DermatologistAppointment da = dermatologistAppointmentService.findById(id);
         Patient p = patientService.findOneByEmail(email);
+        if(p.getPenalty()>3)
+            return new ResponseEntity<>("Patient has more than 3 penalties.", HttpStatus.OK);
         boolean check=appointmentService.createNewAppointment(da,p);
         if(!check)
             return new ResponseEntity<>("Patient has appointment in that time", HttpStatus.OK);
@@ -207,6 +209,9 @@ public class DermatologistController {
     @PostMapping(value = "/scheduleNewAppointmentByTime",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentPatientDTO newAppointment){
+        Patient patient = patientService.findOneByEmail(newAppointment.getPatientEmail());
+        if(patient.getPenalty()>3)
+            return new ResponseEntity<>("Patient has more than 3 penalties.", HttpStatus.OK);
         Dermatologist dermatologist = dermatologistService.findDermatologist(newAppointment.getDermatologistEmail());
         Set<DermatologistWorkHour> dwh = dermatologist.getWorkingHours();
 

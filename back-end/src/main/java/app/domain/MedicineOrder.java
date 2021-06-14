@@ -41,6 +41,9 @@ public class MedicineOrder {
     @Column(name = "status",nullable = true)
     private boolean status;
 
+    @Version
+    private Long version;
+
     public MedicineOrder() {
     }
 
@@ -113,5 +116,13 @@ public class MedicineOrder {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
