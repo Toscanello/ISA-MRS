@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DermatologistAppointmentRepository extends JpaRepository<DermatologistAppointment, Long> {
@@ -22,10 +23,10 @@ public interface DermatologistAppointmentRepository extends JpaRepository<Dermat
     public List<DermatologistAppointment> findFreeAppointmentsByDermatologistEmailAndPharmacy(String email, String pharmacy);
 
     @Query(
-            value = "select * from dermatologist_appointment da where da.pharmacy_reg_no = ?1",
+            value = "select * from dermatologist_appointment da where da.pharmacy_reg_no = ?1 and da.time > ?2",
             nativeQuery = true
     )
-    public List<DermatologistAppointment> findFreeAppointmentsByPharmacyRegNo(String regNo);
+    public List<DermatologistAppointment> findFreeAppointmentsByPharmacyRegNo(String regNo, LocalDateTime start);
 
     @Transactional
     @Modifying

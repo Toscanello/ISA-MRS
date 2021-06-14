@@ -71,7 +71,7 @@ public class DermatologistAppointmentService {
     }
 
     public List<DermatologistAppointment> findFreeAppointmentsByPharmacyRegNo(String regNo){
-        return dermatologistAppointmentRepository.findFreeAppointmentsByPharmacyRegNo(regNo);
+        return dermatologistAppointmentRepository.findFreeAppointmentsByPharmacyRegNo(regNo, LocalDateTime.now());
     }
 
     public void deleteDermatologistAppointment(Long id){
