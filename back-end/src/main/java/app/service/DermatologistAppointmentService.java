@@ -22,6 +22,10 @@ public class DermatologistAppointmentService {
         return dermatologistAppointmentRepository.save(da);
     }
 
+    public List<DermatologistAppointment> findFreeAppointmentsByDermatologist(String email) {
+        return dermatologistAppointmentRepository.findFreeAppointmentsByDermatologistEmail(email);
+    }
+
     public List<DermatologistAppointment> findActiveAppointmentsByDermatologist(String email, String pharmacy){
         return dermatologistAppointmentRepository.findFreeAppointmentsByDermatologistEmailAndPharmacy(email,pharmacy);
     }
