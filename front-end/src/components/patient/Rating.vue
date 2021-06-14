@@ -71,7 +71,53 @@
     </template>
   </v-data-table>
   </div>
-    <RatingMedicine v-if="contoller == 'RatingMedicine'"/>
+
+  <RatingMedicine v-if="contoller == 'RatingMedicine'"/> 
+  <DermatologistRating v-if="contoller == 'DermatologistRating'"/>
+
+  <div v-if="contoller == 'dermatologist'">
+    <v-data-table
+    :headers="headers1"
+    :items="appointments"
+    class="elevation-1"
+  >
+    <template v-slot:item.startTime="{ item }">
+
+        {{ item.startTime.split("T")[0]}} {{ item.startTime.split("T")[1]}}
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        @click="dermatologistList(item)"
+      >
+        mdi-plus
+      </v-icon>
+    </template>
+  </v-data-table>
+  </div>
+
+  <div v-if="contoller == 'pharmacist'">
+    <v-data-table
+    :headers="headers1"
+    :items="pharmacistAppointments"
+    class="elevation-1"
+  >
+    <template v-slot:item.startTime="{ item }">
+
+        {{ item.startTime.split("T")[0]}} {{ item.startTime.split("T")[1]}}
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        small
+        @click="dermatologistList(item)"
+      >
+        mdi-plus
+      </v-icon>
+    </template>
+  </v-data-table>
+  </div>
+
+
   </div>
 </template>
 
@@ -80,6 +126,7 @@
   import TokenDecoder from '../../services/token-decoder'
   import axios from "axios"
   import RatingMedicine from '@/components/patient/RatingMedicine.vue'
+  import DermatologistRating from '@/components/patient/DermatologistRating.vue'
   export default {
     data: () => ({
       dialog: false,
@@ -93,7 +140,21 @@
         { text: 'Manufacturer', value: 'manufacturer' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
+      headers1: [
+        {
+          text: 'Dermatologist name',
+          align: 'start',
+          value: 'medicalWorker.name',
+        },
+        { text: 'Dermatologist surname', value: 'medicalWorker.surname' },
+        { text: 'Dermatologist email', value: 'medicalWorker.email' },
+        { text: 'Price', value: 'price' },
+        { text: 'Date and Time', value: 'startTime' },
+        { text: 'Actions', value: 'actions', sortable: false },
+      ],
+      appointments: [],
       orders: [],
+      pharmacistAppointments: [],
       selectedItem: null,
       medicineQuantity: 0,
       userRole: null,
@@ -101,7 +162,8 @@
 
     }),
     components: {
-        RatingMedicine
+        RatingMedicine,
+        DermatologistRating
     },
      created () {
        this.userRole = TokenDecoder.getUserRole()
@@ -109,6 +171,16 @@
             let path = "http://localhost:9090/patients/medicine/rating/" + TokenDecoder.getUserEmail();
             axios.get(path).then((response) => {
                 this.orders = response.data;
+            })
+       let usersEmail = TokenDecoder.getUserEmail()
+            let path1 = "http://localhost:9090/patients/appointments/dermatologist/" + usersEmail ;
+            axios.get(path1).then((response) => {
+                this.appointments = response.data;
+            })
+
+            
+            axios.get(path1).then((response) => {
+                this.pharmacistAppointments = response.data;
             })
     },
 
@@ -123,6 +195,14 @@
         //localStorage.setItem('pacijent',localStorage.getItem('medicineRating'));
         localStorage.setItem('medicineRating', item.code);
         this.contoller = "RatingMedicine"
+      },
+
+      dermatologistList (item) {
+        this.selectedItem = item
+        console.log(item)
+        //localStorage.setItem('pacijent',localStorage.getItem('medicineRating'));
+        localStorage.setItem('dermatologistRating', item.medicalWorker.email);
+        this.contoller = "DermatologistRating"
       },
 
     },
