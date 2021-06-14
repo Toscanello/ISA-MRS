@@ -155,7 +155,7 @@ export default {
       console.log(check);
       var user = tokenDecoder.getUserEmail();
       if(check){
-        axios.post(`http://localhost:9090/patients/finished/${id}/${user}`);
+        axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${true}`);
       }
       window.location.reload();
     }
@@ -165,7 +165,7 @@ export default {
       var user = tokenDecoder.getUserEmail();
       alert("Penal"+id);
       axios.put(`http://localhost:9090/patients/penalty/user/${id}`);
-      axios.post(`http://localhost:9090/patients/finished/${id}/${user}`);
+      axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${false}`);
       window.location.reload();
     }
   },

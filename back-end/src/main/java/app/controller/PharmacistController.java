@@ -72,7 +72,7 @@ public class PharmacistController {
         }
 
         Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),pharmacist,
-                pharmacist.getPharmacy(), newAppointment.getPrice(), false,false);
+                pharmacist.getPharmacy(), newAppointment.getPrice(), false,false,false);
         appointmentService.save(ap);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");

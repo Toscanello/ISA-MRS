@@ -236,7 +236,7 @@ public class DermatologistController {
         }
         Pharmacy ph = pharmacyService.getPharmacy(newAppointment.getPharmacyRegNo());
         Appointment ap = new Appointment(appointmentBeginLDT,appointmentEndLDT,patientService.findOneByEmail(newAppointment.getPatientEmail()),dermatologist,
-                ph, newAppointment.getPrice(), false,false);
+                ph, newAppointment.getPrice(), false,false,false);
         appointmentService.save(ap);
 
         SimpleMailMessage message = new SimpleMailMessage();

@@ -13,12 +13,12 @@ public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
 
-    @PostMapping(value = "/finished/{id}")
-    public void finished(@PathVariable Long id){
-        System.out.println("usao");
+    @PostMapping(value = "/finished/{id}/{appearance}")
+    public void finished(@PathVariable Long id,@PathVariable Boolean appearance){
         Appointment a = appointmentService.findOneById(id);
-        System.out.println("prosao");
         appointmentService.updateFinished(a.getId());
+        if(appearance)
+            appointmentService.updateAppearance(a.getId());
     }
 
 }

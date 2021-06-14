@@ -175,24 +175,24 @@ values ('derm1@gmail.com', 'ccc', '17:30', '19:30');
 insert into d_work_hour(dermatologist_email, pharmacy_reg_no, beggining_hour, ending_hour)
 values ('derm2@gmail.com', 'abc', '17:00', '23:00');
 
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('ika@gmail.com','derm1@gmail.com',1000, '2021-06-12 16:30:00', '2021-06-12 16:45:00', false,'abc',false);
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('ika@gmail.com','farm@gmail.com',1000, '2021-06-12 17:30:00', '2021-06-12 17:45:00', false,'abc',false);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc',true);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-05-26 11:45:00', '2021-05-26 12:15:00', false,'abc',true);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-28 10:15:00', '2021-04-28 10:45:00', false,'abc',true);
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00', false,'abc',true);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00', false,'abc',true);
-insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 18:15:00', '2021-04-06 18:45:00', false,'ccc',true);
-insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished)
-values('mika95455@gmail.com','derm1@gmail.com',1000, '2021-06-12 12:55:00', '2021-06-12 13:10:00', false,'ccc',false);
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('ika@gmail.com','derm1@gmail.com',1000, '2021-06-12 16:30:00', '2021-06-12 16:45:00', false,'abc',false,false);
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('ika@gmail.com','farm@gmail.com',1000, '2021-06-14 10:30:00', '2021-06-14 10:45:00', false,'abc',false,false);
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('pera@gmail.com','derm2@gmail.com',1000, '2021-04-06 19:15:00', '2021-04-06 19:45:00', false,'abc',true,true);
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-05-26 11:45:00', '2021-05-26 12:15:00', false,'abc',true,true);
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('mika95455@gmail.com','farm@gmail.com',1000, '2021-04-28 10:15:00', '2021-04-28 10:45:00', false,'abc',true,true);
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('a@gmail.com','derm1@gmail.com',1000, '2021-04-06 10:15:00', '2021-04-06 10:45:00', false,'abc',true,true);
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('b@gmail.com','derm1@gmail.com',1000, '2021-04-06 11:15:00', '2021-04-06 11:45:00', false,'abc',true,true);
+insert into appointment(patient_id,medical_worker_id,price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('c@gmail.com','derm1@gmail.com',1000, '2021-04-06 18:15:00', '2021-04-06 18:45:00', false,'ccc',true,true);
+insert into appointment(patient_id,medical_worker_id, price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance)
+values('mika95455@gmail.com','derm1@gmail.com',1000, '2021-06-12 12:55:00', '2021-06-12 13:10:00', false,'ccc',false,false);
 
 insert into dermatologist_appointment(time,duration,dermatologist_email,pharmacy_reg_no,price)
 values('2021-06-07 14:15:00','14:45:00','derm1@gmail.com','abc',1000);

@@ -102,7 +102,7 @@ public class AppointmentService {
         }
         Appointment a=null;
         if(!check) {
-            a = new Appointment(startTime, endTime, patient, d, ph, price, false,false);
+            a = new Appointment(startTime, endTime, patient, d, ph, price, false,false,false);
             appointmentRepository.save(a);
             return true;
         }
@@ -127,5 +127,9 @@ public class AppointmentService {
         LocalDateTime end = dateTime.plusMinutes(30);
 
         appointmentRepository.addPharmacistAppointment(patient_id, medical_worker_id, dateTime, end, regNo);
+    }
+
+    public void updateAppearance(Long id) {
+        appointmentRepository.updateAppearance(id);
     }
 }

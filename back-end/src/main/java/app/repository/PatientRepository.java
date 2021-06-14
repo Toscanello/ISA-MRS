@@ -50,6 +50,8 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
     @Query(value = "delete from patient_allergies where patient_id = ?1 and medicine_code = ?2", nativeQuery = true)
     public void deleteAllergy(String patient_email, String medicine_code);
 
+    @Transactional
+    @Modifying
     @Query(value = "update patients set penalty = ?2 where email = ?1",nativeQuery = true)
     void addPenalty(String email,Integer num);
 }

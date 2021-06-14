@@ -403,14 +403,14 @@ export default {
       this.selectedOpen = false;
       let check  = localStorage.getItem('check_finished');
       if(check){
-        axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
+        axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`);
       }
     },
     didntCome(id){
       //treba odraditi penale
       alert("Penal"+id);
       axios.put(`http://localhost:9090/patients/penalty/${id}`);
-      axios.post(`http://localhost:9090/api/appointment/finished/${id}`);
+      axios.post(`http://localhost:9090/api/appointment/finished/${id}/${false}`);
       window.location.reload();
     }
   },

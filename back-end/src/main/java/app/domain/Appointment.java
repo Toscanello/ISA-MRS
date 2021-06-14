@@ -36,12 +36,15 @@ public class Appointment {
     @Column(name="finished",nullable = false)
     private boolean finished;
 
+    @Column(name = "appearance",nullable = false)
+    private boolean appearance;
+
     public Appointment() {
     }
 
     public Appointment(LocalDateTime startTime, LocalDateTime endTime,
                        Patient patient, MedicalWorker medicalWorker, Pharmacy pharmacy,
-                       Double price, boolean isCanceled,boolean finished) {
+                       Double price, boolean isCanceled,boolean finished, boolean appearance) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.patient = patient;
@@ -50,6 +53,7 @@ public class Appointment {
         this.price = price;
         this.isCanceled = isCanceled;
         this.finished=finished;
+        this.appearance = appearance;
     }
 
     public Long getId() { return id; }
@@ -112,5 +116,13 @@ public class Appointment {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public boolean isAppearance() {
+        return appearance;
+    }
+
+    public void setAppearance(boolean appearance) {
+        this.appearance = appearance;
     }
 }

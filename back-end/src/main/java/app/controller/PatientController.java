@@ -181,8 +181,8 @@ public class PatientController {
         return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/finished/{email}/{emailMed}")
-    public void finished(@PathVariable String email,@PathVariable String emailMed){
+    @PostMapping(path = "/finished/{email}/{emailMed}/{appearance}")
+    public void finished(@PathVariable String email,@PathVariable String emailMed,@PathVariable Boolean appearance){
         Patient patient = service.findOneByEmail(email);
         List<Appointment> appointmentList=appointmentService.findActiveAppointmentsByPatientId(patient.getEmail());
         LocalDateTime now = LocalDateTime.now();
@@ -192,12 +192,15 @@ public class PatientController {
             long diff = Math.abs(ChronoUnit.MINUTES.between(a.getStartTime(),now));
             if (diff <= 15 && !a.isFinished()) {
                 appointmentService.updateFinished(a.getId());
+                if(appearance)
+                    appointmentService.updateAppearance(a.getId());
                 break;
             }
         }
     }
     @PutMapping(path = "/penalty/{id}")
     public void penalty(@PathVariable Long id){
+
         service.addPenalty(appointmentService.findOneById(id).getPatient());
     }
     @PutMapping(path = "/penalty/user/{email}")

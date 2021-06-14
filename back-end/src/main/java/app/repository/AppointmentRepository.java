@@ -86,12 +86,18 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     @Transactional
     @Query(
             value = "insert into appointment(patient_id,medical_worker_id, " +
-                    "price, start_time, end_time, canceled, pharmacy_reg_no,finished) " +
+                    "price, start_time, end_time, canceled, pharmacy_reg_no,finished,appearance) " +
                     "values(?1, ?2, 1000, ?3, " +
-                    "?4, false, ?5, false)",
+                    "?4, false, ?5, false,false)",
             nativeQuery = true
     )
     public void addPharmacistAppointment(String patient_id, String medical_worker_id,
                                          LocalDateTime start, LocalDateTime end, String regNo);
-
- }
+    @Modifying
+    @Transactional
+    @Query(
+            value = "update Appointment set appearance = true where id = ?1",
+            nativeQuery = true
+    )
+    void updateAppearance(Long id);
+}
