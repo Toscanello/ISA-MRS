@@ -48,7 +48,18 @@ public class OrderResponseService {
 
     public void delete(OrderResponse or) { orderResponseRepository.delete(or); }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
+    public void acceptOfferById(Long orderId, Long offerId) {
+        List<OrderResponse> responses = orderResponseRepository.getAllByOrderId(orderId);
+        for (OrderResponse or : responses) {
+            if (or.getId().equals(offerId))
+                accept(or);
+            else
+                decline(or);
+        }
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
     public void accept(OrderResponse or) {
         or.setStatus(OrderResponse.Status.ACCEPTED);
         //SEND EMAIL WOULD BE IMPLEMENTED IF THERE WAS
@@ -89,7 +100,7 @@ public class OrderResponseService {
         pharmacyService.save(p);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.MANDATORY)
     public void decline(OrderResponse or) {
         or.setStatus(OrderResponse.Status.DECLINED);
         orderResponseRepository.save(or);

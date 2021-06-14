@@ -84,18 +84,11 @@ public class BulkOrderController {
 
     @PutMapping(value = "/offer/accept/{orderId}/{id}")
     public ResponseEntity<String> acceptOffer(@PathVariable Long orderId, @PathVariable Long id) {
-        List<OrderResponse> responses = orderResponseService.getAll();
         orderResponseService.setPharmacyService(pharmacyService);
         orderResponseService.setMedicineQuantityService(medicineQuantityService);
         orderResponseService.setMedicinePricingService(medicinePricingService);
-        for (OrderResponse or : responses) {
-            if (!or.getOrder().getId().equals(orderId))
-                continue;
-            if (or.getId().equals(id))
-                orderResponseService.accept(or);
-            else
-                orderResponseService.decline(or);
-        }
+
+        orderResponseService.acceptOfferById(orderId, id);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
