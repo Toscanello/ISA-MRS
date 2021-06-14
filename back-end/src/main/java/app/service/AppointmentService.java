@@ -66,7 +66,10 @@ public class AppointmentService {
         message.setTo("klimentaj99@gmail.com");
         message.setSubject("Rezervacija pregleda");
         message.setText("Rezervisan pregled " + a.getStartTime().getDayOfMonth() + "." +  a.getStartTime().getMonth() +
-                " sa pocetkom u " + a.getStartTime().getHour() + "h i" + a.getStartTime().getMinute() + "min" );
+                " sa pocetkom u " + a.getStartTime().getHour() + "h i " + a.getStartTime().getMinute() + "min. "
+                + " " + a.getPharmacy().getName() + " na adresi " + a.getPharmacy().getAddress().getStreet() + " "
+                + a.getPharmacy().getAddress().getStreetNumber() + ", " + a.getPharmacy().getAddress().getPlace() + "."
+                );
         emailSender.send(message);
     }
 
