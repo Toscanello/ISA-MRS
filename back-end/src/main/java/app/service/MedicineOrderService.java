@@ -37,13 +37,13 @@ public class MedicineOrderService {
                                double price, String patientEmail, LocalDateTime start, LocalDateTime end){
 
 
-        Integer mo = medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
-
+        medicineOrderRepository.insertNewOrder(medicinePricingId, quantity, price, patientEmail, start, end);
+        Integer mo = medicineOrderRepository.getId();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
         message.setTo("klimentaj99@gmail.com");
         message.setSubject("Rezervacija lijeka");
-        message.setText("Jedinstveni id rezervacije je: Narucen je lijek " + Integer.toString(mo));
+        message.setText("Jedinstveni id rezervacije je: " + Integer.toString(mo));
         emailSender.send(message);
     }
 
@@ -63,5 +63,10 @@ public class MedicineOrderService {
     @Transactional
     public void update(MedicineOrder mo) {
         medicineOrderRepository.update(mo.getId());
+    }
+
+    @Transactional
+    public void delete(MedicineOrder mo) {
+        medicineOrderRepository.deleteOrder(mo.getId());
     }
 }

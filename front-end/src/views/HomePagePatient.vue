@@ -124,16 +124,6 @@
         to: "calendar",
       },
       {
-        icon: "mdi-hospital-box",
-        title: "Drugs",
-        to: "drugs",
-      },
-      {
-        icon: "mdi-prescription",
-        title: "Prescription",
-        to: "prescription",
-      },
-      {
         icon: "mdi-plus",
         title: "Appointment",
         to: "appointment",

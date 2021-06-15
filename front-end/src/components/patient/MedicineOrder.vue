@@ -5,6 +5,9 @@
     sort-by="calories"
     class="elevation-1"
   >
+    <template v-slot:item.endTime="{ item }">
+      {{ item.endTime.split("T")[0]}} {{ item.endTime.split("T")[1]}}
+    </template>
     <template v-slot:top>
       <v-toolbar
         flat
@@ -20,61 +23,11 @@
           v-model="dialog"
           max-width="500px"
         >
-          <v-card>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.id"
-                      label="Dessert name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.quantity"
-                      label="Calories"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.price"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                    <v-text-field
-                      v-model="editedItem.endTime"
-                      label="Fat (g)"
-                    ></v-text-field>
-                  </v-col>
-                  
-                </v-row>
-              </v-container>
-            </v-card-text>
-          </v-card>
+          
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="headline">Porudzbinu je moguce otkazati najkasnije 24h prije preuzimanja.</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -98,7 +51,7 @@
         text
         color="primary"
       >
-        THERE IS NO RESERVATIONS(DEDAJ REDIREKCIJU NA STRANICU ZA REZERVISANJE LIJEKOVA)
+        No orders.
       </v-btn>
     </template>
   </v-data-table>
@@ -151,6 +104,9 @@ import TokenDecoder from '../../services/token-decoder'
         price:0.0,
         startTime: null,
         endTime: null,       
+        selectedItem : null,
+        localtime: null,
+        isOk: "ok",
       },
     }),
 
@@ -173,14 +129,39 @@ import TokenDecoder from '../../services/token-decoder'
     methods: {
 
       deleteItem (item) {
-          console.log(item)
-        //this.editedIndex = this.desserts.indexOf(item)
-        //this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
+        this.selectedItem = item
+ 
+        let path = "http://localhost:9090/patients/get/order/" + item.endTime;
+            axios.get(path).then((response) => {
+                this.isOk = response.data;
+                if(this.isOk == "ok"){
+              axios
+                  .post('http://localhost:9090/patients/delete/order' , this.selectedItem, {
+                    
+                  })
+                  .then(response => {
+                    console.log(response)
+                  })
+                  .catch(response => {
+                      console.log(response)
+                    alert('Error')
+                  })
+
+                let usersEmail = TokenDecoder.getUserEmail()
+                  let path1 = "http://localhost:9090/patients/orders/patient/" + usersEmail;
+                  axios.get(path1).then((response) => {
+                      this.orders = response.data;
+                      this.$router.go()
+                  })
+              }else{
+                this.dialogDelete = true
+              }
+            })
+        
       },
 
       deleteItemConfirm () {
-        //this.desserts.splice(this.editedIndex, 1)
+         
         this.closeDelete()
       },
 

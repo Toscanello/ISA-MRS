@@ -1,5 +1,6 @@
 package app.service;
 
+import app.domain.MedicineOrder;
 import app.domain.MedicineQuantity;
 import app.repository.MedicineQuantityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,12 @@ public class MedicineQuantityService {
 
     public MedicineQuantity save(MedicineQuantity mq) {
         return medicineQuantityRepository.save(mq);
+    }
+
+    public void medicineOrderCancellation(MedicineOrder mo, String pharmacyRegNo, String medicineCode){
+        MedicineQuantity mq = medicineQuantityRepository.findMedicineQuantityByPharmacy(pharmacyRegNo, medicineCode);
+        int quantity = mq.getQuantity() + mo.getQuantity();
+        medicineQuantityRepository.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(pharmacyRegNo, medicineCode, quantity);
+
     }
 }

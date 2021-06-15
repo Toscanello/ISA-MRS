@@ -48,4 +48,8 @@ public class PharmacyService {
     public List<Pharmacy> searchPharmacies(String searchParam) {
         return pharmacyRepository.searchPharmacies(searchParam);
     }
+
+    public List<Pharmacy> getAll(){
+        return pharmacyRepository.getAll();
+    }
 }

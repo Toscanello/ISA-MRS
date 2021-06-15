@@ -95,10 +95,16 @@ export default {
       this.$router.push('/dermatologistAppointment/' + pharmacy.regNo)
     },
     searchFun(){ 
-      let path = "http://localhost:9090/api/pharmacy/search/" + this.search; 
-      axios.get(path).then((resp) => {
-      this.pharmacies = resp.data;
-    });
+      if(this.search == ""){
+        axios.get("http://localhost:9090/api/pharmacy/all").then((resp) => {
+          this.pharmacies = resp.data;
+        });
+      }else{
+        let path = "http://localhost:9090/api/pharmacy/search/" + this.search; 
+        axios.get(path).then((resp) => {
+        this.pharmacies = resp.data;
+        });
+      }
     }
   }
 }

@@ -160,7 +160,7 @@
       closeDelete () {
         this.dialogDelete = false
         window.location.reload()
-      },
+      }, 
 
     },
   }

@@ -30,6 +30,9 @@ public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, Lo
             nativeQuery = true)
     public List<MedicineOrder> findAllByPharmacyRegNo(String regno);
 
+    @Query(value = "select count(*) from medicine_order",
+            nativeQuery = true)
+    public Integer getId();
 
     @Modifying
     @Transactional
@@ -38,6 +41,15 @@ public interface MedicineOrderRepository extends JpaRepository<MedicineOrder, Lo
             nativeQuery = true
     )
     public void update(Long id);
+
+    @Transactional
+    @Modifying
+    @Query(
+            value="delete from medicine_order mo where mo.id = ?1",
+            nativeQuery = true
+    )
+    public void deleteOrder(Long id);
+
 
 
 }

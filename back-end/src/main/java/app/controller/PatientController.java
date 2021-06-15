@@ -2,6 +2,7 @@ package app.controller;
 
 import app.domain.*;
 import app.dto.*;
+import app.repository.MedicineOrderRepository;
 import app.repository.MedicineRatingRespository;
 import app.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class PatientController {
     private MedicineOrderService medicineOrderService;
 
     @Autowired
+    private MedicineQuantityService medicineQuantityService;
+
+    @Autowired
     private MedicineService medicineService;
 
     @Autowired
@@ -55,8 +59,8 @@ public class PatientController {
     @PreAuthorize("hasAnyRole('PHARMACIST','DERMATOLOGIST')")
     @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PatientDTO>> searchPatients(@RequestParam Map<String, String> search){
-        System.out.println(search);
-        List<Patient>patients = service.searchPatients(search);
+
+        List<Patient> patients = service.searchPatients(search);
 
         List<PatientDTO> patientDTOS = new ArrayList<>();
         for (Patient p : patients) {
@@ -152,6 +156,17 @@ public class PatientController {
     public ResponseEntity<String>
     newOrder(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
         return new ResponseEntity<>("editedPatient", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "delete/order", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
+    deleteOrder(@RequestBody MedicineOrderDTO medicineOrder) {
+        MedicineOrder mo = medicineOrderService.findOrderById(medicineOrder.getId());
+        medicineQuantityService.medicineOrderCancellation(mo,
+                medicineOrder.getMedicine().getPharmacyDTO().getRegNo(), medicineOrder.getMedicine().getMedicineDTO().getCode());
+        int i = 0;
+        medicineOrderService.delete(mo);
+        return new ResponseEntity<>("deleteOrder", HttpStatus.OK);
     }
 
     @GetMapping(path = "/appointments/dermatologist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -294,5 +309,18 @@ public class PatientController {
 
         dermatologistRatingService.addRating(email, dermEmail, rating);
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(path = "get/order/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getDate(@PathVariable String date){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime mytime = LocalDateTime.parse(date);
+        mytime.plusHours(24);
+
+            String retVal = "NotOk";
+            if (mytime.isAfter(now)) {
+                retVal = "ok";
+            }
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }
