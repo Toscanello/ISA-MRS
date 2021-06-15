@@ -15,7 +15,7 @@
             dark
             prominent
             flat>
-            <v-toolbar-title>Zakazivanje slobodnog termina</v-toolbar-title>
+            <v-toolbar-title>Schedule new appointment</v-toolbar-title>
           </v-app-bar>
           <v-spacer></v-spacer>
           <v-container>
@@ -35,7 +35,7 @@
             <hr />
             <br />
             <div id="minutes">
-              <v-subheader>Trajanje pregleda: {{mins}}min</v-subheader>
+              <v-subheader>Duration: {{mins}}min</v-subheader>
               <v-slider
                   v-model="mins"
                   step="15"
@@ -55,7 +55,7 @@
                   filled
               ></v-text-field>
             </div>
-            <v-btn class="submit-dgm" @click="scheduleAppointment">Zakazi</v-btn>
+            <v-btn class="submit-dgm" @click="scheduleAppointment">Schedule</v-btn>
           </v-container>
         </v-card>
       </v-col>
