@@ -188,7 +188,7 @@ import authHeader from '../../services/auth-header'
       .then(response => {
       console.log(response)
       })
-      window.localtion.reload()
+      window.location.reload()
     },
     onSortClick: function (sorting) {
       this.sortParam = sorting
