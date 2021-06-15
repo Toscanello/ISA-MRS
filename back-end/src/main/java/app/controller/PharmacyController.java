@@ -101,12 +101,13 @@ public class PharmacyController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping(value = "add/pharmacist/appointment/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SimplePharmacyDTO>
+    @PostMapping(value = "add/pharmacist/appointment/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}",
+                            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String>
     addPharmacistAppointment(@PathVariable String date, @PathVariable String time, @PathVariable String pharmacistEmail,
                              @PathVariable String userEmail, @PathVariable String regNo) {
         appointmentService.addPharmacistAppointment(userEmail,pharmacistEmail, date, time, regNo);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
     @PutMapping(value = "edit/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
