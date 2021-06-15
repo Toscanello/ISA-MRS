@@ -6,6 +6,7 @@ services:
   - postgresql
 
 before_install:
+  - cd back-end
   - chmod +x mvnw
 
 addons:
@@ -15,7 +16,7 @@ addons:
 
 script:
   - ./mvnw clean install -DskipTests=false -B
-  - ./mvnw sonar:sonar -Dsonar.projectKey=$PROJECT_KEY -Dsonar.organization=<naziv_organizacije> -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+  - ./mvnw sonar:sonar -Dsonar.projectKey=$PROJECT_KEY -Dsonar.organization=Toscanello -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
 
 dist: trusty
 
