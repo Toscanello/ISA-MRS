@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -70,6 +71,18 @@ public class AppointmentService {
                 + " " + a.getPharmacy().getName() + " na adresi " + a.getPharmacy().getAddress().getStreet() + " "
                 + a.getPharmacy().getAddress().getStreetNumber() + ", " + a.getPharmacy().getAddress().getPlace() + "."
                 );
+        emailSender.send(message);
+    }
+
+    public void sendEmailPharmacist(String date, String time, String pharmacistEmail
+                                    ){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("servis.apoteka@gmail.com");
+        message.setTo("klimentaj99@gmail.com");
+        message.setSubject("Rezervacija pregleda");
+        message.setText("Rezervisan pregled kod farmaceuta "+ pharmacistEmail +" sa pocetkom u " +
+                "" + date + "." + time
+        );
         emailSender.send(message);
     }
 

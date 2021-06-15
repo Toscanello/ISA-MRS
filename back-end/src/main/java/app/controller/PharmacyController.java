@@ -107,6 +107,7 @@ public class PharmacyController {
     addPharmacistAppointment(@PathVariable String date, @PathVariable String time, @PathVariable String pharmacistEmail,
                              @PathVariable String userEmail, @PathVariable String regNo) {
         appointmentService.addPharmacistAppointment(userEmail,pharmacistEmail, date, time, regNo);
+        appointmentService.sendEmailPharmacist(date, time, pharmacistEmail);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
