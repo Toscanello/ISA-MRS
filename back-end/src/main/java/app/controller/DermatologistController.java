@@ -54,7 +54,7 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('PH_ADMIN', 'USER')")
     @PostMapping(value = "/addAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentDTO newAppointment) {
@@ -261,7 +261,7 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'PH_ADMIN')")
     @GetMapping(path = "/dermatologist/rating/{patientEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<SimpleDermatologistDTO>> getDermatologistForRating(@PathVariable String patientEmail){
         Set<Dermatologist> pharmacists = dermatologistService.findDermatologistForRating(patientEmail);
@@ -271,7 +271,6 @@ public class DermatologistController {
         return new ResponseEntity<Set<SimpleDermatologistDTO>>(toRet,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/ratings/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<MedicalWorkerRatingDTO>>
     getDermatologistsRatingsByPharmacy(@PathVariable String regNo) {

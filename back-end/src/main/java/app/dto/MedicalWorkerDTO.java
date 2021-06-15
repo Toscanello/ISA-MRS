@@ -19,7 +19,7 @@ public class MedicalWorkerDTO {
         this.name = mw.getName();
         this.surname = mw.getSurname();
         this.phoneNumber = mw.getPhoneNumber();
-        this.role = mw.getRoles().get(0);
+        //this.role = mw.getRoles().get(0);
         this.address = mw.getAddress();
     }
 

@@ -184,7 +184,7 @@ import authHeader from '../../services/auth-header'
       this.pharmacist = pharmacist
       axios
       .post('http://localhost:9090/api/pharmacy/add/pharmacist/appointment/' + 
-                 this.date + "_" + this.time + "_" + this.pharmacist + "_" + usersEmail + "_" + this.regNo , null,  { headers: authHeader()} )
+                 this.date + "_" + this.time + "_" + this.pharmacist + "_" + usersEmail + "_" + this.regNo , null, { headers: authHeader()} )
       .then(response => {
       console.log(response)
       })
