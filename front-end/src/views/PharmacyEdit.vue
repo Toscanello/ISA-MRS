@@ -14,7 +14,7 @@
             dark
             prominent
             flat>
-            <v-toolbar-title>Izmena podataka</v-toolbar-title>
+            <v-toolbar-title>Modify</v-toolbar-title>
           </v-app-bar>
           <v-spacer></v-spacer>
           <v-card-text>

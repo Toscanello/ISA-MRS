@@ -5,7 +5,7 @@
 
         <v-card class="mx-auto" justify="center" style="width: 60%">
             <v-app-bar dark color="dark cyan" prominent>
-                <v-toolbar-title>Zakazivanje pregleda</v-toolbar-title>
+                <v-toolbar-title>Scheduling appointment</v-toolbar-title>
             </v-app-bar>
             <v-container>
                 <v-row dense>
@@ -22,7 +22,7 @@
                                     <v-card-subtitle class="text-h6" v-text="dermatologist.email"></v-card-subtitle>
 
                                     <v-card-actions>
-                                        <v-btn depressed @click="goToAppointment(dermatologist.email)">Zakazi pregled</v-btn>
+                                        <v-btn depressed @click="goToAppointment(dermatologist.email)">Schedule</v-btn>
                                     </v-card-actions>
                                 </div>
                             </div>

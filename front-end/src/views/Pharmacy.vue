@@ -6,14 +6,14 @@
       dark
       style="background-color: darkcyan"
     >
-      <v-toolbar-title>PROFIL APOTEKE</v-toolbar-title>
+      <v-toolbar-title>Pharmacy profile</v-toolbar-title>
     </v-toolbar>
     <v-tabs vertical>
       <v-tab>
-        Opste informacije
+        General
       </v-tab>
       <v-tab>
-        Lekovi i zakazivanje
+        Medicine and scheduling
       </v-tab>
 
       <v-tab-item>
@@ -24,7 +24,7 @@
                 <h1>{{pharmacy.name.toUpperCase()}}</h1>
 
                 <p style="font-weight: bold;">
-                  Prosecna ocena: {{rating}}
+                  Average rating: {{rating}}
                 </p>
 
                 <p>
@@ -54,16 +54,16 @@
           <v-card-text>
             <table class="links">
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Farmaceuti</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Pharmacists</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Dermatolozi</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Dermatologists</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Pretraga lekova</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Medicine search</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Zakazite termin</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Schedule appointment</a></td>
                 </tr>
             </table>
           </v-card-text>

@@ -3,7 +3,7 @@
   <div>
     <v-toolbar style="background-color:#00bcd4; color: white;">
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title>Administrator apoteke</v-toolbar-title>
+      <v-toolbar-title>Pharmacy admin</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -30,55 +30,55 @@
           </v-list-item>
 
           <v-list-item :to="'/edit/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Izmeni apoteku</v-list-item-title>
+            <v-list-item-title>Modify pharmacy</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/dermatologists/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Novi termin (dermatolog)</v-list-item-title>
+            <v-list-item-title>New appointment (dermatologist)</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/reports/' + pharmacy.regNo">
-            <v-list-item-title>Izveštaji</v-list-item-title>
+            <v-list-item-title>Reports</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/pricing/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Cenovnik Lekova</v-list-item-title>
+            <v-list-item-title>MEdicine pricing</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/dermatologists/list/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Dermatolozi</v-list-item-title>
+            <v-list-item-title>Dermatologists</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/pharmacists/list/pharmacy/' + pharmacy.regNo">
-            <v-list-item-title>Farmaceuti</v-list-item-title>
+            <v-list-item-title>Pharmacists</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/employ/list/dermatologists/' + pharmacy.regNo">
-            <v-list-item-title>Zaposli dermatologa</v-list-item-title>
+            <v-list-item-title>Hire dermatologist</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/employ/list/pharmacists/' + pharmacy.regNo">
-            <v-list-item-title>Zaposli farmaceuta</v-list-item-title>
+            <v-list-item-title>Hire pharmacist</v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title>Upiti za lekove</v-list-item-title>
+            <v-list-item-title>Medicine inquiry</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/orders/' + pharmacy.regNo">
-            <v-list-item-title>Narudžbenice za lekove</v-list-item-title>
+            <v-list-item-title>Medicine order</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/allmedicineordertable/' + pharmacy.regNo">
-            <v-list-item-title>Nova narudžbenica</v-list-item-title>
+            <v-list-item-title>New order</v-list-item-title>
           </v-list-item>
 
           <v-list-item :to="'/vacation/requests/' + pharmacy.regNo">
-            <v-list-item-title>Zahtevi za odmor</v-list-item-title>
+            <v-list-item-title>Vaccation requests</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/admin/pharmacy/account">
-            <v-list-item-title>Izmeni profil</v-list-item-title>
+            <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>

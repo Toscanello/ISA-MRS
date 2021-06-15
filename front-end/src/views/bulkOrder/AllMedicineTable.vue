@@ -11,7 +11,7 @@
         >
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Dostupni Lekovi</v-toolbar-title>
+                    <v-toolbar-title>Available medicines</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
                     <input type="date" v-model="dueDate">

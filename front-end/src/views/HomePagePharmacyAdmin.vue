@@ -3,9 +3,9 @@
       <pharmacy-admin-home></pharmacy-admin-home>
       <div class="content-wrapper mx-auto">
         <br />
-        <h1>Administracija apoteke</h1>
+        <h1>Pharmacy administration</h1>
         <h1>{{pharmacy.name}}</h1>
-        <h1>Ocena: {{pharmacyGrade}}</h1>
+        <h1>Rating: {{pharmacyGrade}}</h1>
         <br />
         <br />
         <br />

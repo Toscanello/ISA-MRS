@@ -45,7 +45,7 @@
       >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       </v-btn>
-      <v-toolbar-title>Title</v-toolbar-title>
+      <v-toolbar-title>Patient</v-toolbar-title>
       <v-spacer></v-spacer>
        <v-btn text style="background-color: #00b2b2;" @click="logout()">
          <span>Sign out</span>
@@ -130,20 +130,20 @@
       },
       {
         icon: "mdi-plus",
-        title: "Rezervisanje lijekova",
+        title: "Medicine order",
         to: "MedicineList",
       },
       {
         icon: "mdi-emoticon-angry-outline",
-        title: "Moje rezervacije",
+        title: "My orders",
         to: "medicineOrder",
       },
       {
-        title: "Istorija posjeta dermatologu",
+        title: "History of dermatologist appointments",
         to: "history",
       },
       {
-        title: "Istorija posjeta farmaceutu",
+        title: "History of pharmacist appointments",
         to: "pharmacistHistory",
       },
       {
@@ -151,7 +151,7 @@
         to: "advertising",
       },
       {
-        title: "Dodavanje alergija",
+        title: "Add allergies",
         to: "addAllergies",
       },
       {

@@ -5,7 +5,7 @@
         </pharmacy-admin-home>
         <v-card class="mx-auto" elevation="0">
             <v-app-bar dark color="dark cyan" prominent>
-                <v-toolbar-title>Lista lekova apoteke</v-toolbar-title>
+                <v-toolbar-title>Medicine list</v-toolbar-title>
             </v-app-bar>
             <v-container>
                 <v-text-field label="Search here..." v-model="searchQuery"></v-text-field>
@@ -23,9 +23,9 @@
                                     <v-card-subtitle class="text-h6" v-text="'Proizvodjac: ' + med.manufacturer + ', Sastav: ' + med.composition + ', Forma: ' + med.drugForm"></v-card-subtitle>
 
                                     <v-card-actions>
-                                        <v-btn @click="viewPricing(med.code)">Pregled cenovnika</v-btn>
-                                        <v-btn outlined rounded small @click="createDiscount(med.code)">Definisi akciju</v-btn>
-                                        <v-btn outlined rounded small @click="deleteMed(med.code)">Obrisi iz ponude</v-btn>
+                                        <v-btn @click="viewPricing(med.code)">View pricing</v-btn>
+                                        <v-btn outlined rounded small @click="createDiscount(med.code)">Create discount</v-btn>
+                                        <v-btn outlined rounded small @click="deleteMed(med.code)">Delete medicine</v-btn>
                                     </v-card-actions>
                                 </div>
                             </div>

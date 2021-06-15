@@ -4,7 +4,7 @@
     </pharmacy-admin-home>
     <v-card class="mx-auto" justify="center" style="width: 50%">
         <v-app-bar dark color="dark cyan" prominent>
-            <v-toolbar-title>Uredite cenovnik leka</v-toolbar-title>
+            <v-toolbar-title>Arrange pricing</v-toolbar-title>
         </v-app-bar>
         <v-container>
             <v-date-picker v-model="startDate" color="dark cyan"></v-date-picker>
@@ -18,18 +18,18 @@
                     filled
                 ></v-text-field>
             </div>
-            <v-btn class="submit-bttn" @click="submitPricing">Izmenite cenovnik</v-btn>
+            <v-btn class="submit-bttn" @click="submitPricing">Change pricing</v-btn>
             <hr />
             <div v-if="currentPricing">
-                <h2>Trenutni cenovnik leka</h2>
-                <p style="font-size:1.5vw">Cena: {{this.currentPricing.price}}</p>
-                <p style="font-size:1.5vw">Važi od: {{this.currentPricing.pricingStart.substring(0, 10)}}</p>
+                <h2>Current pricing</h2>
+                <p style="font-size:1.5vw">Price: {{this.currentPricing.price}}</p>
+                <p style="font-size:1.5vw">Date from: {{this.currentPricing.pricingStart.substring(0, 10)}}</p>
             </div>
             <div v-else> 
-                <h2>Lek jos nema definisanu cenu</h2>
+                <h2>Medicine doesn't have pricing</h2>
             </div>
             <hr />
-            <h2>Prethodni cenovnici leka</h2>
+            <h2>Former pricings</h2>
             <v-col cols="12"
                         v-for="(pastPricing, index) in inactivePricings"
                         :key="index">

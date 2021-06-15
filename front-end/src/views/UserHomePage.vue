@@ -44,7 +44,7 @@
       >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       </v-btn>
-      <v-toolbar-title>Title</v-toolbar-title>
+      <v-toolbar-title>Unautentificated user</v-toolbar-title>
       <v-spacer></v-spacer>
        <v-btn text style="background-color: #00b2b2; " @click="login">
          <span>Login</span>
