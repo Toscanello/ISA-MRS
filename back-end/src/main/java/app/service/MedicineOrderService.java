@@ -42,7 +42,7 @@ public class MedicineOrderService {
         Integer mo = medicineOrderRepository.getId();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("klimentaj99@gmail.com");
+        message.setTo("mika95455@gmail.com");
         message.setSubject("Rezervacija lijeka");
         message.setText("Jedinstveni id rezervacije je: " + Integer.toString(mo));
         emailSender.send(message);

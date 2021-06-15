@@ -20,7 +20,7 @@
                                     class="text-h5"
                                     v-text="med.code + ' | ' + med.name"></v-card-title>
 
-                                    <v-card-subtitle class="text-h6" v-text="'Proizvodjac: ' + med.manufacturer + ', Sastav: ' + med.composition + ', Forma: ' + med.drugForm"></v-card-subtitle>
+                                    <v-card-subtitle class="text-h6" v-text="'Manufacturer: ' + med.manufacturer + ', Composition: ' + med.composition + ', Drug form: ' + med.drugForm"></v-card-subtitle>
 
                                     <v-card-actions>
                                         <v-btn @click="viewPricing(med.code)">View pricing</v-btn>

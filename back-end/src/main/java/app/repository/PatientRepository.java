@@ -54,4 +54,9 @@ public interface PatientRepository extends JpaRepository<Patient, String>{
     @Modifying
     @Query(value = "update patients set penalty = ?2 where email = ?1",nativeQuery = true)
     void addPenalty(String email,Integer num);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update patients set penalty = 0",nativeQuery = true)
+    void erasePenalties();
 }

@@ -41,7 +41,7 @@ public class VaccationService{
         vaccationRepository.save(vac);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("mat3xthepro@gmail.com");
+        message.setTo("mika95455@gmail.com");
         message.setSubject("Vacation request reviewed");
         String response = "Your vacation request has been accepted";
         message.setText(response);
@@ -54,7 +54,7 @@ public class VaccationService{
         vaccationRepository.save(vac);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("mat3xthepro@gmail.com");
+        message.setTo("mika95455@gmail.com");
         message.setSubject("Vacation request reviewed");
         String response = String.format("Your vacation request has been declined because of: \n\t%s", declineReason);
         message.setText(response);

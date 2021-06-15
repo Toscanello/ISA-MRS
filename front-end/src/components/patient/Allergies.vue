@@ -35,7 +35,7 @@
             <v-card-title class="headline">Cofirm order</v-card-title>
             
             
-            <label for="quantity"> <b>Uspesno ste dodali alergiju na lek</b> </label>
+            <label for="quantity"> <b>Successfully added new allergy</b> </label>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>

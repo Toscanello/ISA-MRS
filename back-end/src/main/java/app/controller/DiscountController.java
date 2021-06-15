@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class DiscountController {
     @Autowired
     PatientService patientService;
 
+    @Autowired
+    JavaMailSender emailSender;
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addDiscount(@RequestBody DiscountDTO newDiscount) {
@@ -57,6 +61,13 @@ public class DiscountController {
         List<Patient> subscribedPatients = patientService.getAllSubscribedToPharmacy(pharmacy.getRegNo());
         for (Patient p : subscribedPatients)
             System.out.println(p.getEmail());
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("servis.apoteka@gmail.com");
+        message.setTo("mika95455@gmail.com");
+        message.setSubject("New discount");
+        String response = "Discount created";
+        message.setText(response);
+        emailSender.send(message);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

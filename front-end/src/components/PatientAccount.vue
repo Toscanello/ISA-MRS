@@ -121,7 +121,7 @@
                             text
                             color="primary"
                         >
-                            Nema dodatih alergija
+                            No allergies
                         </v-btn>
                         </template>
                     </v-data-table>
@@ -218,7 +218,7 @@ import authHeader from '../services/auth-header'
                 this.selectedItem = item
 
                 axios
-                .post('http://localhost:9090/patients/delete/allergy/' + this.usersEmail + '/' + this.selectedItem.code, { headers: authHeader() })
+                .post('http://localhost:9090/patients/delete/allergy/' + this.usersEmail + '/' + this.selectedItem.code,null, { headers: authHeader() })
                 .then(response => {
                 //alert('Uspesno izmenjeni podaci!' + response)
                 console.log(response)

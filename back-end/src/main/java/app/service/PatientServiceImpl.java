@@ -90,8 +90,15 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public void erasePenalties() {
+        patientRepository.erasePenalties();
+    }
+
+    @Override
     public void addPenalty(Patient patient) {
         patientRepository.addPenalty(patient.getEmail(),patient.getPenalty()+1);
     }
+
+
 
 }

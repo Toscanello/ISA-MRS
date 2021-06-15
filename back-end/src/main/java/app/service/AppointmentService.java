@@ -65,7 +65,7 @@ public class AppointmentService {
     public void sendEmail(Appointment a){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("klimentaj99@gmail.com");
+        message.setTo("mika95455@gmail.com");
         message.setSubject("Rezervacija pregleda");
         message.setText("Rezervisan pregled " + a.getStartTime().getDayOfMonth() + "." +  a.getStartTime().getMonth() +
                 " sa pocetkom u " + a.getStartTime().getHour() + "h i " + a.getStartTime().getMinute() + "min. "
@@ -79,7 +79,7 @@ public class AppointmentService {
                                     ){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("servis.apoteka@gmail.com");
-        message.setTo("klimentaj99@gmail.com");
+        message.setTo("mika95455@gmail.com");
         message.setSubject("Rezervacija pregleda");
         message.setText("Rezervisan pregled kod farmaceuta "+ pharmacistEmail +" sa pocetkom u " +
                 "" + date + "." + time

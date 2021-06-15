@@ -61,10 +61,6 @@
             <v-list-item-title>Hire pharmacist</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title>Medicine inquiry</v-list-item-title>
-          </v-list-item>
-
           <v-list-item :to="'/orders/' + pharmacy.regNo">
             <v-list-item-title>Medicine order</v-list-item-title>
           </v-list-item>

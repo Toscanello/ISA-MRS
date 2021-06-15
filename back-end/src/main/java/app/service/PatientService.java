@@ -17,4 +17,6 @@ public interface PatientService {
     void addPenalty(Patient patient);
     void insertAllergy(String patient_email, String medicine_code);
     void deleteAllergy(String patient_email, String medicine_code);
+
+    void erasePenalties();
 }

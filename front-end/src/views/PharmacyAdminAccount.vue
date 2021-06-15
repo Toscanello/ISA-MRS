@@ -62,6 +62,9 @@
                         <v-text-field
                         v-model="newPassword"
                         label="New Password"></v-text-field>
+                        <v-text-field
+                    v-model="confirmPassword"
+                    label="Confirm Password"></v-text-field>
 
                     </v-card-text>
                     <v-card-actions>
@@ -87,7 +90,8 @@ import authHeader from '../services/auth-header';
             return {
                 loading: false,
                 user : null,
-                newPassword:'',    
+                newPassword:'',   
+                confirmPassword:'', 
             }
         },
         created() {
@@ -103,6 +107,11 @@ import authHeader from '../services/auth-header';
         methods: {
             update(){
             let usersEmail = TokenDecoder.getUserEmail()
+            if(this.newPassword != this.confirmPassword){
+                alert('Nepoklapanje sifre')
+                return
+            }
+              
             if(this.newPassword != ""){
                 this.user.password = this.newPassword
             }

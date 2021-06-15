@@ -35,7 +35,7 @@
             <v-card-title class="headline">Cofirm order</v-card-title>
             
             
-            <label for="quantity"> <b>Datum preuzimanja rezervacije </b> </label>
+            <label for="quantity"> <b>Date </b> </label>
             <br>
             
             <template>
@@ -46,7 +46,7 @@
                 ></v-date-picker>
             </template>
 
-            <label for="quantity"> <b>Kolicina leka: </b> </label>
+            <label for="quantity"> <b>Quantity: </b> </label>
             <input type="number" id="quantity" name="quantity" min="1" max="5" value="1">
             <br>
             
