@@ -7,8 +7,9 @@ services:
 
 before_install:
   - cd back-end
-  - -u postgres createdb jpa
   - chmod +x mvnw
+  - sudo -i -u postgres
+  - createdb jpa
 
 addons:
   sonarcloud:
