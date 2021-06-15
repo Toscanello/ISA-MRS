@@ -62,6 +62,10 @@
                     v-model="newPassword"
                     label="New Password"></v-text-field>
 
+                    <v-text-field
+                    v-model="confirmPassword"
+                    label="Confirm Password"></v-text-field>
+
                 </v-card-text>
                 <v-card-actions>
                     <v-btn text color="primary" :loading="loading" @click.native="update">
@@ -76,6 +80,7 @@
 <script>
     import TokenDecoder from '../services/token-decoder'
     import axios from "axios";
+import authHeader from '../services/auth-header';
     export default {
         name: "MedicalAccount",
         data () {
@@ -83,6 +88,7 @@
                 loading: false,
                 user : null,
                 newPassword:'',    
+                confirmPassword:'',
             }
         },
         created() {
@@ -93,7 +99,7 @@
                 path = "http://localhost:9090/api/pharmacist/pharm/" + usersEmail;
             else
                 path = "http://localhost:9090/api/dermatologists/derm/" + usersEmail;
-            axios.get(path).then((response) => {
+            axios.get(path, {headers: authHeader()}).then((response) => {
                 this.user = response.data;
                 console.log(this.user)
             })
@@ -101,6 +107,10 @@
         methods: {
             update(){
                 let usersEmail = TokenDecoder.getUserEmail();
+                if(this.newPassword != this.confirmPassword){
+                alert('Nepoklapanje sifre')
+                return
+            }
                 if(this.newPassword != "")
                     this.user.password = this.newPassword
                 let role = TokenDecoder.getUserRole();
@@ -111,7 +121,7 @@
                     path = "http://localhost:9090/api/dermatologists/edit/"+usersEmail;
                 console.log(this.user);
                 axios
-                .put(path, this.user)
+                .put(path, this.user, {headers: authHeader()})
                 .then(
                     alert('Successfully edited!')
                 )

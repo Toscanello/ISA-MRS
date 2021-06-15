@@ -267,10 +267,10 @@ public class MedicineController {
     }
 
     @PreAuthorize("hasRole('PHARMACIST')")
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<String> updateOrder(@PathVariable Long id){
+    @PutMapping(value = "/update/{id}/{pharm}")
+    public ResponseEntity<String> updateOrder(@PathVariable Long id, @PathVariable String pharm){
         MedicineOrder mo=medicineOrderService.findOrderById(id);
-        if(mo==null)
+        if(mo==null||!mo.getMedicine().getPharmacy().getRegNo().equals(pharm)||mo.isStatus())
             return new ResponseEntity<>("No",HttpStatus.OK);
         medicineOrderService.update(mo);
         return new ResponseEntity<>("OK", HttpStatus.OK);

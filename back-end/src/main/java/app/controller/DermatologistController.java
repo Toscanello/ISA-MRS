@@ -226,7 +226,7 @@ public class DermatologistController {
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','DERMATOLOGIST')")
     @GetMapping(path = "/derm/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MedicalWorkerDTO> getDermatologistByEmail(@PathVariable String email){
 
@@ -235,7 +235,7 @@ public class DermatologistController {
         return new ResponseEntity<>(medicalWorkerDTO,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','DERMATOLOGIST')")
     @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     editPatient(@PathVariable String email, @RequestBody MedicalWorkerDTO medicalWorkerDTO) {

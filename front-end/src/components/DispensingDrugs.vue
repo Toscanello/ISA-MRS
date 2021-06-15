@@ -43,13 +43,15 @@ export default {
     };
   },
   mounted() {
+    var pharmacy = localStorage.getItem('selectedPh')
     axios
-      .get("http://localhost:9090/api/medicine/getOrders/abc", {headers: authHeader()})
+      .get(`http://localhost:9090/api/medicine/getOrders/${pharmacy}`, {headers: authHeader()})
       .then((response) => (this.items = response.data));
   },
   methods:{
       onClick(){
-          axios.put(`http://localhost:9090/api/medicine/update/${this.drug}`, null,{headers: authHeader()}).then(response=>{
+        var pharmacy = localStorage.getItem('selectedPh');
+          axios.put(`http://localhost:9090/api/medicine/update/${this.drug}/${pharmacy}`, null,{headers: authHeader()}).then(response=>{
               if(response.data!="OK")
                 alert("Greska");
               window.location.reload();
