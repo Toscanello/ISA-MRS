@@ -35,6 +35,7 @@ public class MedicineQuantityService {
         return medicineQuantityRepository.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code);
     }
 
+    @Transactional
     public void updateMedicineQuantityByPharmacyRegNoAndMedicineCode(String regNo, String code, int newQuantity){
         medicineQuantityRepository.updateMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code, newQuantity);
     }
