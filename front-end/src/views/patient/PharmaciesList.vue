@@ -47,6 +47,13 @@
                         Reserve
                       </v-btn>
                       <v-spacer></v-spacer>
+                      <v-btn 
+                      @click="details(pharmacy)"
+                      text
+                      >
+                        Details
+                      </v-btn>
+                      <v-spacer></v-spacer>
                       <span class="grey--text text--lighten-2 text-caption mr-2">
                         
                          <v-rating
@@ -93,6 +100,9 @@ export default {
   methods: {
     open(pharmacy){
       this.$router.push('/dermatologistAppointment/' + pharmacy.regNo)
+    },
+    details(pharmacy){
+      this.$router.push('/pharmacy/' + pharmacy.regNo)
     },
     searchFun(){ 
       if(this.search == ""){

@@ -101,7 +101,7 @@
               text
               @click="reserveAppointment(pharmacist)"
             >
-              Button
+              ADD
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -188,7 +188,7 @@ import authHeader from '../../services/auth-header'
       .then(response => {
       console.log(response)
       })
-
+      window.localtion.reload()
     },
     onSortClick: function (sorting) {
       this.sortParam = sorting
