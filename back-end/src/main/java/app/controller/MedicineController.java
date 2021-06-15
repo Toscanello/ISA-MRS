@@ -63,6 +63,7 @@ public class MedicineController {
         return new ResponseEntity<>(pharmacyMedicineDTOs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping(value = "/one/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SimpleMedicineDTO> getMedicineByCode(@PathVariable String code) {
         return new ResponseEntity<>(new SimpleMedicineDTO(medicineService.findMedicineByCode(code)), HttpStatus.OK);

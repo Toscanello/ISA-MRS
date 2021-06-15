@@ -8,7 +8,7 @@
       {{pharmacist.name}} {{pharmacist.surname}}
     </v-card-title>
     <v-card-text>
-        Tip: 
+        Email: {{pharmacist.email}}
 
       <div class="text-center mt-12">
         <v-rating
@@ -35,6 +35,7 @@
 <script>
   import axios from "axios";
   import TokenDecoder from '../../services/token-decoder'
+  import authHeader from '../../services/auth-header'
   export default {
     data: () => ({
       rating: 0.0,
@@ -45,20 +46,20 @@
       this.pharmacistEmail = localStorage.getItem('pharmacistRating')
 
       let path = "http://localhost:9090/api/pharmacist/pharm/" +  this.pharmacistEmail;
-      axios.get(path).then((response) => {
+      axios.get(path, { headers: authHeader() }).then((response) => {
           console.log( response.data)
           this.pharmacist = response.data;
       })
 
       let path1 = 'http://localhost:9090/patients/get/pharmacist/rating/' + TokenDecoder.getUserEmail() + '/' + this.pharmacistEmail;
-      axios.get(path1).then((response) => {
+      axios.get(path1, { headers: authHeader() }).then((response) => {
           this.rating = response.data;
       })
     },
     methods: {
       rate(){
         axios
-        .post('http://localhost:9090/patients/pharmacist/rate/' + TokenDecoder.getUserEmail() + '/' + this.pharmacistEmail + '/' + this.rating, null )
+        .post('http://localhost:9090/patients/pharmacist/rate/' + TokenDecoder.getUserEmail() + '/' + this.pharmacistEmail + '/' + this.rating, null, { headers: authHeader() } )
         .then(response => {
           console.log(response)
         })

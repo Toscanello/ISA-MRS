@@ -118,6 +118,7 @@
   import axios from 'axios'
   import PharmacySort from '@/components/patient/PharmacySort.vue'
   import PharmacistSort from '@/components/patient/PharmacistSort.vue'
+import authHeader from '../../services/auth-header'
   
   export default {
     data () {
@@ -169,7 +170,7 @@
       let path = "http://localhost:9090/api/pharmacy/pharmacist/" + this.date + "_" + this.time + "_" + this.regNo
       this.show = "pharmacist"
       axios
-        .get(path)
+        .get(path,  { headers: authHeader()})
         .then(response => {
           this.pharmacists = response.data
           })
@@ -183,7 +184,7 @@
       this.pharmacist = pharmacist
       axios
       .post('http://localhost:9090/api/pharmacy/add/pharmacist/appointment/' + 
-                 this.date + "_" + this.time + "_" + this.pharmacist + "_" + usersEmail + "_" + this.regNo , null )
+                 this.date + "_" + this.time + "_" + this.pharmacist + "_" + usersEmail + "_" + this.regNo , null,  { headers: authHeader()} )
       .then(response => {
       console.log(response)
       })
