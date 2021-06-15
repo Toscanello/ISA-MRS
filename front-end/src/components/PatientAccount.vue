@@ -135,7 +135,9 @@
 
 <script>
     import TokenDecoder from '../services/token-decoder'
-    import axios from "axios";
+    import axios from "axios"
+import authHeader from '../services/auth-header'
+   
     export default {
         data () {
             return {
@@ -181,12 +183,12 @@
             this.usersEmail = TokenDecoder.getUserEmail()
             this.userRole = TokenDecoder.getUserRole()
             let path = "http://localhost:9090/patients/my/allergies/" + this.usersEmail;
-            axios.get(path).then((response) => {
+            axios.get(path, { headers: authHeader() }).then((response) => {
                 this.orders = response.data;
             })
             
             path = "http://localhost:9090/patients/patient/" + this.usersEmail;
-            axios.get(path).then((response) => {
+            axios.get(path, { headers: authHeader() }).then((response) => {
                 this.user = response.data;
                 console.log(this.user)
             })
@@ -202,7 +204,7 @@
             }
 
             axios
-            .put('http://localhost:9090/patients/edit/' + this.usersEmail, this.user)
+            .put('http://localhost:9090/patients/edit/' + this.usersEmail, this.user, { headers: authHeader() })
             .then(response => {
               alert('Uspesno izmenjeni podaci!' + response)
             })
@@ -216,14 +218,14 @@
                 this.selectedItem = item
 
                 axios
-                .post('http://localhost:9090/patients/delete/allergy/' + this.usersEmail + '/' + this.selectedItem.code)
+                .post('http://localhost:9090/patients/delete/allergy/' + this.usersEmail + '/' + this.selectedItem.code, { headers: authHeader() })
                 .then(response => {
                 //alert('Uspesno izmenjeni podaci!' + response)
                 console.log(response)
                 })
             
                 let path = "http://localhost:9090/patients/my/allergies/" + this.usersEmail;
-                axios.get(path).then((response) => {
+                axios.get(path, { headers: authHeader() }).then((response) => {
                     this.orders = response.data;
                 })
 

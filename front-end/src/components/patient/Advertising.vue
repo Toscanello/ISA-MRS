@@ -55,6 +55,7 @@
 <script>
   import TokenDecoder from '../../services/token-decoder'
   import axios from "axios";
+import authHeader from '../../services/auth-header';
   export default {
     data: () => ({
       picker: new Date().toISOString().substr(0, 10),
@@ -85,7 +86,7 @@
      created () {
         let email = TokenDecoder.getUserEmail();
         let path = "http://localhost:9090/patients/advertising/" + email;
-        axios.get(path).then((response) => {
+        axios.get(path, { headers: authHeader() }).then((response) => {
             this.orders = response.data;
         })
     },

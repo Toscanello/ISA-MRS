@@ -143,6 +143,8 @@
 
 <script>
 import axios from 'axios'
+import TokenDecoder from '../services/token-decoder'
+import authHeader from '../services/auth-header';
   export default {
       name: 'Calendar',
     data: () => ({
@@ -161,9 +163,9 @@ import axios from 'axios'
       appointments: []
     }),
      created() {
-      let path = "http://localhost:9090/patients/appointments/ika@gmail.com"
+      let path = "http://localhost:9090/patients/appointments/" + TokenDecoder.getUserEmail();
       
-      axios.get(path)
+      axios.get(path, { headers: authHeader() })
       .then(response => {
         this.appointments = response.data
         const events = []
@@ -207,7 +209,7 @@ import axios from 'axios'
         this.selectedOpen = false
         console.log(this.selectedEvent.id)
         axios
-        .post('http://localhost:9090/patients/cancelAppointment/' , {id : this.selectedEvent.id})
+        .post('http://localhost:9090/patients/cancelAppointment/' , {id : this.selectedEvent.id}, { headers: authHeader() })
         window.location.reload()
       },
       viewDay ({ date }) {

@@ -14,6 +14,7 @@
 <script>
   import TokenDecoder from '../../services/token-decoder'
   import axios from "axios";
+import authHeader from '../../services/auth-header';
   export default {
     name: "DermatologistAppointment",
     data: () => ({
@@ -58,7 +59,7 @@
      created () {
             let usersEmail = TokenDecoder.getUserEmail()
             let path = "http://localhost:9090/patients/appointments/pharmacist/" + usersEmail ;
-            axios.get(path).then((response) => {
+            axios.get(path,  { headers: authHeader() }).then((response) => {
                 this.appointments = response.data;
             })
     },

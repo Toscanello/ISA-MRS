@@ -122,6 +122,7 @@
   import RatingMedicine from '@/components/patient/RatingMedicine.vue'
   import DermatologistRating from '@/components/patient/DermatologistRating.vue'
   import PharmacistRating from '@/components/patient/PharmacistRating.vue'
+  import authHeader from '../../services/auth-header'
   export default {
     data: () => ({
       dialog: false,
@@ -175,16 +176,16 @@
        this.userRole = TokenDecoder.getUserRole()
        console.log(this.userRole)
             let path = "http://localhost:9090/patients/medicine/rating/" + TokenDecoder.getUserEmail();
-            axios.get(path).then((response) => {
+            axios.get(path,  { headers: authHeader() }).then((response) => {
                 this.orders = response.data;
             })
        let usersEmail = TokenDecoder.getUserEmail()
             let path1 = "http://localhost:9090/api/dermatologists/dermatologist/rating/" + usersEmail ;
-            axios.get(path1).then((response) => {
+            axios.get(path1,  { headers: authHeader() }).then((response) => {
                 this.appointments = response.data;
             })
             let path2 = "http://localhost:9090/api/pharmacist/pharmacy/rating/" + usersEmail ;
-            axios.get(path2).then((response) => {
+            axios.get(path2,  { headers: authHeader() }).then((response) => {
                 this.pharmacistAppointments = response.data;
             })
     },

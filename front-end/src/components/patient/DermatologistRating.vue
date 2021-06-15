@@ -35,6 +35,7 @@
 <script>
   import axios from "axios";
   import TokenDecoder from '../../services/token-decoder'
+  import authHeader from '../../services/auth-header'
   export default {
     data: () => ({
       rating: 0.0,
@@ -45,12 +46,12 @@
       this.dermatologistEmail = localStorage.getItem('dermatologistRating')
 
       let path = "http://localhost:9090/api/dermatologists/derm/" + this.dermatologistEmail;
-      axios.get(path).then((response) => {
+      axios.get(path, { headers: authHeader() }).then((response) => {
           console.log( response.data)
           this.dermatologist = response.data;
       })
       let path1 = 'http://localhost:9090/patients/get/dermatologist/rating/' + TokenDecoder.getUserEmail() + '/' + this.dermatologistEmail;
-      axios.get(path1).then((response) => {
+      axios.get(path1, { headers: authHeader() }).then((response) => {
           this.rating = response.data;
       })
      
@@ -58,7 +59,7 @@
     methods: {
       rate(){
         axios
-        .post('http://localhost:9090/patients/dermatologist/rate/' + TokenDecoder.getUserEmail() + '/' + this.dermatologistEmail + '/' + this.rating, null )
+        .post('http://localhost:9090/patients/dermatologist/rate/' + TokenDecoder.getUserEmail() + '/' + this.dermatologistEmail + '/' + this.rating, null, { headers: authHeader() } )
         .then(response => {
           console.log(response)
         })
