@@ -110,6 +110,7 @@
 import axios from "axios";
 import AppointmentForm from '@/components/AppointmentForm.vue';
 import TokenDecoder from '../services/token-decoder';
+import authHeader from '../services/auth-header';
 export default {
   components: { AppointmentForm },
   name: "PharmacistCalendar",
@@ -134,7 +135,7 @@ export default {
     let path =
       `http://localhost:9090/api/pharmacist/appointments/${user}`;
 
-    axios.get(path).then((response) => {
+    axios.get(path, {headers: authHeader()}).then((response) => {
       this.appointments = response.data;
       const events = [];
 
@@ -172,7 +173,7 @@ export default {
       }
       this.events = events;
     });
-    axios.get(`http://localhost:9090/api/pharmacist/getPharmacy/${user}`).then(response=>localStorage.setItem('selectedPh',response.data));
+    axios.get(`http://localhost:9090/api/pharmacist/getPharmacy/${user}`, {headers: authHeader()}).then(response=>localStorage.setItem('selectedPh',response.data));
   },
   mounted() {
     this.$refs.calendar.checkChange();
@@ -232,15 +233,15 @@ export default {
       this.selectedOpen = false;
       let check  = localStorage.getItem('check_finished');
       if(check=="true"){
-        axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`);
+        axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`,null, {headers: authHeader()});
       }
       window.location.reload();
     },
     didntCome(id){
       //treba odraditi penale
       alert("Penal"+id);
-      axios.put(`http://localhost:9090/patients/penalty/${id}`);
-      axios.post(`http://localhost:9090/api/appointment/finished/${id}/${false}`)
+      axios.put(`http://localhost:9090/patients/penalty/${id}`,null, {headers: authHeader()});
+      axios.post(`http://localhost:9090/api/appointment/finished/${id}/${false}`,null, {headers: authHeader()})
       window.location.reload();
     },
     checkApp(time){

@@ -21,6 +21,7 @@
 </template>
 <script>
 import axios from "axios";
+import authHeader from '../services/auth-header';
 export default {
   data() {
     return {
@@ -43,12 +44,12 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:9090/api/medicine/getOrders/abc")
+      .get("http://localhost:9090/api/medicine/getOrders/abc", {headers: authHeader()})
       .then((response) => (this.items = response.data));
   },
   methods:{
       onClick(){
-          axios.put(`http://localhost:9090/api/medicine/update/${this.drug}`).then(response=>{
+          axios.put(`http://localhost:9090/api/medicine/update/${this.drug}`, null,{headers: authHeader()}).then(response=>{
               if(response.data!="OK")
                 alert("Greska");
               window.location.reload();

@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import authHeader from '../services/auth-header';
 export default {
   name: "Vaccation",
   data() {
@@ -40,7 +41,7 @@ export default {
       };
       if(this.date.length==2){
         console.log(vaccation);
-        axios.post('http://localhost:9090/api/vaccation/addVaccation',vaccation);
+        axios.post('http://localhost:9090/api/vaccation/addVaccation',vaccation, {headers: authHeader()});
         this.$emit("clicked");
       }
     }
