@@ -54,16 +54,16 @@
           <v-card-text>
             <table class="links">
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Pharmacists</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=kbs3i8GcdXA">Pharmacists</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Dermatologists</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=kbs3i8GcdXA">Dermatologists</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Medicine search</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=kbs3i8GcdXA">Medicine search</a></td>
                 </tr>
                 <tr>
-                    <td><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Schedule appointment</a></td>
+                    <td><a href="https://www.youtube.com/watch?v=kbs3i8GcdXA">Schedule appointment</a></td>
                 </tr>
             </table>
           </v-card-text>
