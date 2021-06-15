@@ -103,8 +103,8 @@ export default {
             ratingsPath += 'all-ratings'
         }
 
-        let dermatologistsRequest = axios.get(path)
-        let ratingsRequest = axios.get(ratingsPath)
+        let dermatologistsRequest = axios.get(path, { headers: authHeader() })
+        let ratingsRequest = axios.get(ratingsPath, { header: authHeader() })
 
         axios
             .all([dermatologistsRequest, ratingsRequest])

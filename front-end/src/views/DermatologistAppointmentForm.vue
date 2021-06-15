@@ -66,6 +66,7 @@
 <script>
 import axios from 'axios'
 import PharmacyAdminHome from './PharmacyAdminHome.vue'
+import authHeader from '../services/auth-header'
 export default {
     components: { PharmacyAdminHome },
     name: 'DermatologistAppointmentForm',
@@ -101,7 +102,8 @@ export default {
               return 
             }
             axios
-            .post('http://localhost:9090/api/dermatologists/addAppointment', appointment)
+            .post('http://localhost:9090/api/dermatologists/addAppointment',
+                     appointment, { headers: authHeader() })
             .then(response => {
               console.log(response.data)
               alert(response.data)
