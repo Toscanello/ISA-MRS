@@ -86,6 +86,8 @@ public class PharmacyController {
         }
         return new ResponseEntity<>(pharmaciesDTO, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "pharmacist/{date}_{time}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> findPharmacistByWorkHour(@PathVariable String date, @PathVariable String time, @PathVariable String regNo) {
         //sastanak traje 30 minuta
@@ -98,6 +100,7 @@ public class PharmacyController {
         return new ResponseEntity<>(pharmacistService.findPharmacist(start, end, dateTime, regNo), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "add/pharmacist/appointment/{date}_{time}_{pharmacistEmail}_{userEmail}_{regNo}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SimplePharmacyDTO>
     addPharmacistAppointment(@PathVariable String date, @PathVariable String time, @PathVariable String pharmacistEmail,
@@ -116,6 +119,7 @@ public class PharmacyController {
         return new ResponseEntity<>(editedPharmacy, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(value = "/pharmacy/appointments/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DermatologistAppointmentDTO>>
     getPharmacyAppointmentsByRegNo(@PathVariable String regNo) {
@@ -128,6 +132,7 @@ public class PharmacyController {
         return new ResponseEntity<>(dermatologistAppointmentDTOs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/new/appointment/{email}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> reserveAppointment(@PathVariable String email, @RequestBody DermatologistAppointment dermatologistAppointment){
@@ -410,6 +415,7 @@ public class PharmacyController {
 
     @GetMapping(value = "/search/{searchParam}")
     public ResponseEntity<List<SimplePharmacyDTO>> searchPharmacies(@PathVariable String searchParam) {
+
         List<Pharmacy> pharmacies = pharmacyService.searchPharmacies(searchParam);
         List<SimplePharmacyDTO> pharmaciesDTO = new ArrayList<>();
 

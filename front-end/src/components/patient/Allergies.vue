@@ -68,6 +68,7 @@
 <script>
   import TokenDecoder from '../../services/token-decoder'
   import axios from "axios";
+import authHeader from '../../services/auth-header';
   export default {
     data: () => ({
       picker: new Date().toISOString().substr(0, 10),
@@ -107,7 +108,7 @@
        this.userRole = TokenDecoder.getUserRole()
        console.log(this.userRole)
             let path = "http://localhost:9090/api/medicine/findall";
-            axios.get(path).then((response) => {
+            axios.get(path, { headers: authHeader() }).then((response) => {
                 this.orders = response.data;
             })
     },
@@ -123,7 +124,7 @@
           ///allergy/{email}/{code}
           this.usersEmail = TokenDecoder.getUserEmail()
           axios
-              .post('http://localhost:9090/patients/allergy/' + this.usersEmail + '/' + this.selectedItem.code , null )
+              .post('http://localhost:9090/patients/allergy/' + this.usersEmail + '/' + this.selectedItem.code , null, { headers: authHeader() } )
               .then(response => {
                 console.log(response)
               })

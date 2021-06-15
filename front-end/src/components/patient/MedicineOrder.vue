@@ -60,6 +60,7 @@
 <script>
 import TokenDecoder from '../../services/token-decoder'
     import axios from "axios";
+import authHeader from '../../services/auth-header';
   export default {
     data: () => ({
       dialog: false,
@@ -120,7 +121,7 @@ import TokenDecoder from '../../services/token-decoder'
      created () {
       let usersEmail = TokenDecoder.getUserEmail()
             let path = "http://localhost:9090/patients/orders/patient/" + usersEmail;
-            axios.get(path).then((response) => {
+            axios.get(path, { headers: authHeader() }).then((response) => {
                 this.orders = response.data;
                 console.log(this.orders)
             })
@@ -132,11 +133,11 @@ import TokenDecoder from '../../services/token-decoder'
         this.selectedItem = item
  
         let path = "http://localhost:9090/patients/get/order/" + item.endTime;
-            axios.get(path).then((response) => {
+            axios.get(path, { headers: authHeader() }).then((response) => {
                 this.isOk = response.data;
                 if(this.isOk == "ok"){
               axios
-                  .post('http://localhost:9090/patients/delete/order' , this.selectedItem, {
+                  .post('http://localhost:9090/patients/delete/order' , this.selectedItem, { headers: authHeader() }, {
                     
                   })
                   .then(response => {
@@ -149,7 +150,7 @@ import TokenDecoder from '../../services/token-decoder'
 
                 let usersEmail = TokenDecoder.getUserEmail()
                   let path1 = "http://localhost:9090/patients/orders/patient/" + usersEmail;
-                  axios.get(path1).then((response) => {
+                  axios.get(path1, { headers: authHeader() }).then((response) => {
                       this.orders = response.data;
                       this.$router.go()
                   })

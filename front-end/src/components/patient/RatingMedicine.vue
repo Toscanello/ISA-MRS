@@ -43,6 +43,7 @@
 <script>
   import axios from "axios";
   import TokenDecoder from '../../services/token-decoder'
+import authHeader from '../../services/auth-header';
   export default {
     data: () => ({
       rating: 0.0,
@@ -51,23 +52,22 @@
     }),
     created (){
       this.medicineCode = localStorage.getItem('medicineRating')
-      console.log("tralalalalal lijek")
-      console.log(this.medicineCode)
+
       let path = "http://localhost:9090/api/medicine/one/" + this.medicineCode;
 
       let path1 = 'http://localhost:9090/patients/get/medicine/rating/' + TokenDecoder.getUserEmail() + '/' + this.medicineCode;
-      axios.get(path).then((response) => {
+      axios.get(path, { headers: authHeader() }).then((response) => {
           this.medicine = response.data;
       })
       
-      axios.get(path1).then((response) => {
+      axios.get(path1, { headers: authHeader() }).then((response) => {
           this.rating = response.data;
       })
     },
     methods: {
       rate(){
         axios
-        .post('http://localhost:9090/patients/medicine/rate/' + TokenDecoder.getUserEmail() + '/' + this.medicineCode + '/' + this.rating, null )
+        .post('http://localhost:9090/patients/medicine/rate/' + TokenDecoder.getUserEmail() + '/' + this.medicineCode + '/' + this.rating, null, { headers: authHeader() } )
         .then(response => {
           console.log(response)
         })

@@ -101,6 +101,7 @@ public class PatientController {
         }
         return new ResponseEntity<>(patientDTOS,HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/appointments/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsByPharmacistEmail(@PathVariable String email){
 
@@ -113,6 +114,7 @@ public class PatientController {
         return new ResponseEntity<>(appointmentDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/cancelAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> cancelAppointment(@RequestBody AppointmentDTO appointment){
@@ -130,7 +132,7 @@ public class PatientController {
         PatientDTO patientDTO = new PatientDTO(patient);
         return new ResponseEntity<>(patientDTO,HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('USER')")
     @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDTO>
     editPatient(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
@@ -140,6 +142,7 @@ public class PatientController {
         return new ResponseEntity<>(editedPatient, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/orders/patient/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MedicineOrderDTO>> getPatientsOrders(@PathVariable String email){
 
@@ -152,12 +155,14 @@ public class PatientController {
         return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping(value = "add/order/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     newOrder(@PathVariable String email, @RequestBody PatientDTO editedPatient) {
         return new ResponseEntity<>("editedPatient", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "delete/order", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     deleteOrder(@RequestBody MedicineOrderDTO medicineOrder) {
@@ -169,6 +174,7 @@ public class PatientController {
         return new ResponseEntity<>("deleteOrder", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/appointments/dermatologist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> getDermatologistAppointments(@PathVariable String email){
         List<Appointment> appointments = appointmentService.findPatientsAppointments(email);
@@ -180,6 +186,7 @@ public class PatientController {
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/appointments/pharmacist/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppointmentDTO>> getPharmacistAppointments(@PathVariable String email){
         List<Appointment> appointments = appointmentService.findPatientsPharmacistAppointments(email);
@@ -191,6 +198,7 @@ public class PatientController {
         return new ResponseEntity<>(appointmentDTOs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/advertising/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimplePharmacyDTO>> getPatientsPharmacies(@PathVariable String email){
 
@@ -234,12 +242,14 @@ public class PatientController {
         service.addPenalty(service.findOneByEmail(email));
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/allergy/{email}/{code}")
     public ResponseEntity<String> addAllergy(@PathVariable String email, @PathVariable String code){
         service.insertAllergy(email, code);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "my/allergies/{email}")
     public ResponseEntity<Set<SimpleMedicineDTO>> patientsAllergies(@PathVariable String email){
         List<Medicine> allAllergies = medicineService.findPatientsAllergies(email);
@@ -250,6 +260,7 @@ public class PatientController {
         return new ResponseEntity<>(allergies, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "delete/allergy/{email}/{code}")
     public ResponseEntity<String>
     deleteAllergyMethod(@PathVariable String email, @PathVariable String code) {
@@ -257,6 +268,7 @@ public class PatientController {
         return new ResponseEntity<>("deletedAllergy", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/medicine/rating/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SimpleMedicineDTO>> getMedicineForRating(@PathVariable String email){
 
@@ -269,12 +281,14 @@ public class PatientController {
         return new ResponseEntity<>(medicineDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "get/medicine/rating/{email}/{code}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getMedicineRating(@PathVariable String email, @PathVariable String code){
 
         return new ResponseEntity<>(medicineRatingService.getRating(email, code), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/medicine/rate/{email}/{code}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> rateMedicine(@PathVariable String email,
                                                @PathVariable String code, @PathVariable Double rating){
@@ -283,12 +297,14 @@ public class PatientController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "get/pharmacist/rating/{email}/{pharmEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getPharmacistRating(@PathVariable String email, @PathVariable String pharmEmail){
 
         return new ResponseEntity<>(pharmacistRatingService.getRating(email, pharmEmail), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/pharmacist/rate/{email}/{pharmEmail}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> ratePharmacist(@PathVariable String email,
                                                @PathVariable String pharmEmail, @PathVariable Double rating){
@@ -297,12 +313,14 @@ public class PatientController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "get/dermatologist/rating/{email}/{dermEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getDermatologistRating(@PathVariable String email, @PathVariable String dermEmail){
 
         return new ResponseEntity<>(dermatologistRatingService.getRating(email, dermEmail), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(path = "/dermatologist/rate/{email}/{dermEmail}/{rating}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> rateDermatologist(@PathVariable String email,
                                                @PathVariable String dermEmail, @PathVariable Double rating){
@@ -311,6 +329,7 @@ public class PatientController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "get/order/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getDate(@PathVariable String date){
         LocalDateTime now = LocalDateTime.now();

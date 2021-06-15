@@ -54,6 +54,7 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/addAppointment",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addAppointment(@RequestBody FreeAppointmentDTO newAppointment) {
@@ -225,6 +226,7 @@ public class DermatologistController {
         return new ResponseEntity<>("Successfully added a new appointment", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/derm/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MedicalWorkerDTO> getDermatologistByEmail(@PathVariable String email){
 
@@ -233,6 +235,7 @@ public class DermatologistController {
         return new ResponseEntity<>(medicalWorkerDTO,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping(value = "edit/{email}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String>
     editPatient(@PathVariable String email, @RequestBody MedicalWorkerDTO medicalWorkerDTO) {
@@ -258,6 +261,7 @@ public class DermatologistController {
         return new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/dermatologist/rating/{patientEmail}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<SimpleDermatologistDTO>> getDermatologistForRating(@PathVariable String patientEmail){
         Set<Dermatologist> pharmacists = dermatologistService.findDermatologistForRating(patientEmail);
@@ -267,6 +271,7 @@ public class DermatologistController {
         return new ResponseEntity<Set<SimpleDermatologistDTO>>(toRet,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping(path = "/ratings/{regNo}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<MedicalWorkerRatingDTO>>
     getDermatologistsRatingsByPharmacy(@PathVariable String regNo) {
