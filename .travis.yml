@@ -8,7 +8,6 @@ services:
 before_install:
   - cd back-end
   - chmod +x mvnw
-  - sudo -i -u postgres
   - createdb jpa
 
 addons:
