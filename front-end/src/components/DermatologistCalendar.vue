@@ -160,6 +160,7 @@
 import TokenDecoder from "@/services/token-decoder";
 import AppointmentForm from "@/components/AppointmentForm.vue";
 import axios from "axios";
+import authHeader from '../services/auth-header';
 export default {
   components: { AppointmentForm },
   name: "DermatologistCalendar",
@@ -186,7 +187,7 @@ export default {
   created() {
     let user = TokenDecoder.getUserEmail();
     axios
-      .get(`http://localhost:9090/api/pharmacy/getAll/${user}`)
+      .get(`http://localhost:9090/api/pharmacy/getAll/${user}`, {headers: authHeader()})
       .then((response) => {
         this.items = response.data;
         this.selected = this.items[0];
@@ -196,7 +197,7 @@ export default {
         let path2 =
           `http://localhost:9090/api/dermatologists/dermAppointments/${user}/${this.selected.regNo}`;
 
-        axios.get(path).then((response) => {
+        axios.get(path, {headers: authHeader()}).then((response) => {
           this.appointments = response.data;
 
           for (let i = 0; i < this.appointments.length; i++) {
@@ -227,7 +228,7 @@ export default {
             });
           }
         });
-        axios.get(path2).then((response) => {
+        axios.get(path2, {headers: authHeader()}).then((response) => {
           this.dermappointments = response.data;
 
           for (let i = 0; i < this.dermappointments.length; i++) {
@@ -304,7 +305,7 @@ export default {
       let email = localStorage.getItem("pacijent");
       axios
         .post(
-          `http://localhost:9090/api/dermatologists/scheduleNewAppointment/${this.selectedEvent.id}/${email}`
+          `http://localhost:9090/api/dermatologists/scheduleNewAppointment/${this.selectedEvent.id}/${email}`,null ,{headers: authHeader()}
         )
         .then((response) => {
           alert(response.data);
@@ -325,7 +326,7 @@ export default {
       this.selectedElement = null;
       this.selectedOpen = false;
       this.events = [];
-      axios.get(path).then((response) => {
+      axios.get(path, {headers: authHeader()}).then((response) => {
         this.appointments = response.data;
 
         for (let i = 0; i < this.appointments.length; i++) {
@@ -356,7 +357,7 @@ export default {
           });
         }
       });
-      axios.get(path2).then((response) => {
+      axios.get(path2, {headers: authHeader()}).then((response) => {
         this.dermappointments = response.data;
 
         for (let i = 0; i < this.dermappointments.length; i++) {
@@ -409,15 +410,15 @@ export default {
       this.selectedOpen = false;
       let check  = localStorage.getItem('check_finished');
       if(check=="true"){
-        axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`);
+        axios.post(`http://localhost:9090/api/appointment/finished/${id}/${true}`,null, {headers: authHeader()});
       }
       
     },
     didntCome(id){
       //treba odraditi penale
       alert("Penal"+id);
-      axios.put(`http://localhost:9090/patients/penalty/${id}`);
-      axios.post(`http://localhost:9090/api/appointment/finished/${id}/${false}`);
+      axios.put(`http://localhost:9090/patients/penalty/${id}`,null, {headers: authHeader()});
+      axios.post(`http://localhost:9090/api/appointment/finished/${id}/${false}`,null, {headers: authHeader()});
       window.location.reload();
     }
   },

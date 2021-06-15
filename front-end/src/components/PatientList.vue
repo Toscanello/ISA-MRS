@@ -64,6 +64,7 @@ import PatientSearch from "@/components/PatientSearch.vue";
 import PatientSort from "@/components/PatientSort.vue";
 import AppointmentForm from "@/components/AppointmentForm.vue";
 import tokenDecoder from '../services/token-decoder';
+import authHeader from '../services/auth-header';
 export default {
   name: "PatientList",
   components: {
@@ -80,7 +81,7 @@ export default {
     let kor = localStorage.getItem("korisnik");
     console.log(kor);
     axios
-      .get(`http://localhost:9090/patients/${kor}@gmail.com`)
+      .get(`http://localhost:9090/patients/${kor}@gmail.com`, {headers: authHeader()})
       .then((resp) => {
         this.patients = resp.data;
         for(var i =0;i<this.patients.length;i++){
@@ -98,8 +99,8 @@ export default {
             email: `${kor}@gmail.com`,
             name: search.name,
             surname: search.surname,
-          },
-        })
+          }
+        }, {headers: authHeader()})
         .then((response) => (this.patients = response.data));
     },
     onSortClick: function (sorting) {
@@ -155,7 +156,7 @@ export default {
       console.log(check);
       var user = tokenDecoder.getUserEmail();
       if(check=="true"){
-        axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${true}`);
+        axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${true}`,null, {headers: authHeader()});
       }
       window.location.reload();
     }
@@ -164,8 +165,8 @@ export default {
       //treba odraditi penale
       var user = tokenDecoder.getUserEmail();
       alert("Penal"+id);
-      axios.put(`http://localhost:9090/patients/penalty/user/${id}`);
-      axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${false}`);
+      axios.put(`http://localhost:9090/patients/penalty/user/${id}`,null, {headers: authHeader()});
+      axios.post(`http://localhost:9090/patients/finished/${id}/${user}/${false}`,null, {headers: authHeader()});
       window.location.reload();
     }
   },

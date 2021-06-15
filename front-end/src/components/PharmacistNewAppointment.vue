@@ -30,6 +30,7 @@
 <script>
 import TokenDecoder from "@/services/token-decoder";
 import axios from "axios";
+import authHeader from '../services/auth-header';
 export default {
   name: "PharmacistNewAppointment",
   data() {
@@ -66,7 +67,7 @@ export default {
         path =
           "http://localhost:9090/api/dermatologists/scheduleNewAppointmentByTime";
       axios
-        .post(path, appointment)
+        .post(path, appointment, {headers: authHeader()})
         .then((response) => {
           alert(response.data);
           this.$emit("clicked", "calendar");

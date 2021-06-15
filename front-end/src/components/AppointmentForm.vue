@@ -101,6 +101,7 @@
 import TokenDecoder from "@/services/token-decoder";
 import PharmacistNewAppointment from "@/components/PharmacistNewAppointment";
 import axios from "axios";
+import authHeader from '../services/auth-header';
 export default {
   name: "AppointmentForm",
   components: { PharmacistNewAppointment },
@@ -117,7 +118,7 @@ export default {
   created() {
     console.log(this.$props.patient);
     let path = "http://localhost:9090/api/medicine/all";
-    axios.get(path).then((response) => {
+    axios.get(path, {headers: authHeader()}).then((response) => {
       this.items = response.data;
     });
   },
@@ -157,7 +158,7 @@ export default {
       else
         path = `http://localhost:9090/api/medicine/check/derm/${localStorage.getItem('selectedPh')}/${id}/${this.$props.patient}`
       axios
-        .get(path)
+        .get(path, {headers: authHeader()})
         .then((response) => {
           console.log(response.data);
           if (response.data.length != 0) {
@@ -188,7 +189,7 @@ export default {
       var ph = localStorage.getItem('selectedPh');
       let path = `http://localhost:9090/api/medicine/prescribe/${ph}`;
       axios
-        .post(path, medicines)
+        .post(path, medicines, {headers: authHeader()})
         .then((response) => console.log(response.data));
 
       axios
@@ -196,7 +197,7 @@ export default {
           report: this.report,
           days: this.days,
           patient_id: localStorage.getItem("patient"),
-        })
+        }, {headers: authHeader()})
         .then((response) => {
           console.log(response)
           localStorage.setItem('check_finished',true);

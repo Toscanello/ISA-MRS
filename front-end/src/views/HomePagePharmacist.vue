@@ -92,11 +92,6 @@ export default {
         to: "account",
       },
       {
-        icon: "mdi-pencil",
-        title: "Start appointment",
-        to: "home",
-      },
-      {
         icon: "mdi-calendar",
         title: "Calendar",
         to: "calendar",
