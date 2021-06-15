@@ -7,7 +7,7 @@ services:
 
 before_install:
   - cd back-end
-  - postgres createdb jpa
+  - -u postgres createdb jpa
   - chmod +x mvnw
 
 addons:
