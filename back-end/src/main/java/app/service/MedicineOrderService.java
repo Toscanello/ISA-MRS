@@ -33,6 +33,7 @@ public class MedicineOrderService {
         return medicineOrderRepository.save(mo);
     }
 
+    @Transactional
     public void insertNewOrder(Long medicinePricingId, int quantity,
                                double price, String patientEmail, LocalDateTime start, LocalDateTime end){
 
@@ -65,7 +66,6 @@ public class MedicineOrderService {
         medicineOrderRepository.update(mo.getId());
     }
 
-    @Transactional
     public void delete(MedicineOrder mo) {
         medicineOrderRepository.deleteOrder(mo.getId());
     }

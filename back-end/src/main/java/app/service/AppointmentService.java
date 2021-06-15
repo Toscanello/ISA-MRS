@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -133,6 +134,7 @@ public class AppointmentService {
         appointmentRepository.updateFinished(id);
     }
 
+    @Transactional
     public void addPharmacistAppointment(String patient_id, String medical_worker_id,
                                          String startDate, String time, String regNo)
     {

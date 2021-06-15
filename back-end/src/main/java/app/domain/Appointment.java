@@ -39,6 +39,21 @@ public class Appointment {
     @Column(name = "appearance",nullable = false)
     private boolean appearance;
 
+    @Version
+    private Long version;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public Appointment() {
     }
 

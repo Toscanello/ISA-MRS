@@ -6,6 +6,7 @@ import app.repository.MedicineQuantityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -29,6 +30,7 @@ public class MedicineQuantityService {
         return medicineQuantityRepository.findById(id);
     }
 
+    @Transactional
     public int findMedicineQuantityByPharmacyRegNoAndMedicineCode(String regNo, String code){
         return medicineQuantityRepository.findMedicineQuantityByPharmacyRegNoAndMedicineCode(regNo, code);
     }
@@ -41,6 +43,7 @@ public class MedicineQuantityService {
         return medicineQuantityRepository.save(mq);
     }
 
+    @Transactional
     public void medicineOrderCancellation(MedicineOrder mo, String pharmacyRegNo, String medicineCode){
         MedicineQuantity mq = medicineQuantityRepository.findMedicineQuantityByPharmacy(pharmacyRegNo, medicineCode);
         int quantity = mq.getQuantity() + mo.getQuantity();
